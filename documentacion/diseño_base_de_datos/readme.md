@@ -1,1 +1,0 @@
-Los esquemas y diagramas con extensión .erdplus pueden ser importados y editados en la página web https://erdplus.com
