@@ -12,8 +12,12 @@ Cada viajero se registra en la plataforma y busca su experiencia a contratar.
 
     ./
     |
-    |___aplicacion                           #Archivos que componen la aplicación en sí misma.
+    |___aplicacion                #Archivos que componen la aplicación en sí misma.
+    |          |
+    |          |___backend
+    |          |
+    |          |___frontend     
     |
-    |___documentacion                        #Documentos relativos a la aplicación  
+    |___documentacion             #Documentos relativos a la aplicación  
 
 
