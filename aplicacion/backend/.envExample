@@ -4,3 +4,9 @@ PORT=
 
 #Directorio en el que se guardarán los archivos estáticos (imágenes principalmente).
 UPLOAD_DIRECTORY=
+
+#Variables relativas a la base de datos.
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_DATABASE=
