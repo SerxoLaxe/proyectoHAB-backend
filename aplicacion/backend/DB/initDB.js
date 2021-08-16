@@ -78,6 +78,30 @@ async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
 }
 
 /**
+ * Esta función inserta en la tabla usuarios al usuario administrador, tomando como credenciales las variables de entorno ADMIN_EMAIL, ADMIN_NAME y ADMIN_PASSWORD
+ * @param {Object} conexion 
+ */
+ async function crearAdministrador(conexion) {
+
+    await conexion.query(
+        `
+        INSERT INTO usuarios ( nombre,  email, contraseña, fecha, privilegios, activo )
+        VALUES( ?, ?, SHA2(?,512), ? ,?,?)
+        `,
+        [
+            process.env.ADMIN_NAME,
+            process.env.ADMIN_EMAIL,
+            process.env.ADMIN_PASSWORD,
+            helpers.formatearDateMysql(new Date()), 
+            'admin',
+            true,
+            
+        ]
+    );
+    helpers.log('Cuenta de administrador creada');
+}
+
+/**
  * Configura completamente la base de datos
  */
 async function config() {
@@ -88,6 +112,7 @@ async function config() {
         await resetDB(conexion);
         await llenarTablaUsuarios(10, conexion);
         await llenarTablaExperiencias(10, conexion);
+        await crearAdministrador(conexion);
     } catch (error) {
         helpers.logError(error);
     } finally {
