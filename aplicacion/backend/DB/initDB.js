@@ -25,6 +25,31 @@ async function resetDB(conexion) {
 }
 
 /**
+ * Esta función inserta determinado número de usuarios con datos generado automáticamente por Faker, usando una conexion a MYSQL.
+ * @param {number} numeroDeUsuarios - Número de usuarios que se desea insertar en la tabla.
+ * @param {Object} conexion - Conexión a MYSQL
+ */
+async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
+
+    for (let i = 0; i < numeroDeUsuarios; i++) {
+        const nombre = faker.name.findName();
+        const biografia = faker.lorem.paragraph(2);
+        const email = faker.internet.email();
+        const contraseña = faker.internet.password();
+        const avatar = path.join(faker.system.directoryPath(), faker.system.fileName());
+
+        await conexion.query(
+            `
+            INSERT INTO usuarios ( nombre, biografia, email, contraseña, avatar, fecha, codigo_validacion )
+            VALUES( ?, ?, ?, SHA2(?,512), ? ,?,?)
+            `,
+            [nombre, biografia, email, contraseña, avatar, helpers.formatearDateMysql(new Date()), helpers.generateRandomString()]
+        );
+    }
+    helpers.log(`Insertados ${numeroDeUsuarios} registros en la tabla usuarios`);
+}
+
+/**
  * Configura completamente la base de datos
  */
 async function config() {
@@ -33,6 +58,7 @@ async function config() {
     try {
         conexion = await conexionMysql();
         await resetDB(conexion);
+        await llenarTablaUsuarios(10,conexion);
     } catch (error) {
         helpers.logError(error);
     } finally {
