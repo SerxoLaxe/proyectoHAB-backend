@@ -50,6 +50,34 @@ async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
 }
 
 /**
+ * Esta función inserta un número determinado de experiencias con datos generados automáticamente por Faker, usando una conexion a MYSQL.
+ * @param {number} numeroDeExperiencias 
+ * @param {Object} conexion 
+ */
+async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
+
+    for (let i = 0; i < numeroDeExperiencias; i++) {
+        const nombre = faker.commerce.productName();
+        const descripcion = faker.lorem.paragraph(3);
+        const precio = lodash.random(20, 500);
+        const ubicacion = faker.address.city();
+        const rating = lodash.random(0, 5);
+        const plazasTotales = lodash.random(5, 45);
+        const fechaInicial = helpers.formatearDateMysql(new Date());
+        const fechaFinal = helpers.formatearDateMysql(new Date());
+
+        await conexion.query(
+            `
+            INSERT INTO experiencias (nombre, descripcion, fecha_inicial, fecha_final,rating,precio,ubicacion,plazas_totales)
+            VALUES(?,?,?,?,?,?,?,?)
+            `,
+            [nombre, descripcion, fechaInicial, fechaFinal, rating, precio, ubicacion, plazasTotales]
+        )
+    }
+    helpers.log(`Insertados ${numeroDeExperiencias} registros en la tabla experiencias`);
+}
+
+/**
  * Configura completamente la base de datos
  */
 async function config() {
@@ -58,7 +86,8 @@ async function config() {
     try {
         conexion = await conexionMysql();
         await resetDB(conexion);
-        await llenarTablaUsuarios(10,conexion);
+        await llenarTablaUsuarios(10, conexion);
+        await llenarTablaExperiencias(10, conexion);
     } catch (error) {
         helpers.logError(error);
     } finally {
