@@ -1,0 +1,6 @@
+#Host y puerto de escucha para Express.
+HOST=
+PORT=
+
+#Directorio en el que se guardarán los archivos estáticos (imágenes principalmente).
+UPLOAD_DIRECTORY=

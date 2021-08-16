@@ -44,6 +44,7 @@ Endpoints finalizados marcados con ✅. No finalizados marcados con ❌
 
 #### Experiencia
 
+- GET de todas las experiencias. ❌
 - GET experiencias mediante búsqueda y filtrado opcional mediante rango de fechas y precios. ❌
 - GET Selecciona experiencia mediante id. ❌
 - POST Añade nueva experiencia. ( Sólo administrador). ❌
@@ -57,6 +58,7 @@ Endpoints finalizados marcados con ✅. No finalizados marcados con ❌
 
 #### Usuario
 
+- GET de todos los usuarios. ❌
 - GET usuario, para acceso al perfil mediante ID. ( Sólo usuarios registrados )❌  
 - POST registro de nuevo usuario. ❌
 - POST validar usuario mediante codigo. ❌
@@ -64,3 +66,14 @@ Endpoints finalizados marcados con ✅. No finalizados marcados con ❌
 - DELETE usuario, elimina un usuario. (Sólo administrador) ❌
 - GET login de usuario. ❌
 - PUT Cambiar la contraseña ❌
+
+## Instalación backend desarrollo
+
+Se debe crear un archivo .env e introducir en él las variables necesarias. El archivo .envExample sirve de modelo.
+
+```console
+git clone https://github.com/SerxoLaxe/proyectoHAB/tree/develop/aplicacion/backend
+cd proyectoHAB/aplicacion/backend
+npm i
+npm run dev
+```
