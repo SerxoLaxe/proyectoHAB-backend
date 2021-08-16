@@ -74,5 +74,6 @@ Se debe crear un archivo .env e introducir en él las variables necesarias. El a
 ```console
 git clone https://github.com/SerxoLaxe/proyectoHAB/tree/develop/aplicacion/backend
 cd proyectoHAB/aplicacion/backend
+npm i
 npm run dev
 ```
