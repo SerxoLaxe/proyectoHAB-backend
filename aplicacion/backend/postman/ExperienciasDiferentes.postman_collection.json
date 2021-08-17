@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "20f8a813-718a-4780-a5a6-9696d0a306f3",
+		"name": "bocetoExperienciasDiferentes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requests a experiencias",
+			"item": [
+				{
+					"name": "todas las experiencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/experiencias",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"experiencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Conseguir experiencia mediante su ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/experiencias/8",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"experiencias",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir experiencia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Extracción de Coltrán no remunerada",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Parece divertido pero no lo es.",
+									"type": "text"
+								},
+								{
+									"key": "ubicacion",
+									"value": "Carantoña, Nepal.",
+									"type": "text"
+								},
+								{
+									"key": "fechaInicial",
+									"value": "2021-11-08",
+									"type": "text"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2021-11-08",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "877.99",
+									"type": "text"
+								},
+								{
+									"key": "plazasTotales",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:3456/experiencias",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"experiencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar experiencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/experiencias/search/?texto=craft",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"experiencias",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "texto",
+									"value": "craft"
+								},
+								{
+									"key": "fechaInicial",
+									"value": "2021-07-12",
+									"disabled": true
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2021-112-21",
+									"disabled": true
+								},
+								{
+									"key": "precioMinimo",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "precioMaximo",
+									"value": "231",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar experiencia",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Cruising vegano con perspectiva mapuche",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "No lo sabemos ni nosotros.",
+									"type": "text"
+								},
+								{
+									"key": "ubicacion",
+									"value": "Estación de servicio Km 223 de la AP9",
+									"type": "text"
+								},
+								{
+									"key": "fechaInicial",
+									"value": "2021-08-09T13:48:09.142Z",
+									"type": "text"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2021-09-23T13:48:09.142Z",
+									"type": "text"
+								},
+								{
+									"key": "plazasTotales",
+									"value": "24",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "10.65",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:3456/experiencias/2",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"experiencias",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar experiencia",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/experiencias/id=332",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"experiencias",
+								"id=332"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requests a usuarios",
+			"item": [
+				{
+					"name": "todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/usuarios",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Conseguir usuario mediante ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/usuarios/5",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"usuarios",
+								"5"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/usuarios",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Amancio",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Ortega",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"value": "fotopolla.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:3456/usuarios/1",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3456/usuarios/2",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validar usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "serxolaxe@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "contraseña",
+									"value": "patatasfritas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:3456/usuarios/login",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3456",
+							"path": [
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
