@@ -9,13 +9,18 @@ async function añadirExperiencia(req, res, next) {
     let conexion;
     try {
         conexion = await conexionMysql();
+        await conexion.query(`SELECT * FROM experiencias`)
         res.statusCode = 200;
-        res.send({
-            status: 'Ok',
-            message: 'Añadir experiencia',
-        });
+        res.send(conexion);
     } catch (error) {
         next(error);
     } 
 }
 module.exports = añadirExperiencia;
+
+
+
+
+
+
+
