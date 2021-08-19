@@ -6,7 +6,7 @@ Este es el proyecto final del bootcamp full stack Javascript impartido por Hack 
 - **Título**: Experiencias diferentes.
 - **Descripción**: Buscador de experiencias diferentes (surf, barranquismo, masajes, buceo, fin de semana en velero…).
 Cada viajero se registra en la plataforma y busca su experiencia a contratar.
-- **Equipo**: Oscar Alberto, Cristina Dominguez, Robert y Sergio Lage.
+- **Equipo**: Oscar Alberto, Cristina Dominguez, Robert Montero y Sergio Lage.
 
 ## Estructura del repositorio.
 
