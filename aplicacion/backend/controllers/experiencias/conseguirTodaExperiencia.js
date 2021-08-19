@@ -9,7 +9,7 @@ async function conseguirTodaExperiencia(req, res, next) {
     let conexion
     try {
         conexion = await conexionMysql();
-        const result = await conexion.query(
+        const [result] = await conexion.query(
             `
             SELECT * FROM experiencias
             `
