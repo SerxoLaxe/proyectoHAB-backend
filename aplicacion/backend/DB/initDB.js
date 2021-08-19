@@ -117,7 +117,7 @@ async function config() {
         helpers.logError(error);
     } finally {
         if (conexion) {
-            conexion.release();
+            conexion.release();            
         }
     }
 
