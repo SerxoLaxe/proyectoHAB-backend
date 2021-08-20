@@ -35,17 +35,17 @@ app.delete('/experiencias/:id/imagen/:id', experiencia.eliminarImagen);     //DE
 
 
                                                                             /* USUARIO */
-app.get('/usuarios/:id', usuario.id);                                       //GET usuario, para acceso al perfil mediante ID.❌ 
+app.get('/usuarios/:id', usuario.id);                                       //GET usuario, para acceso al perfil mediante ID. 👍 
 app.post('/usuarios', usuario.registrar);                                   //POST registro de nuevo usuario. ❌
 app.get('/usuarios/validar/:codigo', usuario.validar);                      //POST validar usuario mediante codigo. ❌
 app.put('/usuarios/:id',  usuario.editar);                                  //PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
-app.delete('/usuarios/:id', usuario.eliminar);                              //DELETE usuario, elimina un usuario. (Sólo administrador)❌
+app.delete('/usuarios/:id', usuario.eliminar);                              //DELETE usuario, elimina un usuario. (Sólo administrador). 👍 
 app.post('/usuarios/login', usuario.login);                                 //GET login de usuario. 
 app.put('/usuarios/:id/contraseña', usuario.cambiarContraseña)              //PUT Cambia la contraseña ❌
 
                                                                             /* RESERVADOS A DESARROLLO */
 app.get('/experiencias', experiencia.listarTodas);                          //GET experiencias, para mostrar todas las experiencias ( sólo para desarrollo ). ❌
-app.get('/usuarios', usuario.listarTodos);                                  //GET todos los usuarios ( sólo para desarrollo ). ❌
+app.get('/usuarios', usuario.listarTodos);                                  //GET todos los usuarios ( sólo para desarrollo ). 👍 
 
 
 /* Middleware error */
