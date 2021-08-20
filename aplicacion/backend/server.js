@@ -44,7 +44,7 @@ app.post('/usuarios/login', usuario.login);                                 //GE
 app.put('/usuarios/:id/contraseña', usuario.cambiarContraseña)              //PUT Cambia la contraseña ❌
 
                                                                             /* RESERVADOS A DESARROLLO */
-app.get('/experiencias', experiencia.listarTodas);                          //GET experiencias, para mostrar todas las experiencias ( sólo para desarrollo ). ❌
+app.get('/experiencias', experiencia.listarTodas);                          //GET experiencias, para mostrar todas las experiencias ( sólo para desarrollo ). 👍
 app.get('/usuarios', usuario.listarTodos);                                  //GET todos los usuarios ( sólo para desarrollo ). ❌
 
 
