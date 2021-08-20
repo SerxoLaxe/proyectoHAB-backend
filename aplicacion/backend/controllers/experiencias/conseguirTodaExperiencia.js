@@ -1,4 +1,5 @@
 const conexionMysql = require('../../DB/conexionMysql');
+
 /** 
  * Responde con una array de todos los datos de la tabla experiencias. ❌ 
  * @param {*} req 
@@ -6,7 +7,7 @@ const conexionMysql = require('../../DB/conexionMysql');
  * @param {*} next 
  */
 async function conseguirTodaExperiencia(req, res, next) {
-    let conexion
+    let conexion;
     try {
         conexion = await conexionMysql();
         const [result] = await conexion.query(
@@ -17,7 +18,7 @@ async function conseguirTodaExperiencia(req, res, next) {
         res.statusCode = 200;
         res.send(result);
     } catch (error) {
-        next(error)
+        next(error);
     } finally {
         if (conexion) {
             conexion.release();
