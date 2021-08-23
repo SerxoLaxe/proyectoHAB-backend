@@ -21,6 +21,9 @@ app.use(express.json());     //Middleware parsing responses a json.
 app.use(express.static(path.join(__dirname, UPLOAD_DIRECTORY)));    //Middleware recursos estáticos.
 app.use(fileUpload());    //Middleware subida de archivos a servidor.
 
+//DE USO ESPECÍFICO
+const mWare = require('./middlewares/index') //Middlewares propios.
+
 ///////////////////////////////////* ENDPOINTS *////////////////////////////////////////
 
                                                                             /* EXPERIENCIA */
