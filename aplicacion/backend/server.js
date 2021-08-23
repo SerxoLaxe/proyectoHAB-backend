@@ -38,13 +38,13 @@ app.delete('/experiencias/:id/imagen/:id', mWare.existe, experiencia.eliminarIma
 
 
 /* USUARIO */
-app.get('/usuarios/:id', usuario.id);                                       //GET usuario, para acceso al perfil mediante ID.❌ 
+app.get('/usuarios/:id', mWare.existe, usuario.id);                                       //GET usuario, para acceso al perfil mediante ID.❌ 
 app.post('/usuarios', usuario.registrar);                                   //POST registro de nuevo usuario. ❌
 app.get('/usuarios/validar/:codigo', usuario.validar);                      //POST validar usuario mediante codigo. ❌
-app.put('/usuarios/:id', usuario.editar);                                  //PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
-app.delete('/usuarios/:id', usuario.eliminar);                              //DELETE usuario, elimina un usuario. (Sólo administrador)❌
+app.put('/usuarios/:id', mWare.existe, usuario.editar);                                  //PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
+app.delete('/usuarios/:id', mWare.existe, usuario.eliminar);                              //DELETE usuario, elimina un usuario. (Sólo administrador)❌
 app.post('/usuarios/login', usuario.login);                                 //GET login de usuario. 
-app.put('/usuarios/:id/contraseña', usuario.cambiarContraseña)              //PUT Cambia la contraseña ❌
+app.put('/usuarios/:id/contraseña', mWare.existe, usuario.cambiarContraseña)              //PUT Cambia la contraseña ❌
 
 /* RESERVADOS A DESARROLLO */
 app.get('/experiencias', experiencia.listarTodas);                          //GET experiencias, para mostrar todas las experiencias ( sólo para desarrollo ). 👍
