@@ -1,6 +1,5 @@
 const conexionMysql = require("../../DB/conexionMysql");
 
-
 /**
  * Selecciona de la tabla de experiencias un único registro especificando su ID. ❌ 
  * @param {} req 
@@ -11,16 +10,11 @@ async function conseguirExperienciaID(req, res, next) {
     let conexion;
     try {
         conexion = await conexionMysql();
-
-        const {id} = req.params;
-
-       
+        const { id } = req.params;
 
         const [result] = await conexion.query(`
         SELECT * FROM experiencias WHERE id=?
-    `, [id])
-    
-
+    `, [id]);
 
         res.send({
             status: 'Ok',
@@ -32,4 +26,5 @@ async function conseguirExperienciaID(req, res, next) {
         if (conexion) conexion.release();
     }
 }
+
 module.exports = conseguirExperienciaID;
