@@ -14,16 +14,7 @@ async function conseguirExperienciaID(req, res, next) {
 
         const {id} = req.params;
 
-        const [valor] = await conexion.query(`
-            SELECT id FROM experiencias WHERE id=?
-        `, [id])
-        
-
-        if (valor.length === 0){
-            const err = new Error("No existe ninguna experiencia con ese ID")
-            err.httpStatus = 404;
-            throw err;
-        }
+       
 
         const [result] = await conexion.query(`
         SELECT * FROM experiencias WHERE id=?
