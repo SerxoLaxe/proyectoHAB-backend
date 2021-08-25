@@ -1,7 +1,7 @@
 const conexionMysql = require("../../DB/conexionMysql");
 
 /**
- * Selecciona de la tabla de experiencias un único registro especificando su ID. ❌ 
+ * Selecciona de la tabla de experiencias un único registro especificando su ID. 👍 
  * @param {} req 
  * @param {*} res 
  * @param {*} next 
