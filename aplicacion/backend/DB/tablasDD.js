@@ -1,8 +1,7 @@
 /** Tabla de experiencias_fotos */
-
 const tablaExperiencias_fotos = {
-  nombre: 'experiencias_fotos',
-  columnas: 
+    nombre: 'experiencias_fotos',
+    columnas:
         `
         (id INT PRIMARY KEY AUTO_INCREMENT,
         fecha_foto DATETIME NOT NULL,
@@ -14,7 +13,7 @@ const tablaExperiencias_fotos = {
 
 /** Tabla de experiencias */
 const tablaExperiencias = {
-  
+
     nombre: 'experiencias',
     columnas:
         `
@@ -31,10 +30,9 @@ const tablaExperiencias = {
     `
 };
 
-
 /** Tabla de Usuarios */
 const tablaUsuarios = {
-  
+
     nombre: 'usuarios',
     columnas:
         ` 
@@ -50,7 +48,6 @@ const tablaUsuarios = {
         codigo_validacion VARCHAR(100))
     `,
 };
-
 
 module.exports = { tablaExperiencias, tablaUsuarios, tablaExperiencias_fotos };
 
