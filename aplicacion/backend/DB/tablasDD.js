@@ -1,9 +1,8 @@
 /**Tabla de experiencias */
 const tablaExperiencias = {
     nombre: 'experiencias',
-    query:
+    columnas:
         `
-        CREATE TABLE experiencias 
         (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(100) NOT NULL,
         descripcion TEXT NOT NULL,
@@ -20,8 +19,8 @@ const tablaExperiencias = {
 /** Tabla de Usuarios */
 const tablaUsuarios = {
     nombre: 'usuarios',
-    query:
-        `CREATE TABLE usuarios 
+    columnas:
+        ` 
         ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(200),
         biografia TEXT,
@@ -35,4 +34,4 @@ const tablaUsuarios = {
     `
 };
 
-module.exports = { tablaExperiencias, tablaUsuarios}
+module.exports = { tablaExperiencias, tablaUsuarios }
