@@ -1,5 +1,5 @@
 require('dotenv').config();    //Módulo que carga las variables del archivo .env en las variables de entorno
-const { HOST, PORT, UPLOAD_DIRECTORY, RESET_DB } = process.env; //Destructuring de las variables de entorno necesarias;
+const { HOST, PORT, UPLOAD_DIRECTORY } = process.env; //Destructuring de las variables de entorno necesarias;
 const path = require('path');    //Módulo para el formato de direcciones de archivos y directorios.
 const morgan = require('morgan');    //Middleware log de eventos de express.
 const fileUpload = require('express-fileupload');    //Middleware para la subida de archivos al servidor.
