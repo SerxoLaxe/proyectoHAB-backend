@@ -11,6 +11,11 @@ const conexionMysql = require('./conexionMysql'); //Modulo para obtener conexió
  * @param {Object} conexion - Conexión a Mysql
  */
 async function eliminarTablas(conexion) {
+
+    //Desactivamos el check de foreign keys para eliminar las tablas que contengan foreign keys.
+    await conexion.query(
+        ` SET foreign_key_checks = 0;`
+    );
     for (let tabla in tablas) {
         await conexion.query(
             `
@@ -18,6 +23,10 @@ async function eliminarTablas(conexion) {
             `
         );
     }
+    //Volvemos a activar el check de foreign keys de nuevo.
+    await conexion.query(
+        ` SET foreign_key_checks = 1;`
+    );
     helpers.log(`Tablas eliminadas`);
 }
 /**
@@ -45,33 +54,33 @@ async function crearTablas(conexion) {
  * @param {Object} conexion - Conexión a MYSQL
  */
 async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
-  for (let i = 0; i < numeroDeUsuarios; i++) {
-    const nombre = faker.name.findName();
-    const biografia = faker.lorem.paragraph(2);
-    const email = faker.internet.email();
-    const contraseña = faker.internet.password();
-    const avatar = path.join(
-      faker.system.directoryPath(),
-      faker.system.fileName()
-    );
+    for (let i = 0; i < numeroDeUsuarios; i++) {
+        const nombre = faker.name.findName();
+        const biografia = faker.lorem.paragraph(2);
+        const email = faker.internet.email();
+        const contraseña = faker.internet.password();
+        const avatar = path.join(
+            faker.system.directoryPath(),
+            faker.system.fileName()
+        );
 
-    await conexion.query(
-      `
+        await conexion.query(
+            `
             INSERT INTO usuarios ( nombre, biografia, email, contraseña, avatar, fecha, codigo_validacion )
             VALUES( ?, ?, ?, SHA2(?,512), ? ,?,?)
             `,
-      [
-        nombre,
-        biografia,
-        email,
-        contraseña,
-        avatar,
-        helpers.formatearDateMysql(new Date()),
-        helpers.generateRandomString(),
-      ]
-    );
-  }
-  helpers.log(`Insertados ${numeroDeUsuarios} registros en la tabla usuarios`);
+            [
+                nombre,
+                biografia,
+                email,
+                contraseña,
+                avatar,
+                helpers.formatearDateMysql(new Date()),
+                helpers.generateRandomString(),
+            ]
+        );
+    }
+    helpers.log(`Insertados ${numeroDeUsuarios} registros en la tabla usuarios`);
 }
 
 /**
@@ -82,38 +91,38 @@ async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
  * @param {Object} conexion
  */
 async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
-  for (let i = 0; i < numeroDeExperiencias; i++) {
-    const fecha_insert = helpers.formatearDateMysql(new Date());
-    const nombre = faker.commerce.productName();
-    const descripcion = faker.lorem.paragraph(3);
-    const precio = lodash.random(20, 500);
-    const ubicacion = faker.address.city();
-    const rating = lodash.random(0, 5);
-    const plazasTotales = lodash.random(5, 45);
-    const fechaInicial = helpers.formatearDateMysql(new Date());
-    const fechaFinal = helpers.formatearDateMysql(new Date());
+    for (let i = 0; i < numeroDeExperiencias; i++) {
+        const fecha_insert = helpers.formatearDateMysql(new Date());
+        const nombre = faker.commerce.productName();
+        const descripcion = faker.lorem.paragraph(3);
+        const precio = lodash.random(20, 500);
+        const ubicacion = faker.address.city();
+        const rating = lodash.random(0, 5);
+        const plazasTotales = lodash.random(5, 45);
+        const fechaInicial = helpers.formatearDateMysql(new Date());
+        const fechaFinal = helpers.formatearDateMysql(new Date());
 
-    await conexion.query(
-      `
+        await conexion.query(
+            `
             INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final,rating,precio,ubicacion,plazas_totales)
             VALUES(?,?,?,?,?,?,?,?,?)
             `,
-      [
-        fecha_insert,
-        nombre,
-        descripcion,
-        fechaInicial,
-        fechaFinal,
-        rating,
-        precio,
-        ubicacion,
-        plazasTotales,
-      ]
+            [
+                fecha_insert,
+                nombre,
+                descripcion,
+                fechaInicial,
+                fechaFinal,
+                rating,
+                precio,
+                ubicacion,
+                plazasTotales,
+            ]
+        );
+    }
+    helpers.log(
+        `Insertados ${numeroDeExperiencias} registros en la tabla experiencias`
     );
-  }
-  helpers.log(
-    `Insertados ${numeroDeExperiencias} registros en la tabla experiencias`
-  );
 }
 
 /**
@@ -124,27 +133,27 @@ async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
  */
 async function crearAdministrador(conexion) {
 
-  await conexion.query(
-    `
+    await conexion.query(
+        `
         INSERT INTO usuarios ( nombre,  email, contraseña, fecha, privilegios, activo )
         VALUES( ?, ?, SHA2(?,512), ? ,?,?)
         `,
-    [
-      process.env.ADMIN_NAME,
-      process.env.ADMIN_EMAIL,
-      process.env.ADMIN_PASSWORD,
-      helpers.formatearDateMysql(new Date()),
-      "admin",
-      true,
-    ]
-  );
-  helpers.log("Cuenta de administrador creada");
+        [
+            process.env.ADMIN_NAME,
+            process.env.ADMIN_EMAIL,
+            process.env.ADMIN_PASSWORD,
+            helpers.formatearDateMysql(new Date()),
+            "admin",
+            true,
+        ]
+    );
+    helpers.log("Cuenta de administrador creada");
 }
 
 /** Configura completamente la base de datos */
 async function config() {
 
-    const {RESET_DB} = process.env;
+    const { RESET_DB } = process.env;
     let conexion;
     try {
         conexion = await conexionMysql();
@@ -167,7 +176,7 @@ async function config() {
         }
 
     }
-  }
 }
+
 
 module.exports = { config };
