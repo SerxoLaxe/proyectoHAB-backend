@@ -11,6 +11,11 @@ const conexionMysql = require('./conexionMysql'); //Modulo para obtener conexió
  * @param {Object} conexion - Conexión a Mysql
  */
 async function eliminarTablas(conexion) {
+
+    //Desactivamos el check de foreign keys para eliminar las tablas que contengan foreign keys.
+    await conexion.query(
+        ` SET foreign_key_checks = 0;`
+    );
     for (let tabla in tablas) {
         await conexion.query(
             `
@@ -18,6 +23,10 @@ async function eliminarTablas(conexion) {
             `
         );
     }
+    //Volvemos a activar el check de foreign keys de nuevo.
+    await conexion.query(
+        ` SET foreign_key_checks = 1;`
+    );
     helpers.log(`Tablas eliminadas`);
 }
 /**
