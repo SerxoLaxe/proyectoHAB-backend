@@ -1,5 +1,6 @@
 const conexionMysql = require("../../DB/conexionMysql");
 const { formatearDateMysql, guardarFoto } = require("../../helpers");
+
 /**
  * Añade una experiencia a la tabla de experiencias ❌
  *
@@ -23,8 +24,6 @@ async function añadirExperiencia(req, res, next) {
       ubicacion,
       plazas_totales,
     } = req.body;
-
-    console.log(req.body);
 
     if (
       !nombre ||
@@ -61,8 +60,6 @@ async function añadirExperiencia(req, res, next) {
       ]
     );
 
-    console.log(req);
-
     //saco el id de la nueva experiencia
     const { insertId } = [result];
 
@@ -70,7 +67,7 @@ async function añadirExperiencia(req, res, next) {
     const fotos = [];
     if (req.files && Object.keys(req.files).length > 0) {
       for (const foto of Object.values(req.files).slice(0, 4)) {
-        console.log(foto);
+
         //creo en helpers una funcion que me guarda las fotos
         const nombreFoto = await guardarFoto(foto);
         fotos.push(nombreFoto);
@@ -107,4 +104,5 @@ async function añadirExperiencia(req, res, next) {
     next(error);
   }
 }
+
 module.exports = añadirExperiencia;
