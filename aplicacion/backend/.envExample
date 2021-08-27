@@ -11,9 +11,6 @@ DB_USER=
 DB_PASSWORD=
 DB_DATABASE=
 
-#Si el valor de RESET_DB es true las tablas definidas en el código se eliminaran si existen y se crearán de nuevo para ser rellenadas con datos generados por el módulo Faker. Si el valor en cambio es false las tablas sólo se crearán si no existen y nunca serán rellenadas con datos generados programáticamente.
-RESET_DB=
-
 #Contraseña admin
 ADMIN_NAME=
 ADMIN_EMAIL=
