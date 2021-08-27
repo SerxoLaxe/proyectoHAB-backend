@@ -18,6 +18,7 @@ const tablaExperiencias = {
     columnas:
         `
         (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        fecha_insert DATETIME NOT NULL,
         nombre VARCHAR(100) NOT NULL,
         descripcion TEXT NOT NULL,
         fecha_inicial DATE NOT NULL,
