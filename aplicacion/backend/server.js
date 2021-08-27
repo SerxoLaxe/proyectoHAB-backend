@@ -7,7 +7,7 @@ const chalk = require('chalk');    //Módulo para editar formato y estilo de log
 const helpers = require('./helpers');    //Helpers, incluye generador de codigos de validacion, formateo de fechas, customización de errores...
 const express = require('express');    //Módulo para la creación de servidor http.
 const app = express(); //definición de aplicación Express.
-require('./DB/initDB').config(); //Reset y configuración de la base de datos con datos creados por módulo Faker.
+require('./DB/initDB').config(RESET_DB); //Reset y configuración de la base de datos con datos creados por módulo Faker.
 
 /* IMPORT DE CONTROLLERS */
 const experiencia = require('./controllers/experiencias/index');    //Import de controladores experiencias
