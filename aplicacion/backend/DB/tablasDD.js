@@ -1,8 +1,9 @@
 /** Tabla de experiencias_fotos */
 
 const tablaExperiencias_fotos = {
-  nombre: "experiencias_fotos",
-  query: `CREATE TABLE experiencias_fotos
+  nombre: 'experiencias_fotos',
+  columnas: 
+        `
         (id INT PRIMARY KEY AUTO_INCREMENT,
         fecha_foto DATETIME NOT NULL,
         foto VARCHAR(64),
@@ -13,24 +14,30 @@ const tablaExperiencias_fotos = {
 
 /** Tabla de experiencias */
 const tablaExperiencias = {
-  nombre: "experiencias",
-  query: `CREATE TABLE experiencias
-        (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-        fecha_insert DATETIME NOT NULL, 
-        nombre VARCHAR(100) NOT NULL, 
-        descripcion TEXT NOT NULL, 
-        fecha_inicial DATE NOT NULL, 
-        fecha_final DATE NOT NULL, 
-        rating INT, precio FLOAT NOT NULL, 
-        ubicacion VARCHAR(200) NOT NULL, 
-        plazas_totales INT NOT NULL)
-    `,
+  
+    nombre: 'experiencias',
+    columnas:
+        `
+        (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        nombre VARCHAR(100) NOT NULL,
+        descripcion TEXT NOT NULL,
+        fecha_inicial DATE NOT NULL,
+        fecha_final DATE NOT NULL,
+        rating INT,
+        precio FLOAT NOT NULL,
+        ubicacion VARCHAR(200) NOT NULL,
+        plazas_totales INT NOT NULL
+        )
+    `
 };
+
 
 /** Tabla de Usuarios */
 const tablaUsuarios = {
-  nombre: "usuarios",
-  query: `CREATE TABLE usuarios 
+  
+    nombre: 'usuarios',
+    columnas:
+        ` 
         ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(200),
         biografia TEXT,
@@ -44,4 +51,6 @@ const tablaUsuarios = {
     `,
 };
 
+
 module.exports = { tablaExperiencias, tablaUsuarios, tablaExperiencias_fotos };
+
