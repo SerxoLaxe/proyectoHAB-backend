@@ -168,6 +168,6 @@ async function config() {
 
     }
   }
-}
+
 
 module.exports = { config };
