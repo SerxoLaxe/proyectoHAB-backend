@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { joiConfig } = require('../config');
 
 const añadirExperienciaSchema = Joi.object().keys({
 
@@ -6,8 +7,8 @@ const añadirExperienciaSchema = Joi.object().keys({
         nombre: Joi.string().required().error(
             new Error('El nombre es obligatorio.')
         ),
-        descripcion: Joi.string().required().max(1000).error(
-            new Error('La descripción es obligatoria y debe tener menos de mil carácteres de extensión.')
+        descripcion: Joi.string().required().max(joiConfig.schemaExperiencias.charsDescripcion).error(
+            new Error(`La descripción es obligatoria y debe tener menos de ${joiConfig.schemaExperiencias.charsDescripcion} carácteres de extensión.`)
         ),
         fecha_inicial: Joi.string().required().isoDate().error(
             new Error('La fecha de inicio es obligatoria y debe tener formato AAAA/MM/DD.')
@@ -25,8 +26,8 @@ const añadirExperienciaSchema = Joi.object().keys({
             new Error('Las plazas totales son obligatorias.')
         ),
     }),
-    files: Joi.object().required().max(4).error(
-        new Error('Sólo se permite un máximo de 4 imágenes por experiencia.')
+    files: Joi.object().required().max(joiConfig.schemaExperiencias.maxImagenes).error(
+        new Error(`Sólo se permite un máximo de ${joiConfig.schemaExperiencias.maxImagenes} imágenes por experiencia.`)
     ).pattern(
         Joi.string(),
         Joi.object().keys({
