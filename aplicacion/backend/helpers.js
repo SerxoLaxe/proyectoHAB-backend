@@ -7,11 +7,10 @@ const sharp = require("sharp");
 const uuid = require("uuid");
 
 /**
- * 
- * @returns {string}
+ * Esta función guarda imagenes en el directorio determinado por la variable de entorno UPLOAD_DIRECTORY.
+ * @param {Object} foto - Objeto imagen de Sharp.
+ * @returns {string} - Nombre de la imagen.
  */
-
-
 async function guardarFoto(foto) {
     const { UPLOAD_DIRECTORY } = process.env;
     const recursosDir = path.join(__dirname, UPLOAD_DIRECTORY);
