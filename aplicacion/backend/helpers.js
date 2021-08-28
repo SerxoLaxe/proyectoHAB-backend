@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const crypto = require('crypto');
 const format = require('date-fns').format;
-const {ensureDir} = require("fs-extra");
+const { ensureDir } = require("fs-extra");
 const path = require("path");
 const sharp = require("sharp");
 const uuid = require("uuid");
@@ -10,14 +10,12 @@ const uuid = require("uuid");
  * 
  * @returns {string}
  */
-const {UPLOAD_DIRECTORY} = process.env;
 
-const recursosDir = path.join(__dirname, UPLOAD_DIRECTORY);
 
 async function guardarFoto(foto) {
-    //compruebo si hay en el directorio de recursos y sino lo creo 
-    //y lo defino en las variables de entorno
-    await ensureDir(recursosDir);
+    const { UPLOAD_DIRECTORY } = process.env;
+    const recursosDir = path.join(__dirname, UPLOAD_DIRECTORY);
+    await ensureDir(recursosDir);                               //compruebo si hay en el directorio de recursos y sino lo creo 
     const imagen = sharp(foto.data);                            //leo el buffer (foto.data) con sharp
     imagen.resize(600);                                         //controlo el tamaño
     const nombreImagen = `${uuid.v4()}.jpg`;                    //genero un nombre para la foto con uuid sin controlar el formato
