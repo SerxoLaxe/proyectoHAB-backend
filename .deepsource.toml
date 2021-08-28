@@ -1,0 +1,18 @@
+version = 1
+
+exclude_patterns = ["documentacion/"]
+
+[[analyzers]]
+name = "test-coverage"
+enabled = true
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+  [analyzers.meta]
+  plugins = ["react"]
+
+[[analyzers]]
+name = "secrets"
+enabled = true
