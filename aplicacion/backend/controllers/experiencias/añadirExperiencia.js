@@ -1,8 +1,9 @@
 const conexionMysql = require("../../DB/conexionMysql");
-const { formatearDateMysql, guardarFoto } = require("../../helpers");
+const { formatearDateMysql, validate, guardarImagenesExperiencia } = require("../../helpers");
+const { añadirExperienciaSchema } = require('../../schemas')
 
 /**
- * Añade una experiencia a la tabla de experiencias ❌
+ * Añade una experiencia a la tabla de experiencias 👍
  *
  * @param {any} req
  * @param {any} res
@@ -12,14 +13,14 @@ async function añadirExperiencia(req, res, next) {
 
     let conexion;
     try {
-        conexion = await conexionMysql();
-        const now = formatearDateMysql(new Date());
-        const data = await procesarBody(req, conexion, now);
-        await procesarImagenes(req.files, conexion, now, data.idExperiencia);
+        await validate(añadirExperienciaSchema, req);                   //Validamos la petición mediante Joi.
+        conexion = await conexionMysql();                               //Creamos una conexión a la BD.
+        const idExperiencia = await procesarBody(req, conexion);        //Procesamos los parámetros del body.
+        await procesarImagenes(req.files, conexion, idExperiencia);     //Procesamos las imágenes.
         res.statusCode = 200;
         res.send({
             status: "Ok",
-            data
+            message: `Experiencia ${idExperiencia} guardada correctamente`,
         });
     } catch (error) {
         next(error);
@@ -30,9 +31,10 @@ async function añadirExperiencia(req, res, next) {
     }
 }
 
-async function procesarBody(req, conexion, now) {
-    //saco los datos del body.
-    const {
+async function procesarBody(req, conexion) {
+
+    const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
+    const {                                         //saco los datos del body.
         nombre,
         descripcion,
         fecha_inicial,
@@ -41,34 +43,7 @@ async function procesarBody(req, conexion, now) {
         ubicacion,
         plazas_totales,
     } = req.body;
-
-    //comprobamos si faltan campos por rellenar
-    if (
-        !nombre ||
-        !descripcion ||
-        !fecha_inicial ||
-        !fecha_final ||
-        !precio ||
-        !ubicacion ||
-        !plazas_totales
-    ) {
-        const error = new Error("Faltan campos obligatorios");
-        error.httpStatus = 400;
-        throw error;
-    }
-
-    //comprobamos si no hay imágenes
-    if (
-        !req.files ||
-        Object.keys(req.files).length === 0
-    ) {
-        const error = new Error("Faltan imágenes obligatorias");
-        error.httpStatus = 400;
-        throw error;
-    }
-
-    // hacemos la INSERT en el DB
-    const [result] = await conexion.query(
+    const [result] = await conexion.query(          // hacemos la INSERT en el DB
         `
         INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, precio, ubicacion, plazas_totales)
         VALUES (?,?,?,?,?,?,?,?)
@@ -84,40 +59,23 @@ async function procesarBody(req, conexion, now) {
             plazas_totales,
         ]
     );
-    //Creamos un objeto data con toda la información necesaria para el resto de funciones.
-    const data = {
-        now,
-        nombre,
-        descripcion,
-        fecha_inicial,
-        fecha_final,
-        precio,
-        ubicacion,
-        plazas_totales,
-        idExperiencia: result.insertId,
-    };
-
-    return data;
+    return result.insertId;
 }
 
-async function procesarImagenes(files, conexion, now, idExperiencia) {
+async function procesarImagenes(files, conexion, idExperiencia) {
     //proceso las fotos
+    const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
     const fotos = [];
-    if (files && Object.keys(files).length > 0) {
-        for (const foto of Object.values(files).slice(0, 4)) {
-            //creo en helpers una funcion que me guarda las fotos
-            const nombreFoto = await guardarFoto(foto);
-            fotos.push(nombreFoto);
-
-            //las inserto en el DB
-            await conexion.query(
-                `
-                INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
-                VALUES (?,?,?)
-                `,
-                [now, nombreFoto, idExperiencia]
-            );
-        }
+    for (const foto of Object.values(files).slice(0, 4)) {
+        const nombreFoto = await guardarImagenesExperiencia(foto);
+        fotos.push(nombreFoto);
+        await conexion.query(       //las inserto en el DB
+            `
+            INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
+            VALUES (?,?,?)
+            `,
+            [now, nombreFoto, idExperiencia]
+        );
     }
 }
 
