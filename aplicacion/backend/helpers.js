@@ -18,21 +18,11 @@ async function guardarFoto(foto) {
     //compruebo si hay en el directorio de recursos y sino lo creo 
     //y lo defino en las variables de entorno
     await ensureDir(recursosDir);
-
-    //leo el buffer (foto.data) con sharp
-    const imagen = sharp(foto.data);
-
-    //controlo el tamaño
-    imagen.resize(600);
-
-    //genero un nombre para la foto con uuid sin controlar el formato
-    const nombreImagen = `${uuid.v4()}.jpg`;
-
-    //guardo la imagen en mi directorio de recursos 
-    await imagen.toFile(path.join(recursosDir, nombreImagen));
-
-    //devuelvo el nombre de la foto
-    return nombreImagen;
+    const imagen = sharp(foto.data);                            //leo el buffer (foto.data) con sharp
+    imagen.resize(600);                                         //controlo el tamaño
+    const nombreImagen = `${uuid.v4()}.jpg`;                    //genero un nombre para la foto con uuid sin controlar el formato
+    await imagen.toFile(path.join(recursosDir, nombreImagen));  //guardo la imagen en mi directorio de recursos 
+    return nombreImagen;                                         //devuelvo el nombre de la foto
 }
 
 /**
