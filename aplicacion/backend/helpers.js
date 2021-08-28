@@ -11,7 +11,7 @@ const uuid = require("uuid");
  * @param {Object} foto - Objeto imagen de Sharp.
  * @returns {string} - Nombre de la imagen.
  */
-async function guardarFoto(foto) {
+async function guardarImagenesExperiencia(foto) {
     const { UPLOAD_DIRECTORY } = process.env;
     const recursosDir = path.join(__dirname, UPLOAD_DIRECTORY);
     await ensureDir(recursosDir);                               //compruebo si hay en el directorio de recursos y sino lo creo 
@@ -39,7 +39,7 @@ function log(message) {
 }
 
 /**
- * Formatea y estiliza mensajes de error.
+ * Formatea y estiliza mensajes de error. Si la variable de entorno VERBOSE es true, muestra el stacktrace, de lo contrario sólo muestra el mensaje de error.
  * @param {Object} error 
  */
 function logError(error) {
@@ -75,4 +75,4 @@ async function validate(schema, data) {
 }
 
 
-module.exports = { validate, guardarFoto, generateRandomString, log, logError, formatearDateMysql }
+module.exports = { validate, guardarImagenesExperiencia, generateRandomString, log, logError, formatearDateMysql }
