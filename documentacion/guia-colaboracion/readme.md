@@ -3,8 +3,6 @@
 Primero de todo hay que tener claro qué es Github y ,aún más importante, saber qué es git.
 Después de llevar ya unos meses usando git y otras plataformas basadas en su uso, como son gitlab o github, quizás uno se pueda formar una intuición de cúal es su cometido y relevancia actual. Pero para acceder al uso de funcionalidades más avanzadas que realizar commits cuando cuadra creo que biene muy bien saber por qué y para qué existen git y sus plataformas web más relevantes.
 
-Si quieres saltarte la introducción [estos son los pasos uno a uno para colaborar en este proyecto](#Vale,-pero-qué-tengo-que-hacer-_EXACTAMENTE_-?-😠)
-
 ## Qué es Git ? 🤔
 
 Git es un software de control de versiones desarrollado por Linus Torvalds y sirve para desarrollar software de manera ordenada y colaborativa. Git permite registrar los cambios que hacemos a nuestro código y documentar cada uno de los pasos que tomamos, también permite deshacer cambios, añadir los realizados por otros y estructurar nuestro trabajo en diferentes ramas, que facilitan crear y mantener software.
@@ -18,6 +16,7 @@ Git es una herramienta local, es decir, que está almacenada en nuestro ordenado
 Github es una plataforma web de compartición de repositorios Git. Es una especie de red social de desarrolladores, donde estos pueden almacenar y compartir su código abierto a la vista y alcance del resto de desarrolladores. En Git es posible colaborar en proyectos ajenos usando las funcionalidades que ofrece git, pero impulsadas por las posibilidades que ofrece github con su presencia en la nube.
 
 ***
+
 ## Muy bien, pero qué hago para colaborar en el proyecto? 💢
 
 Sólo hay que seguir unos pocos pasos y comprender unos pocos conceptos. Lo primero es entender que no existe una única manera de colaborar y crear en Github. Existen múltiples flujos de desarrollo, llamados workflows, y cada uno tiene sus pros y sus contras. El más universal es el **gitFlow**, que consiste en una serie de prácticas.
@@ -30,7 +29,7 @@ La rama master debe ser ramificada nada más comenzar el desarrollo creando la r
 
 ## Vale, pero qué tengo que hacer _EXACTAMENTE_ ? 😠
 
-#### 1. Forkear el repositorio
+### 1. Forkear el repositorio
 
 Lo primero es realizar un fork del repositorio en el que piensas colaborar, en este caso sería visitando [el repositorio del proyecto final](https://github.com/SerxoLaxe/proyectoHAB) y clicando en el botón de fork.
 
@@ -41,7 +40,9 @@ En la siguiente imagen se puede ver un ejemplo de un fork realizado por mí del 
 
 ![fork](./img/fork.png)
 
-#### 2. Clonar el repositorio
+***
+
+### 2. Clonar el repositorio
 
 Ahora para poder realizar cambios en este repositorio debemos crear una copia localmente, es decir, descargar el repositorio en nuestro PC y empezar a trabajar en él. Para esto hay que copiar la dirección de nuestro fork e introducirla en el terminal local de git usando el comando git clone. Para esto primero clicamos sobre el botón de code (1) seguido del botón de copiar dirección https (2)
 
@@ -58,7 +59,9 @@ Con este comando ya tendremos una copia local del fork en nuestro PC. En la sigu
 
 ![resultado-clonar](./img/resultadoClonar.png)
 
-#### 3. Configurar el remoto upstream
+***
+
+### 3. Configurar el remoto upstream
 
 Una vez clonado el fork debemos añadir a la lista de remotos el upstream, que es el repositorio original que hemos copiado y del que debemos depender a la hora de actualizar el propio. Cada vez que nos pongamos a trabajar en un fork debemos actualizarlo según los cambios que acontecen en el original. Sería muy poco práctico ponerse a trabajar en una funcionalidad para luego descubrir que ya estaba realizada por otro compañero, o que es incompatible con la versión de desarrollo actual. Por esto es importante añadir el remoto upstream y acostumbrarse a realizar un pull de este y un push a nuestro fork hospedado en Github al comenzar cada sesión de trabajo.
 
@@ -82,7 +85,9 @@ Si volvemos a listar los remotos del repositorio como hicimos anteriormente ahor
 
 Con esto ya tenemos configurado el remoto **upstream**.
 
-#### 4. Realizar un fetch del remoto upstream
+***
+
+### 4. Realizar un fetch del remoto upstream
 
 Ahora toca actualizar nuestro repositorio local tomando de referencia el remoto **upstream**, que se realiza mediante el comando:
 
@@ -91,9 +96,9 @@ git fetch upstream
 ```
 ![fetch](./img/fetch.png)
 
-Con esto tendremos nuestro repositorio local actualizado con metadata del repositorio original. Como se ve en la imagen ahora sabemos que el repositorio original cuenta con dos ramas: master y develop. Como vamos a seguir el workflow Gitflow debemos centrarnos en esta última. Es posible que además de estas dos ramas existan otras más dedicadas al desarrollo de características.
-
-#### 5. Actualizar el repositorio local tomando de referencia las ramas de upstream
+Con esto tendremos nuestro repositorio local actualizado con metadata del repositorio original. Como se ve en la imagen ahora sabemos que el repositorio original cuenta con dos ramas: **master** y **develop**. Como vamos a seguir el workflow Gitflow debemos centrarnos en esta última. Es posible que además de estas dos ramas existan otras más dedicadas al desarrollo de características.
+***
+### 5. Actualizar el repositorio local tomando de referencia las ramas de upstream
 
 Para listar todas las ramas disponibles del repositorio original, del fork y del local debemos usar el comando:
 
@@ -111,7 +116,7 @@ git branch develop upstream/develop
 
 ![develop](./img/develop.png)
 
-Ahora nuestra rama local develop hace seguimiento de la rama develop del repositorio upstream donde están subiendo código nuestros compañeros. Para mantenernos actualizados debemos realizar un pull de esta rama cada vez que comenzamos a trabajar en una nueva característica, para esto usamos:
+Ahora nuestra rama local develop hace seguimiento de la rama **develop** del repositorio upstream donde están subiendo código nuestros compañeros. Para mantenernos actualizados debemos realizar un pull de esta rama cada vez que comenzamos a trabajar en una nueva característica, para esto usamos:
 
 ```sh
 git pull upstream develop
@@ -120,9 +125,11 @@ git pull upstream develop
 
 En este caso no hay nada que actualizar porque no hubo cambios en el repositorio upstream.
 
-En el repositorio que estamos usando de ejemplo ( EquipoA de RoberMontero ) no existen más ramas que master y develop, pero podría ser que hubiera otras reservadas al desarrollo en curso de alguna característica. Para colaborar en el desarrollo de esa característica debemos realizar los pasos anteriores cambiando develop por el nombre de la rama pertinente, y comenzar a trabajar en ella directamente, omitiendo la siguiente sección de esta guía.
+En el repositorio que estamos usando de ejemplo ( EquipoA de RoberMontero ) no existen más ramas que **master** y **develop**, pero podría ser que hubiera otras reservadas al desarrollo en curso de alguna característica. Para colaborar en el desarrollo de esa característica debemos realizar los pasos anteriores cambiando develop por el nombre de la rama pertinente, y comenzar a trabajar en ella directamente, omitiendo la siguiente sección de esta guía.
 
-#### 6 - Comenzar a desarrollar una característica nueva
+***
+
+### 6 - Comenzar a desarrollar una característica nueva
 
 Para esto debemos crear una rama partiendo de develop. En ella realizaremos todas las ediciones y eliminaciones de código que queramos. Para esto debemos primero situarnos en la rama develop:
 
@@ -131,7 +138,7 @@ git branch
 ```
 ![branch-list](./img/branchList.png)
 
-Estamos situados en **master**, debemos cambiar a develop para ramificar este último.
+Estamos situados en **master**, debemos cambiar a **develop** para ramificar este último.
 
 ```sh
 git checkout develop
@@ -154,7 +161,9 @@ git checkout nuestra-propia-rama
 
 Y con esto ya podríamos comenzar a trabajar en ella y realizar commits, **por fín!** 🎉 🎉 🎉 
 
-#### 7 - Realizar cambios en nuestra rama de desarrollo de característica
+***
+
+### 7 - Realizar cambios en nuestra rama de desarrollo de característica
 
 Una vez dentro de nuestra propia rama de desarrollo podemos abrir VScode y comenzar a realizar cambios.
 
@@ -172,7 +181,9 @@ Es **MUY** importante hacer el mayor número de commits posible de pequeña exte
 
 Una vez estés contento con tu trabajo sólo queda subirlo a tu fork y realizar un pull request en el repositorio upstream, donde tus compañeros revisarán lo que hiciste y decidirán si se añade al proyecto o si antes es necesario hacer modificaciones.
 
-#### 8. Subir la rama de desarrollo de característica a nuestro fork
+***
+
+### 8. Subir la rama de desarrollo de característica a nuestro fork
 
 Esto se realiza mediante el comando:
 
@@ -181,7 +192,9 @@ git push origin nuestra-propia-rama
 ```
 ![push](./img/push.png)
 
-#### 9. Crear un pull request de nuestro fork en el repositorio upstream
+***
+
+### 9. Crear un pull request de nuestro fork en el repositorio upstream
 
 Llegó el momento de la verdad. Vamos a solicitar que nuestros cambios sean añadidos a la rama de desarrollo del repositorio upstream. Para esto debemos acceder a nuestro fork en Github, allí podremos ver cuantos commits va de adelantado nuestro fork en relación al repositorio que forkeamos.
 
@@ -202,7 +215,7 @@ Con esto sólo queda rellenar los campos del formulario del pull request. El tí
 
 Clicamos el botón Create pull request y listo, **finalizamos el proceso!** 🎉🎉🎉
 
-Sólo queda esperar que nuestros compañeros nos den el visto buenoy que el dueño del repositorio ( en el caso del ejemplo, Robber) valide nuestros cambios y los incluya al repositorio.
+Sólo queda esperar que nuestros compañeros nos den el visto bueno y que el dueño del repositorio ( en el caso del ejemplo, Robber) valide nuestros cambios y los incluya al repositorio.
 
 
 
