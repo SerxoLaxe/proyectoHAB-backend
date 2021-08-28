@@ -37,7 +37,6 @@ async function procesarBody(req, conexion, now) {
         descripcion,
         fecha_inicial,
         fecha_final,
-        rating,
         precio,
         ubicacion,
         plazas_totales,
@@ -71,8 +70,8 @@ async function procesarBody(req, conexion, now) {
     // hacemos la INSERT en el DB
     const [result] = await conexion.query(
         `
-        INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, rating, precio, ubicacion, plazas_totales)
-        VALUES (?,?,?,?,?,?,?,?,?)
+        INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, precio, ubicacion, plazas_totales)
+        VALUES (?,?,?,?,?,?,?,?)
         `,
         [
             now,
@@ -80,7 +79,6 @@ async function procesarBody(req, conexion, now) {
             descripcion,
             fecha_inicial,
             fecha_final,
-            rating,
             precio,
             ubicacion,
             plazas_totales,
@@ -93,7 +91,6 @@ async function procesarBody(req, conexion, now) {
         descripcion,
         fecha_inicial,
         fecha_final,
-        rating,
         precio,
         ubicacion,
         plazas_totales,
