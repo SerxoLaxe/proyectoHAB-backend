@@ -60,4 +60,19 @@ function formatearDateMysql(dateObject) {
     return format(dateObject, "yyyy-MM-dd HH:mm:ss");
 }
 
-module.exports = { guardarFoto, generateRandomString, log, logError, formatearDateMysql }
+/**
+ * Valida los datos introducidos en el body o query de las peticiones.
+ * @param {Object} schema - Esquema de requisitos a analizar
+ * @param {Object} data - Objeto que posee los datos a validar
+ */
+async function validate(schema, data) {
+    try {
+        await schema.validateAsync(data);
+    } catch (error) {
+        error.httpStatus = 400;
+        throw error;
+    }
+}
+
+
+module.exports = { validate, guardarFoto, generateRandomString, log, logError, formatearDateMysql }
