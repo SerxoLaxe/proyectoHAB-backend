@@ -66,7 +66,7 @@ async function procesarImagenes(files, conexion, idExperiencia) {
     //proceso las fotos
     const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
     const fotos = [];
-    for (const foto of Object.values(files).slice(0, 4)) {
+    for (const foto of Object.values(files)) {
         const nombreFoto = await guardarImagenesExperiencia(foto);
         fotos.push(nombreFoto);
         await conexion.query(       //las inserto en el DB
