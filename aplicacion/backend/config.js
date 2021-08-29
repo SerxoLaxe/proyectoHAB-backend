@@ -23,7 +23,9 @@ const fakerConfig = {
         },
     }
 }
-
+/**
+ * Configuración de validaciones de peticiones mediante módulo Joi. Schemas situados en ./schemas/index.js
+ */
 const joiConfig = {
     schemaExperiencias: {
         charsDescripcion: 1000,
