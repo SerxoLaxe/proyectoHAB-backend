@@ -5,6 +5,11 @@ const { ensureDir } = require("fs-extra");
 const path = require("path");
 const sharp = require("sharp");
 const uuid = require("uuid");
+const sgMail = require('@sendgrid/mail');
+
+// Configuro sendgrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 
 /**
  * Esta función guarda imagenes en el directorio determinado por la variable de entorno UPLOAD_DIRECTORY.
@@ -74,5 +79,41 @@ async function validate(schema, data) {
     }
 }
 
+/**
+ *  Envia un email dede la dirección de correo estipulada en SENDGRID_FROM con los datos del objeto añadido como argumento.
+ * @param {String} param0.to - Destinatario del email.
+ * @param {String} param0.subject - Tema del email.
+ * @param {String} param0.body - Cuerpo del email.
+ */
+async function sendMail({ to, subject, body }) {
+    try {
+        // https://www.npmjs.com/package/sendgrid
+        const msg = {
+            to,
+            from: process.env.SENDGRID_FROM, //poner el mismo correo que pusimos en FROM de sendgrid
+            subject,
+            text: body,
+            html: `
+                    <div>
+                    <h1>${subject}</h1>
+                    <p>${body}</p>
+                    </div>
+                `,
+        };
+        await sgMail.send(msg);
+    } catch (error) {
+        throw new Error("Error enviando email");
+    }
+}
 
-module.exports = { validate, guardarImagenesExperiencia, generateRandomString, log, logError, formatearDateMysql }
+
+
+module.exports = {
+    validate,
+    guardarImagenesExperiencia,
+    generateRandomString,
+    log,
+    logError,
+    formatearDateMysql,
+    sendMail
+}
