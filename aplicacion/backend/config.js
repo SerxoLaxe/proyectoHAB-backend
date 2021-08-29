@@ -31,8 +31,12 @@ const joiConfig = {
         charsDescripcion: 1000, //Carácteres máximos de extensión de la descripción.
         maxImagenes: 4,         //Número máximo de imágenes por experiencia
         minImagenes: 1,         //Número mínimo de imágenes por experiencia
+    },
+    schemaUsuarios: {
+        minCharsContraseña: 10, //Número mínimo de carácteres de extensión para la contraseña
+        maxCharsContraseña: 20, //Número máximo de carácteres de extensión para la contraseña.
     }
-    
+
 }
 
-module.exports = {fakerConfig, joiConfig }
+module.exports = { fakerConfig, joiConfig }
