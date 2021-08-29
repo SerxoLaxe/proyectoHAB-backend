@@ -56,11 +56,11 @@ const registrarUsuarioSchema = Joi.object().keys({
             (value, helpers) => {
                 const regExDigitos = /\d/;
                 const regExCaracteres = /\D/;
-                if (regExDigitos.test(value) === true && regExCaracteres.test(value) === true ) {
+                if (regExDigitos.test(value) === true && regExCaracteres.test(value) === true) {
                     return value;
-                } else {
-                    return helpers.error('La contraseña debe incluir al menos un dígito y una letra');
                 }
+                return helpers.error('La contraseña debe incluir al menos un dígito y una letra');
+
             }
         )
         .error(
