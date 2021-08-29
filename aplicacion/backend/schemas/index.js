@@ -46,26 +46,27 @@ const añadirExperienciaSchema = Joi.object().keys({
  * Esquema de validación de la contraseña de la petición de registro de usuario.
  */
 const registrarUsuarioSchema = Joi.object().keys({
-    password: Joi
-        .string()
-        .required()
-        .alphanum()
-        .min(schemaUsuarios.minCharsContraseña)
-        .max(schemaUsuarios.maxCharsContraseña)
-        .custom(                                    //Esta función custom valida sólo las contraseñas que poseen al menos un dígito y una letra.
-            (value, helpers) => {
-                const regExDigitos = /\d/;
-                const regExCaracteres = /\D/;
-                if (regExDigitos.test(value) === true && regExCaracteres.test(value) === true) {
-                    return value;
-                }
-                return helpers.error('La contraseña debe incluir al menos un dígito y una letra');
+    password:
+        Joi.
+            string().
+            required().
+            alphanum().
+            min(schemaUsuarios.minCharsContraseña).
+            max(schemaUsuarios.maxCharsContraseña).
+            custom(                                    //Esta función custom valida sólo las contraseñas que poseen al menos un dígito y una letra.
+                (value, helpers) => {
+                    const regExDigitos = /\d/;
+                    const regExCaracteres = /\D/;
+                    if (regExDigitos.test(value) === true && regExCaracteres.test(value) === true) {
+                        return value;
+                    }
+                    return helpers.error('La contraseña debe incluir al menos un dígito y una letra');
 
-            }
-        )
-        .error(
-            new Error(`La contraseña debe ser alfanumérica, contener al menos un número y contar como mínimo con ${schemaUsuarios.minCharsContraseña} carácteres y como máximo con ${schemaUsuarios.maxCharsContraseña} carácteres.`)
-        ),
+                }
+            ).
+            error(
+                new Error(`La contraseña debe ser alfanumérica, contener al menos un número y contar como mínimo con ${schemaUsuarios.minCharsContraseña} carácteres y como máximo con ${schemaUsuarios.maxCharsContraseña} carácteres.`)
+            ),
     email: Joi.string().required().email().error(
         new Error('Introduce un email válido.')
     )
