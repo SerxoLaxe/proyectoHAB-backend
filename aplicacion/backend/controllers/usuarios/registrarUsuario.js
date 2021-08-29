@@ -16,7 +16,7 @@ async function registrarUsuario(req, res, next) {
         await existeUsuarioConEmail(email, conexion);                       //Comprobamos que el email no exista ya en la BD.
         const codigoRegistro = generateRandomString();                      //Genero un código de registro (ej: sbdhfbud809urut9304)
         await añadirUsuarioEnTabla(req.body, codigoRegistro, conexion);     //Añado el usuario a la tabla de usuarios.
-        await enviarEmail(email, codigoRegistro)                            //Envio un email con el enlace de validación.
+        enviarEmail(email, codigoRegistro)                            //Envio un email con el enlace de validación.
         res.statusCode = 200;
         res.send({
             status: 'Ok',
@@ -72,7 +72,7 @@ async function añadirUsuarioEnTabla(datos, codigoRegistro, conexion) {
  * @param {String} email - email destinatario
  * @param {String} codigoRegistro - codigo de validacion del usuario
  */
-async function enviarEmail(email, codigoRegistro) {
+function enviarEmail(email, codigoRegistro) {
     const emailBody =
         `
     Te acabas de registrar en Experiencias diferentes.
