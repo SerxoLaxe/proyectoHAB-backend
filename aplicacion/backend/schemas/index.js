@@ -26,8 +26,8 @@ const añadirExperienciaSchema = Joi.object().keys({
             new Error('Las plazas totales son obligatorias y debe ser de valor positivo.')
         ),
     }),
-    files: Joi.object().required().max(joiConfig.schemaExperiencias.maxImagenes).error(
-        new Error(`Es obligatorio incluir al menos una imagen y sólo se permite un máximo de ${joiConfig.schemaExperiencias.maxImagenes} imágenes por experiencia.`)
+    files: Joi.object().required().min(joiConfig.schemaExperiencias.minImagenes).max(joiConfig.schemaExperiencias.maxImagenes).error(
+        new Error(`Sólo se permite un mínimo de ${joiConfig.schemaExperiencias.minImagenes} y un máximo de ${joiConfig.schemaExperiencias.maxImagenes} imágenes por experiencia.`)
     ).pattern(
         Joi.string(),
         Joi.object().keys({
