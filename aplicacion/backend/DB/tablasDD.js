@@ -45,7 +45,7 @@ const tablaUsuarios = {
         contraseña VARCHAR(512) NOT NULL,
         privilegios ENUM("admin","normal") DEFAULT "normal" NOT NULL,
         avatar VARCHAR(500),
-        fecha DATE NOT NULL,
+        fecha DATETIME NOT NULL,
         codigo_validacion VARCHAR(100))
     `,
 };
