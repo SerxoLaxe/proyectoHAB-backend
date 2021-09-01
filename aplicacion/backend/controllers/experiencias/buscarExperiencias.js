@@ -50,10 +50,10 @@ function construirQueryString(params) {
     const queryBase = `SELECT * FROM experiencias WHERE`;
 
     //Array en el que se irán añadiendo todas las condiciones
-    let queryArray = [];
+    const queryArray = [];
 
     //Cuando el parámetro está definido se añade al queryArray el string que define la condición relativa al parámetro.
-    if (texto !== undefined && texto.length !== 0) {
+    if (typeof texto !== 'undefined' && texto.length !== 0) {
         queryArray.push(
             `CONCAT(
             experiencias.nombre, 
@@ -62,25 +62,25 @@ function construirQueryString(params) {
             LIKE '%${texto}%'`);
     }
 
-    if (precioMinimo !== undefined && precioMinimo > 0) {
+    if (typeof precioMinimo !== 'undefined' && precioMinimo > 0) {
         queryArray.push(`experiencias.precio >= ${precioMinimo}`);
     }
 
-    if (precioMaximo !== undefined && precioMaximo > 0) {
+    if (typeof precioMaximo !== 'undefined' && precioMaximo > 0) {
         queryArray.push(`experiencias.precio <= ${precioMaximo}`);
     }
 
-    if (fechaInicial !== undefined) {
+    if (typeof fechaInicial !== 'undefined') {
         queryArray.push(`experiencias.fecha_inicial >= '${fechaInicial}'`);
     }
 
-    if (fechaFinal !== undefined) {
+    if (typeof fechaFinal !== 'undefined') {
         queryArray.push(`experiencias.fecha_final <= '${fechaFinal}'`);
     }
 
     // Concatenamos la parte invariable de la string (queryBase) junto con el array de condicionales, que es unido con el string ' AND '.
     // Pseudo resultado: 'SELECT * FROM EXPERIENCIAS WHERE' + 'columnaA = parámetroA' + ' AND ' + 'columnaB = parámetroB'.
-    const queryString = queryBase + ' ' + queryArray.join(' AND ');
+    const queryString = `${queryBase} ${queryArray.join(' AND ')}`;
     return queryString;
 }
 
