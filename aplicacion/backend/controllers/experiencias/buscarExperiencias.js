@@ -3,7 +3,7 @@ const { buscarExperienciaSchema } = require('../../schemas/index');
 const { validate } = require('../../helpers');
 
 /**
- * buscarExperiencias() toma los parámetros definidos en la query ylos usa para buscar coincidencias en la tabla experiencias.❌ 
+ * buscarExperiencias() toma los parámetros definidos en la query ylos usa para buscar coincidencias en la tabla experiencias. 👍 
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 

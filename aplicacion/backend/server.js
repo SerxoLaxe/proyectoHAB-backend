@@ -27,7 +27,7 @@ const mWare = require('./middlewares/index') //Middlewares propios.
 ///////////////////////////////////* ENDPOINTS *////////////////////////////////////////
 
 /* EXPERIENCIA */
-app.get('/experiencias/search', experiencia.buscar);                         //GET experiencias mediante búsqueda y filtrado opcional mediante rango de fechas y precios. ❌
+app.get('/experiencias/search', experiencia.buscar);                         //GET experiencias mediante búsqueda y filtrado opcional mediante rango de fechas y precios. 👍
 app.get('/experiencias/:id', mWare.existe, experiencia.id);                              //GET Selecciona experiencia mediante id.  👍 
 app.post('/experiencias', experiencia.añadir);                              //POST Añade nueva experiencia ( Sólo administrador ) 👍 
 app.put('/experiencias/:id', mWare.existe, experiencia.editar);                           //PUT Editar experiencia.  ( Sólo administrador )❌
