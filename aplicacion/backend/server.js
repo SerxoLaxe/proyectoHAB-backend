@@ -45,7 +45,7 @@ app.get('/usuarios/validar/:codigo', usuario.validar);                      //PO
 app.put('/usuarios/:id', mWare.existe, usuario.editar);                                  //PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
 app.delete('/usuarios/:id', mWare.existe, usuario.eliminar);                              //DELETE usuario, elimina un usuario. (Sólo administrador)👍
 app.post('/usuarios/login', usuario.login);                                 //GET login de usuario. 
-app.put('/usuarios/:id/contraseña', mWare.existe, usuario.cambiarContraseña)              //PUT Cambia la contraseña ❌
+app.put('/usuarios/:id/:password', mWare.existe, usuario.cambiarContraseña)              //PUT Cambia la contraseña ❌
 
 
 /* RESERVADOS A DESARROLLO */
