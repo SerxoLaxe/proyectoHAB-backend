@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 
 });
 
-let variableInutil;
+const variableInutil;
 
 /* Iniciar escucha del servidor. */
 app.listen(PORT, HOST, () => {
