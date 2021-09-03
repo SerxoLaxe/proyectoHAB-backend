@@ -1,7 +1,7 @@
 const conexionMysql = require('../../DB/conexionMysql');
 const jwt = require('jsonwebtoken');
 const { validate } = require('../../helpers');
-const { loginSchema } = require('../../schemas');
+const { loginRegistroSchema } = require('../../schemas');
 /**
  * Esta función logea a los usuarios con credenciales correctas respondiendo con un JWT. ❌
  * @param {*} req 
@@ -11,7 +11,7 @@ const { loginSchema } = require('../../schemas');
 async function loginUsuario(req, res, next) {
     let conexion;
     try {
-        await validate(loginSchema, req.body);
+        await validate(loginRegistroSchema, req.body);
         const { email, contraseña } = req.body;
         conexion = await conexionMysql();
         const [usuario] = await conexion.query(
