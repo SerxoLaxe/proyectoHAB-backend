@@ -72,6 +72,9 @@ app.use((req, res, next) => {
 });
 
 const variableInutil;
+if (variableInutil === undefined){
+    console.log('error');
+}
 
 /* Iniciar escucha del servidor. */
 app.listen(PORT, HOST, () => {
