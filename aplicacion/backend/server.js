@@ -27,16 +27,15 @@ const mWare = require('./middlewares/index') //Middlewares propios.
 ///////////////////////////////////* ENDPOINTS *////////////////////////////////////////
 
 /* EXPERIENCIA */
-app.get('/experiencias/search', experiencia.buscar);                                        //GET experiencias mediante búsqueda y filtrado opcional mediante rango de fechas y precios. ❌
-app.get('/experiencias/:id', mWare.existe, experiencia.id);                                 //GET Selecciona experiencia mediante id.  👍 
-app.post('/experiencias', experiencia.añadir);                                              //POST Añade nueva experiencia ( Sólo administrador ) 👍 
-app.put('/experiencias/:id', mWare.existe, experiencia.editar);                             //PUT Editar experiencia.  ( Sólo administrador )❌
-app.delete('/experiencias/:id', mWare.existe, experiencia.eliminar);                        //DELETE Elimina experiencia.  ( Sólo administrador )❌
-app.post('/experiecias/puntuar', mWare.existe, experiencia.puntuar);                        //POST Puntua experiencia ( sólo cuando está finalizada y el usuario ha participado).❌
-app.post('/experiencias/:id/imagen/:id', mWare.existe, experiencia.añadirImagen);           //POST Añade imagen a experiencia.( Sólo administrador) ❌
-app.delete('/experiencias/:id/imagen/:id', mWare.existe, experiencia.eliminarImagen);       //DELETE Elimina imagen de experiencia (Sólo administrador) ❌
 
-
+app.get('/experiencias/search', experiencia.buscar);                         //GET experiencias mediante búsqueda y filtrado opcional mediante rango de fechas y precios. 👍
+app.get('/experiencias/:id', mWare.existe, experiencia.id);                              //GET Selecciona experiencia mediante id.  👍 
+app.post('/experiencias', experiencia.añadir);                              //POST Añade nueva experiencia ( Sólo administrador ) 👍 
+app.put('/experiencias/:id', mWare.existe, experiencia.editar);                           //PUT Editar experiencia.  ( Sólo administrador )❌
+app.delete('/experiencias/:id', mWare.existe, experiencia.eliminar);                      //DELETE Elimina experiencia.  ( Sólo administrador )❌
+app.post('/experiecias/puntuar', mWare.existe, experiencia.puntuar);                      //POST Puntua experiencia ( sólo cuando está finalizada y el usuario ha participado).❌
+app.post('/experiencias/:id/imagen/:id', mWare.existe, experiencia.añadirImagen);         //POST Añade imagen a experiencia.( Sólo administrador) ❌
+app.delete('/experiencias/:id/imagen/:id', mWare.existe, experiencia.eliminarImagen);     //DELETE Elimina imagen de experiencia (Sólo administrador) ❌
 
 /* USUARIO */
 app.get('/usuarios/:id', mWare.existe, usuario.id);                                         //GET usuario, para acceso al perfil mediante ID.👍 
@@ -46,7 +45,6 @@ app.put('/usuarios/:id', mWare.existe, usuario.editar);                         
 app.delete('/usuarios/:id', mWare.existe, usuario.eliminar);                                //DELETE usuario, elimina un usuario. (Sólo administrador)👍
 app.post('/usuarios/login', usuario.login);                                                 //GET login de usuario. 
 app.put('/usuarios/:id/contraseña', mWare.existe, usuario.cambiarContraseña)                //PUT Cambia la contraseña ❌
-
 
 /* RESERVADOS A DESARROLLO */
 app.get('/experiencias', experiencia.listarTodas);                          //GET experiencias, para mostrar todas las experiencias ( sólo para desarrollo ). 👍
