@@ -71,6 +71,8 @@ app.use((req, res, next) => {
 
 });
 
+let variableInutil;
+
 /* Iniciar escucha del servidor. */
 app.listen(PORT, HOST, () => {
     console.log(chalk.yellow.bold(`Servidor escuchando en ${HOST}:${PORT}`));
