@@ -5,6 +5,7 @@ const path = require('path'); //Módulo para creación de rutas de directorios y
 const helpers = require('../helpers'); //Módulo que incluye los helpers globales.
 const tablas = require('./tablasDD'); // Módulo con los objetos que definen las tablas de la base de datos.
 const conexionMysql = require('./conexionMysql'); //Modulo para obtener conexión a MYSQL
+const {fakerConfig }= require('../config');
 
 /**
  * Esta función elimina las tablas definidas en módulo tablasDD de la base de datos si es que existen.
@@ -56,7 +57,7 @@ async function crearTablas(conexion) {
 async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
     for (let i = 0; i < numeroDeUsuarios; i++) {
         const nombre = faker.name.findName();
-        const biografia = faker.lorem.paragraph(2);
+        const biografia = faker.lorem.paragraph(fakerConfig.usuarios.parrafosBiografia);
         const email = faker.internet.email();
         const contraseña = faker.internet.password();
         const avatar = path.join(
@@ -91,14 +92,15 @@ async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
  * @param {Object} conexion
  */
 async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
+    const { experiencias } = fakerConfig;
     for (let i = 0; i < numeroDeExperiencias; i++) {
         const fecha_insert = helpers.formatearDateMysql(new Date());
         const nombre = faker.commerce.productName();
-        const descripcion = faker.lorem.paragraph(3);
-        const precio = lodash.random(20, 500);
+        const descripcion = faker.lorem.paragraph(experiencias.parrafosDescripcion);
+        const precio = lodash.random(experiencias.precio.minimo, experiencias.precio.maximo);
         const ubicacion = faker.address.city();
-        const rating = lodash.random(0, 5);
-        const plazasTotales = lodash.random(5, 45);
+        const rating = lodash.random(experiencias.rating.minimo, experiencias.rating.maximo);
+        const plazasTotales = lodash.random(experiencias.plazas.minimas, experiencias.plazas.maximas);
         const fechaInicial = helpers.formatearDateMysql(new Date());
         const fechaFinal = helpers.formatearDateMysql(new Date());
 
@@ -160,8 +162,8 @@ async function config() {
         if (RESET_DB === 'true') {      //Si la variable de entorno RESET_DB es true reseteamos la base de datos.
             await eliminarTablas(conexion);
             await crearTablas(conexion);
-            await llenarTablaUsuarios(10, conexion);
-            await llenarTablaExperiencias(10, conexion);
+            await llenarTablaUsuarios(fakerConfig.usuarios.cantidad, conexion);
+            await llenarTablaExperiencias(fakerConfig.experiencias.cantidad, conexion);
             await crearAdministrador(conexion);
         } else if (RESET_DB === 'false') {       //De lo contrario sólo creamos las tablas si no existen.
             await crearTablas(conexion);

@@ -20,7 +20,7 @@ const tablaExperiencias = {
         (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha_insert DATETIME NOT NULL,
         nombre VARCHAR(100) NOT NULL,
-        descripcion TEXT NOT NULL,
+        descripcion VARCHAR(8000) NOT NULL,
         fecha_inicial DATE NOT NULL,
         fecha_final DATE NOT NULL,
         rating INT,
@@ -45,7 +45,7 @@ const tablaUsuarios = {
         contraseña VARCHAR(512) NOT NULL,
         privilegios ENUM("admin","normal") DEFAULT "normal" NOT NULL,
         avatar VARCHAR(500),
-        fecha DATE NOT NULL,
+        fecha DATETIME NOT NULL,
         codigo_validacion VARCHAR(100))
     `,
 };
