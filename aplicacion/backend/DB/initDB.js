@@ -103,11 +103,12 @@ async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
         const plazasTotales = lodash.random(experiencias.plazas.minimas, experiencias.plazas.maximas);
         const fechaInicial = helpers.formatearDateMysql(new Date());
         const fechaFinal = helpers.formatearDateMysql(new Date());
+        const idAutor= 1;
 
         await conexion.query(
             `
-            INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final,rating,precio,ubicacion,plazas_totales)
-            VALUES(?,?,?,?,?,?,?,?,?)
+            INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final,rating,precio,ubicacion,plazas_totales, id_autor)
+            VALUES(?,?,?,?,?,?,?,?,?,?)
             `,
             [
                 fecha_insert,
@@ -119,6 +120,7 @@ async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
                 precio,
                 ubicacion,
                 plazasTotales,
+                idAutor,
             ]
         );
     }
