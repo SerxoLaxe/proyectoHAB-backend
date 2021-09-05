@@ -20,10 +20,13 @@ ADMIN_EMAIL=
 ADMIN_PASSWORD=
 
 #Configura el log de errores para mostrar el stack del error por completo.
-VERBOSE=false
+VERBOSE=true
 
 #Variables relativas a sendGrid
 PUBLIC_HOST=
 PUBLIC_PORT=
 SENDGRID_FROM=
 SENDGRID_API_KEY=
+
+#Clave secreta para JsonWebtoken
+SECRET=hashSecreto

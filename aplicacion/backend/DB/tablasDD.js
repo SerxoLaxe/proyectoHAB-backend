@@ -1,13 +1,25 @@
-/** Tabla de experiencias_fotos */
-const tablaExperiencias_fotos = {
-    nombre: 'experiencias_fotos',
+
+/** Tabla de Usuarios */
+const tablaUsuarios = {
+
+    nombre: 'usuarios',
     columnas:
-        `
-        (id INT PRIMARY KEY AUTO_INCREMENT,
-        fecha_foto DATETIME NOT NULL,
-        foto VARCHAR(64),
-        experiencia_id INT NOT NULL,
-        FOREIGN KEY (experiencia_id) REFERENCES experiencias(id))
+        ` 
+        (
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        nombre VARCHAR(200),
+        biografia TEXT,
+        activo BOOLEAN NOT NULL DEFAULT false,
+        email VARCHAR(200) UNIQUE NOT NULL,
+        contraseña VARCHAR(512) NOT NULL,
+        privilegios ENUM("admin","normal") DEFAULT "normal" NOT NULL,
+        avatar VARCHAR(500),
+        fecha DATETIME NOT NULL,
+        codigo_validacion VARCHAR(100),
+        eliminado BOOLEAN DEFAULT false,
+        ultimo_cambio_contraseña DATETIME,
+        codigo_recuperacion varchar(100)
+        )
     `,
 };
 
@@ -17,7 +29,8 @@ const tablaExperiencias = {
     nombre: 'experiencias',
     columnas:
         `
-        (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        (
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha_insert DATETIME NOT NULL,
         nombre VARCHAR(100) NOT NULL,
         descripcion VARCHAR(8000) NOT NULL,
@@ -26,29 +39,27 @@ const tablaExperiencias = {
         rating INT,
         precio FLOAT NOT NULL,
         ubicacion VARCHAR(200) NOT NULL,
-        plazas_totales INT NOT NULL
+        plazas_totales INT NOT NULL,
+        id_autor INT NOT NULL,
+        FOREIGN KEY (id_autor) REFERENCES usuarios (id)
         )
     `
 };
 
-/** Tabla de Usuarios */
-const tablaUsuarios = {
-
-    nombre: 'usuarios',
+/** Tabla de experiencias_fotos */
+const tablaExperiencias_fotos = {
+    nombre: 'experiencias_fotos',
     columnas:
-        ` 
-        ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        nombre VARCHAR(200),
-        biografia TEXT,
-        activo BOOLEAN NOT NULL DEFAULT false,
-        email VARCHAR(200) UNIQUE NOT NULL,
-        contraseña VARCHAR(512) NOT NULL,
-        privilegios ENUM("admin","normal") DEFAULT "normal" NOT NULL,
-        avatar VARCHAR(500),
-        fecha DATETIME NOT NULL,
-        codigo_validacion VARCHAR(100))
+        `
+        (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        fecha_foto DATETIME NOT NULL,
+        foto VARCHAR(64),
+        experiencia_id INT NOT NULL,
+        FOREIGN KEY (experiencia_id) REFERENCES experiencias(id)
+        )
     `,
 };
 
-module.exports = { tablaExperiencias, tablaUsuarios, tablaExperiencias_fotos };
+module.exports = { tablaUsuarios, tablaExperiencias, tablaExperiencias_fotos };
 

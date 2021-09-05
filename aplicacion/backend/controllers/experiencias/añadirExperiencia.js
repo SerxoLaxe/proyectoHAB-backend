@@ -43,10 +43,11 @@ async function procesarBody(req, conexion) {
         ubicacion,
         plazas_totales,
     } = req.body;
+    const idAutor = req.userAuth.id;
     const [result] = await conexion.query(          // hacemos la INSERT en el DB
         `
-        INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, precio, ubicacion, plazas_totales)
-        VALUES (?,?,?,?,?,?,?,?)
+        INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, precio, ubicacion, plazas_totales, id_autor)
+        VALUES (?,?,?,?,?,?,?,?,?)
         `,
         [
             now,
@@ -57,6 +58,7 @@ async function procesarBody(req, conexion) {
             precio,
             ubicacion,
             plazas_totales,
+            idAutor
         ]
     );
     return result.insertId;

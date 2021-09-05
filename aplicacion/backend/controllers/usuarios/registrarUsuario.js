@@ -1,6 +1,6 @@
 const conexionMysql = require('../../DB/conexionMysql');
 const { validate, generateRandomString, formatearDateMysql, sendMail } = require('../../helpers');
-const { registrarUsuarioSchema } = require('../../schemas/index')
+const { loginRegistroSchema } = require('../../schemas/index')
 /**
  * Registra un nuevo usuario tomando del body de la petición el email y la contraseña, genera para el usuario un código de registro y envia un correo con enlace de validación. ❌
  * @param {*} req 
@@ -10,7 +10,7 @@ const { registrarUsuarioSchema } = require('../../schemas/index')
 async function registrarUsuario(req, res, next) {
     let conexion;
     try {
-        await validate(registrarUsuarioSchema, req.body);                   //Validamos los datos del body.
+        await validate(loginRegistroSchema, req.body);                   //Validamos los datos del body.
         const { email } = req.body;                                         //Destructuring del body.
         conexion = await conexionMysql();                                   //Obtenemos una conexión a la BD.
         await existeUsuarioConEmail(email, conexion);                       //Comprobamos que el email no exista ya en la BD.
@@ -63,7 +63,7 @@ async function añadirUsuarioEnTabla(datos, codigoRegistro, conexion) {
         INSERT INTO usuarios(fecha,email,contraseña,codigo_validacion)
         VALUES (?,?,SHA2(?, 512),?)
         `,
-        [formatearDateMysql(new Date()), datos.email, datos.password, codigoRegistro]
+        [formatearDateMysql(new Date()), datos.email, datos.contraseña, codigoRegistro]
     );
 }
 
