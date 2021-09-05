@@ -1,5 +1,5 @@
 
-const esAdmin = async (req, res, next) => {
+const esAdmin = (req, res, next) => {
     try {
         if (req.userAuth.role !== "admin") {
             // ERROR
