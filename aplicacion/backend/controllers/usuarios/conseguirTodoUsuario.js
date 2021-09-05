@@ -18,7 +18,10 @@ async function conseguirTodoUsuario(req, res, next){
         )
 
         res.statusCode = 200;
-        res.send(resultado);
+        res.send({
+            status: 'Ok',
+            data: resultado,
+        });
     } catch (error) {
         next(error);
     } finally {

@@ -27,7 +27,7 @@ async function buscarExperiencias(req, res, next) {
         //Si la petición no da errores, respondemos con los datos obtenidos.
         res.statusCode = 200;
         res.send({
-            status: "ok",
+            status: "Ok",
             data: result,
         });
 
