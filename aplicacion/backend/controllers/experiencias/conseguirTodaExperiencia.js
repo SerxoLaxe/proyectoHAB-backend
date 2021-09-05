@@ -16,7 +16,10 @@ async function conseguirTodaExperiencia(req, res, next) {
             `
         )
         res.statusCode = 200;
-        res.send(result);
+        res.send({
+            status: 'Ok',
+            data: result
+        });
     } catch (error) {
         next(error);
     } finally {
