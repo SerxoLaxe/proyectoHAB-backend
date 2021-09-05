@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 require('dotenv').config();                                 //Módulo que carga las variables del archivo .env en las variables de entorno
 const { HOST, PORT, UPLOAD_DIRECTORY } = process.env;       //Destructuring de las variables de entorno necesarias;
 const path = require('path');                               //Módulo para el formato de direcciones de archivos y directorios.
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, UPLOAD_DIRECTORY)));        //Middle
 app.use(fileUpload());                                                  //Middleware subida de archivos a servidor.
 
 //DE USO ESPECÍFICO
-const {esUsuario, existe} = require('./middlewares/index') //Middlewares propios.
+const { esUsuario, existe, esAdmin, esAutor } = require('./middlewares/index') //Middlewares propios.
 
 ///////////////////////////////////* ENDPOINTS *////////////////////////////////////////
 
@@ -35,22 +36,22 @@ app.get('/experiencias/search', experiencia.buscar);
 app.get('/experiencias/:id', existe, experiencia.id);
 
 // POST Añade nueva experiencia ( Sólo administrador ) 👍 
-app.post('/experiencias', esUsuario, experiencia.añadir);
+app.post('/experiencias', esUsuario, esAdmin, experiencia.añadir);
 
 // PUT Editar experiencia.  ( Sólo administrador ) ❌
-app.put('/experiencias/:id', esUsuario, existe, experiencia.editar);
+app.put('/experiencias/:id', esUsuario, esAdmin, esAutor, existe, experiencia.editar);
 
 // DELETE Elimina experiencia.  ( Sólo administrador ) ❌
-app.delete('/experiencias/:id', esUsuario, existe, experiencia.eliminar);
+app.delete('/experiencias/:id', esUsuario, esAdmin, existe, esAutor, experiencia.eliminar);
 
 // POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).❌                        
 app.post('/experiecias/puntuar', esUsuario, existe, experiencia.puntuar);
 
 // POST Añade imagen a experiencia.( Sólo administrador) ❌
-app.post('/experiencias/:id/imagen/:id', esUsuario, existe, experiencia.añadirImagen);
+app.post('/experiencias/:id/imagen/:id', esUsuario, esAdmin, esAutor, existe, experiencia.añadirImagen);
 
 // DELETE Elimina imagen de experiencia (Sólo administrador) ❌
-app.delete('/experiencias/:id/imagen/:id', esUsuario, existe, experiencia.eliminarImagen);
+app.delete('/experiencias/:id/imagen/:id', esUsuario, existe, esAutor, experiencia.eliminarImagen);
 
 /* USUARIO */
 
@@ -81,7 +82,7 @@ app.put('/usuarios/:id/contraseña', existe, usuario.cambiarContraseña);
 app.get('/experiencias', experiencia.listarTodas);
 
 //GET todos los usuarios ( sólo para desarrollo ). 👍
-app.get('/usuarios', usuario.listarTodos); 
+app.get('/usuarios', usuario.listarTodos);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
