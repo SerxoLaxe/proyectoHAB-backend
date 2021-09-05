@@ -1,3 +1,4 @@
 const existe = require('./existe');
+const esUsuario = require('./esUsuario')
 
-module.exports = {existe}
+module.exports = {existe, esUsuario}
