@@ -14,8 +14,6 @@ async function eliminarUsuario(req, res, next) {
         // sacar el id usuario que queremos eliminar.
         const { id } = req.params;
 
-        console.log("ID usuario", id);
-
         // se el usuario que quiero borrar el el id=1 (admin) salgo con error
         if (Number(id) === 1) {
             const error = new Error("El administrador no se pude eliminar");
