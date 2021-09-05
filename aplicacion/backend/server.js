@@ -74,7 +74,7 @@ app.delete('/usuarios/:id', esUsuario, existe, usuario.eliminar);
 app.post('/usuarios/login', usuario.login);
 
 // PUT Cambia la contraseña ❌
-app.put('/usuarios/:id/contraseña', existe, usuario.cambiarContraseña);
+app.put('/usuarios/:id/password', existe, usuario.cambiarContraseña);
 
 /* RESERVADOS A DESARROLLO */
 
