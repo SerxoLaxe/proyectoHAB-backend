@@ -67,8 +67,8 @@ async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
 
         await conexion.query(
             `
-            INSERT INTO usuarios ( nombre, biografia, email, contraseña, avatar, fecha, codigo_validacion )
-            VALUES( ?, ?, ?, SHA2(?,512), ? ,?,?)
+            INSERT INTO usuarios ( nombre, biografia, email, contraseña, avatar, fecha, codigo_validacion, ultimo_cambio_contraseña)
+            VALUES( ?, ?, ?, SHA2(?,512), ? ,?,?, ?)
             `,
             [
                 nombre,
@@ -78,6 +78,7 @@ async function llenarTablaUsuarios(numeroDeUsuarios, conexion) {
                 avatar,
                 helpers.formatearDateMysql(new Date()),
                 helpers.generateRandomString(),
+                helpers.formatearDateMysql(new Date()),
             ]
         );
     }
@@ -101,8 +102,8 @@ async function llenarTablaExperiencias(numeroDeExperiencias, conexion) {
         const ubicacion = faker.address.city();
         const rating = lodash.random(experiencias.rating.minimo, experiencias.rating.maximo);
         const plazasTotales = lodash.random(experiencias.plazas.minimas, experiencias.plazas.maximas);
-        const fechaInicial = helpers.formatearDateMysql(new Date());
-        const fechaFinal = helpers.formatearDateMysql(new Date());
+        const fechaInicial = helpers.formatearDateMysql(faker.date.recent());
+        const fechaFinal = helpers.formatearDateMysql(faker.date.future());
         const idAutor= 1;
 
         await conexion.query(
@@ -164,9 +165,9 @@ async function config() {
         if (RESET_DB === 'true') {      //Si la variable de entorno RESET_DB es true reseteamos la base de datos.
             await eliminarTablas(conexion);
             await crearTablas(conexion);
+            await crearAdministrador(conexion);
             await llenarTablaUsuarios(fakerConfig.usuarios.cantidad, conexion);
             await llenarTablaExperiencias(fakerConfig.experiencias.cantidad, conexion);
-            await crearAdministrador(conexion);
         } else if (RESET_DB === 'false') {       //De lo contrario sólo creamos las tablas si no existen.
             await crearTablas(conexion);
         } else {
