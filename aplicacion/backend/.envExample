@@ -27,3 +27,6 @@ PUBLIC_HOST=
 PUBLIC_PORT=
 SENDGRID_FROM=
 SENDGRID_API_KEY=
+
+#Clave secreta para JsonWebtoken
+SECRET=hashSecreto
