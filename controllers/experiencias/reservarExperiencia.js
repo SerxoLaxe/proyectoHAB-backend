@@ -51,7 +51,7 @@ async function existeReserva(conexion, [idUsuario, idExperiencia]) {
     const [data] = await conexion.query(
         `
         SELECT id FROM reservas
-        WHERE id_experiencia=? AND id_usuario=? 
+        WHERE id_experiencia=? AND id_usuario=? AND cancelada=false
         `,
         [idExperiencia, idUsuario]
     );
