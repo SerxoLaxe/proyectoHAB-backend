@@ -12,12 +12,31 @@ Cada viajero se registra en la plataforma y busca su experiencia a contratar.
 
     ./
     |
-    |___aplicacion                #Archivos que componen la aplicación en sí misma.
-    |          |
-    |          |___backend
-    |          |
-    |          |___frontend     
+    |_______controllers
+    |           |
+    |           |_______experiencias      
+    |           |       ...
+    |           |_______usuarios
+    |                   ...
     |
-    |___documentacion             #Documentos relativos a la aplicación  
+    |_______DB
+    |       ...
+    |
+    |_______documentación
+    |       ...
+    |
+    |_______middlewares
+    |       ...
+    |
+    |______schemas
+           ...
+
+    .envExample
+    config.js
+    helpers.js
+    server.js
+    ...
+    
+    
 
 
