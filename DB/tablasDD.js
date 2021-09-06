@@ -61,5 +61,19 @@ const tablaExperiencias_fotos = {
     `,
 };
 
-module.exports = { tablaUsuarios, tablaExperiencias, tablaExperiencias_fotos };
+const tablaReservas = {
+    nombre: 'reservas',
+    columnas:
+    `(
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        fecha DATETIME NOT NULL,
+        cancelada BOOLEAN DEFAULT false,
+        id_usuario INT NOT NULL,
+        FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+        id_experiencia INT NOT NULL,
+        FOREIGN KEY (id_experiencia) REFERENCES experiencias(id)
+    )`
+}
+
+module.exports = { tablaUsuarios, tablaExperiencias, tablaExperiencias_fotos, tablaReservas };
 
