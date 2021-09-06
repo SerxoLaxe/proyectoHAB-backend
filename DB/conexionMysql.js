@@ -16,7 +16,7 @@ async function conexionMysql() {
             timezone: "Z",
         });
     }
-    return await pool.getConnection();
+    return pool.getConnection();
 }
 
 module.exports = conexionMysql;
