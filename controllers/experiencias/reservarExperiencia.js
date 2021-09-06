@@ -80,7 +80,7 @@ async function quedanPlazas(conexion, idExperiencia) {
 
     if (
         typeof plazas !== 'undefined' &&
-        /* plazas.length > 0 && */
+        plazas.length > 0 &&
         plazas.length >= plazas[0].plazas_totales
     ) {
         const error = new Error('No quedan plazas disponibles');
