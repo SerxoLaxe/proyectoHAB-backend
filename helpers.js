@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const crypto = require('crypto');
-const format = require('date-fns').format;
+const {format} = require('date-fns');
 const { ensureDir } = require("fs-extra");
 const path = require("path");
 const sharp = require("sharp");

@@ -17,7 +17,7 @@ async function eliminarTablas(conexion) {
     await conexion.query(
         ` SET foreign_key_checks = 0;`
     );
-    for (let tabla in tablas) {
+    for (const tabla in tablas) {
         await conexion.query(
             `
             DROP TABLE IF EXISTS ${tablas[tabla].nombre} 
@@ -35,7 +35,7 @@ async function eliminarTablas(conexion) {
  * @param {Object} conexion - Conexión a Mysql
  */
 async function crearTablas(conexion) {
-    for (let tabla in tablas) {
+    for (const tabla in tablas) {
         await conexion.query(
             `
             CREATE TABLE IF NOT EXISTS ${tablas[tabla].nombre} ${tablas[tabla].columnas}

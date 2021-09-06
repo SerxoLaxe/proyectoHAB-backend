@@ -8,7 +8,7 @@ async function existe(req, res, next) {
     let conexion;
     try {
         const tabla = req.path.split('/')[1];  //O es experiencias o es usuarios.
-        const id = req.params.id;
+        const { params: { id } = {} } = req;
         conexion = await conexionMysql();
         const [resultado] = await conexion.query(
             `
