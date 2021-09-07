@@ -58,23 +58,23 @@ function construirQueryString(params, conexion) {
             experiencias.nombre, 
             experiencias.descripcion, 
             experiencias.ubicacion) 
-            LIKE ` + conexion.escape(`%${texto}%`));
+            LIKE ${conexion.escape(`%${texto}%`)}`);
     }
 
     if (typeof precioMinimo !== 'undefined' && precioMinimo > 0) {
-        queryArray.push(`experiencias.precio >= ` + conexion.escape(precioMinimo));
+        queryArray.push(`experiencias.precio >= ${conexion.escape(precioMinimo)}`);
     }
 
     if (typeof precioMaximo !== 'undefined' && precioMaximo > 0) {
-        queryArray.push(`experiencias.precio <= ` + conexion.escape(precioMaximo));
+        queryArray.push(`experiencias.precio <= ${conexion.escape(precioMaximo)}`);
     }
 
     if (typeof fechaInicial !== 'undefined') {
-        queryArray.push(`experiencias.fecha_inicial >= ` + conexion.escape(fechaInicial));
+        queryArray.push(`experiencias.fecha_inicial >= ${conexion.escape(fechaInicial)}`);
     }
 
     if (typeof fechaFinal !== 'undefined') {
-        queryArray.push(`experiencias.fecha_final <= ` + conexion.escape(fechaFinal));
+        queryArray.push(`experiencias.fecha_final <= ${conexion.escape(fechaFinal)}`);
     }
 
     // Concatenamos la parte invariable de la string (queryBase) junto con el array de condicionales, que es unido con el string ' AND '.
