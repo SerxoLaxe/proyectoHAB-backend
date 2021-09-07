@@ -3,7 +3,7 @@ const { buscarExperienciaSchema } = require('../../schemas/index');
 const { validate } = require('../../helpers');
 
 /**
- * buscarExperiencias() toma los parámetros definidos en la query ylos usa para buscar coincidencias en la tabla experiencias. 👍 
+ * buscarExperiencias() toma los parámetros definidos en la query y los usa para buscar coincidencias en la tabla experiencias. 👍 
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -15,11 +15,10 @@ async function buscarExperiencias(req, res, next) {
         // Validamos los datos con Joi.
         await validate(buscarExperienciaSchema, req.query);
 
-        // Creamos una query SQL adaptada a los parámetros de la petición.
-        const queryString = construirQueryString(req.query);
-
         // Si no hay error, obtenemos conexión a Mysql.
         conexion = await conexionMysql();
+        // Creamos una query SQL adaptada a los parámetros de la petición.
+        const queryString = construirQueryString(req.query, conexion);
 
         //Realizamos la petición
         const [result] = await conexion.query(queryString);
@@ -43,7 +42,7 @@ async function buscarExperiencias(req, res, next) {
  * @param {Object} params - parámetros a introducir en la tabla.
  * @returns {string} - La string apropiada.
  */
-function construirQueryString(params) {
+function construirQueryString(params, conexion) {
     const { texto, precioMinimo, precioMaximo, fechaInicial, fechaFinal } = params;
 
     //Parte de la string que siempre se va a usar
@@ -59,23 +58,23 @@ function construirQueryString(params) {
             experiencias.nombre, 
             experiencias.descripcion, 
             experiencias.ubicacion) 
-            LIKE '%${texto}%'`);
+            LIKE ` + conexion.escape(`%${texto}%`));
     }
 
     if (typeof precioMinimo !== 'undefined' && precioMinimo > 0) {
-        queryArray.push(`experiencias.precio >= ${precioMinimo}`);
+        queryArray.push(`experiencias.precio >= ` + conexion.escape(precioMinimo));
     }
 
     if (typeof precioMaximo !== 'undefined' && precioMaximo > 0) {
-        queryArray.push(`experiencias.precio <= ${precioMaximo}`);
+        queryArray.push(`experiencias.precio <= ` + conexion.escape(precioMaximo));
     }
 
     if (typeof fechaInicial !== 'undefined') {
-        queryArray.push(`experiencias.fecha_inicial >= '${fechaInicial}'`);
+        queryArray.push(`experiencias.fecha_inicial >= ` + conexion.escape(fechaInicial));
     }
 
     if (typeof fechaFinal !== 'undefined') {
-        queryArray.push(`experiencias.fecha_final <= '${fechaFinal}'`);
+        queryArray.push(`experiencias.fecha_final <= ` + conexion.escape(fechaFinal));
     }
 
     // Concatenamos la parte invariable de la string (queryBase) junto con el array de condicionales, que es unido con el string ' AND '.
