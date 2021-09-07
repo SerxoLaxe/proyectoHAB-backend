@@ -44,10 +44,10 @@ app.put('/experiencias/:id', esUsuario, esAdmin, esAutor, existe, experiencia.ed
 // DELETE Elimina experiencia.  ( Sólo administrador ) ❌
 app.delete('/experiencias/:id', esUsuario, esAdmin, existe, esAutor, experiencia.eliminar);
 
-// PUT Reserva plaza en experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario no está apuntado). ❌
-app.put('/experiencias/:id/reservar', esUsuario, existe, experiencia.reservar); 
+// PUT Reserva plaza en experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario no está apuntado). 👍
+app.post('/experiencias/:id/reservar', esUsuario, existe, experiencia.reservar); 
 
-// DELETE cancela la reserva de la experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario no está apuntado). ❌
+// DELETE cancela la reserva de la experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario está apuntado). ❌
 app.delete('/experiencias/:id/cancelar', esUsuario, existe, experiencia.cancelar);
 
 // POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).❌                        
