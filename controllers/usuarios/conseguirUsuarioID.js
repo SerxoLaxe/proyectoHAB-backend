@@ -10,12 +10,10 @@ async function conseguirUsuarioID(req, res, next) {
     let conexion;
     try {
         conexion = await conexionMysql();
-
         const [resultado] = await conexion.query(
             `SELECT * FROM usuarios WHERE id=?`,
             [req.params.id]
-        )
-
+        );
         res.statusCode = 200;
         res.send({
             status: 'Ok',

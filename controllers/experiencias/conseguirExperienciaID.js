@@ -11,10 +11,11 @@ async function conseguirExperienciaID(req, res, next) {
     try {
         conexion = await conexionMysql();
         const { id } = req.params;
-
-        const [result] = await conexion.query(`
-        SELECT * FROM experiencias WHERE id=?
-    `, [id]);
+        const [result] = await conexion.query(
+            `
+            SELECT * FROM experiencias WHERE id=?
+            `,
+            [id]);
 
         res.send({
             status: 'Ok',

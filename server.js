@@ -1,29 +1,62 @@
 /* eslint-disable no-unused-vars */
-require('dotenv').config();                                 //Módulo que carga las variables del archivo .env en las variables de entorno
-const { HOST, PORT, UPLOAD_DIRECTORY } = process.env;       //Destructuring de las variables de entorno necesarias;
-const path = require('path');                               //Módulo para el formato de direcciones de archivos y directorios.
-const morgan = require('morgan');                           //Middleware log de eventos de express.
-const fileUpload = require('express-fileupload');           //Middleware para la subida de archivos al servidor.
-const chalk = require('chalk');                             //Módulo para editar formato y estilo de logs.
-const helpers = require('./helpers');                       //Helpers, incluye generador de codigos de validacion, formateo de fechas, customización de errores...
-const express = require('express');                         //Módulo para la creación de servidor http.
-const app = express();                                      //definición de aplicación Express.
-require('./DB/initDB').config();                            //Reset y configuración de la base de datos con datos creados por módulo Faker.
 
-/* IMPORT DE CONTROLLERS */
-const experiencia = require('./controllers/experiencias/index');        //Import de controladores experiencias
-const usuario = require('./controllers/usuarios/index');                //Import de controladores usuarios
+// Módulo que carga las variables del archivo .env en las variables de entorno
+require('dotenv').config();
+
+// Destructuring de las variables de entorno necesarias;
+const { HOST, PORT, UPLOAD_DIRECTORY } = process.env;
+
+// Módulo para el formato de direcciones de archivos y directorios.
+const path = require('path');
+
+// Middleware log de eventos de express.
+const morgan = require('morgan');
+
+// Middleware para la subida de archivos al servidor.
+const fileUpload = require('express-fileupload');
+
+// Módulo para editar formato y estilo de logs.
+const chalk = require('chalk');
+
+// Helpers incluye generador de codigos de validacion, formateo de fechas, customización de errores...
+const helpers = require('./helpers');
+
+// Módulo para la creación de servidor http.
+const express = require('express');
+
+// Definición de aplicación Express.
+const app = express();
+
+// Reset y configuración de la base de datos con datos creados por módulo Faker.
+require('./DB/initDB').config();
+                          
+///////////////////////////////////* IMPORT DE CONTROLLERS *//////////////////////////////
+
+// Import de controladores experiencias
+const experiencia = require('./controllers/experiencias/index');
+
+// Import de controladores usuarios
+const usuario = require('./controllers/usuarios/index');                
 
 /////////////////////////////////////*MIDDLEWARES*///////////////////////////////////////
 
-//GLOBALES
-app.use(morgan('dev'));                                                 //MIddleware log de eventos de express.
-app.use(express.json());                                                //Middleware parsing responses a json.
-app.use(express.static(path.join(__dirname, UPLOAD_DIRECTORY)));        //Middleware recursos estáticos.
-app.use(fileUpload());                                                  //Middleware subida de archivos a servidor.
+// GLOBALES
 
-//DE USO ESPECÍFICO
-const { esUsuario, existe, esAdmin, esAutor } = require('./middlewares/index'); //Middlewares propios.
+// MIddleware log de eventos de express.
+app.use(morgan('dev'));
+
+// Middleware parsing responses a json.
+app.use(express.json());
+
+// Middleware recursos estáticos.
+app.use(express.static(path.join(__dirname, UPLOAD_DIRECTORY)));
+
+// Middleware subida de archivos a servidor.
+app.use(fileUpload());
+
+// DE USO ESPECÍFICO
+
+const { esUsuario, existe, esAdmin, esAutor } = require('./middlewares/index');
 
 ///////////////////////////////////* ENDPOINTS *////////////////////////////////////////
 
