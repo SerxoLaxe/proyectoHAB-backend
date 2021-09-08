@@ -6,7 +6,7 @@ const { toNumber } = require("lodash");
  * @param {*} res 
  * @param {*} next 
  */
-const esPropietarioPerfil = async (req, res, next) => {
+const esPropietarioPerfil = (req, res, next) => {
     try {
         const { id } = req.params;
         if (toNumber(id) !== req.userAuth.id) {
