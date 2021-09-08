@@ -9,7 +9,6 @@ const { toNumber } = require("lodash");
 const esPropietarioPerfil = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log('id query:',id, 'id token:', req.userAuth.id);
         if (toNumber(id) !== req.userAuth.id) {
             // ERROR
             const error = new Error(
