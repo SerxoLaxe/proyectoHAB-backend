@@ -1,25 +1,25 @@
 const conexionMysql = require('../../DB/conexionMysql');
 
 /**
- * Elimina un usuario 👍 
+ * Devuelve el usuario con id introducido como parámetro. 👍
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
  */
-async function eliminarUsuario(req, res, next) {
+async function conseguirUsuarioID(req, res, next) {
     let conexion;
     try {
         conexion = await conexionMysql();
-        await conexion.query(
-            `
-            DELETE FROM usuarios WHERE id=?
-            `,
-            [req.params.id])
+
+        const [resultado] = await conexion.query(
+            `SELECT * FROM usuarios WHERE id=?`,
+            [req.params.id]
+        )
 
         res.statusCode = 200;
         res.send({
             status: 'Ok',
-            message: `Eliminado usuario  con id ${req.params.id}`
+            data: resultado
         });
     } catch (error) {
         next(error);
@@ -30,4 +30,4 @@ async function eliminarUsuario(req, res, next) {
     }
 }
 
-module.exports = eliminarUsuario;
+module.exports = conseguirUsuarioID;

@@ -1,22 +1,27 @@
 const conexionMysql = require('../../DB/conexionMysql');
 
-/** 
- * Responde con una array de todos los datos de la tabla experiencias. ❌ 
+/**
+ * Responde con un array de todos los usuarios registrados. 👍
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
  */
-async function conseguirTodaExperiencia(req, res, next) {
+async function conseguirTodoUsuario(req, res, next){
     let conexion;
     try {
         conexion = await conexionMysql();
-        const [result] = await conexion.query(
+
+        const [resultado] = await conexion.query(
             `
-            SELECT * FROM experiencias
+            SELECT * FROM usuarios
             `
         )
+
         res.statusCode = 200;
-        res.send(result);
+        res.send({
+            status: 'Ok',
+            data: resultado,
+        });
     } catch (error) {
         next(error);
     } finally {
@@ -24,6 +29,6 @@ async function conseguirTodaExperiencia(req, res, next) {
             conexion.release();
         }
     }
-
 }
-module.exports = conseguirTodaExperiencia;
+
+module.exports = conseguirTodoUsuario;

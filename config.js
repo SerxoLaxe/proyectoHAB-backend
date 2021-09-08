@@ -10,7 +10,7 @@ const fakerConfig = {
         cantidad: 10,               //Cantidad de experiencias a introducir en la tabla.
         parrafosDescripcion: 3,     //Párrafos de lorem ipsum a introducir en la descripción.
         precio: {
-            maximo: 5,              //Precio máximo.
+            maximo: 500,              //Precio máximo.
             minimo: 2,              //Precio mínimo.
         },
         rating: {
