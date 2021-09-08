@@ -11,7 +11,7 @@ async function conseguirUsuarioID(req, res, next) {
     try {
         conexion = await conexionMysql();
         const [resultado] = await conexion.query(
-            `SELECT * FROM usuarios WHERE id=?`,
+            `SELECT id, nombre, biografia, avatar, privilegios FROM usuarios WHERE id=?`,
             [req.params.id]
         );
         res.statusCode = 200;
