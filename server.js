@@ -29,14 +29,14 @@ const app = express();
 
 // Reset y configuración de la base de datos con datos creados por módulo Faker.
 require('./DB/initDB').config();
-                          
+
 ///////////////////////////////////* IMPORT DE CONTROLLERS *//////////////////////////////
 
 // Import de controladores experiencias
 const experiencia = require('./controllers/experiencias/index');
 
 // Import de controladores usuarios
-const usuario = require('./controllers/usuarios/index');                
+const usuario = require('./controllers/usuarios/index');
 
 /////////////////////////////////////*MIDDLEWARES*///////////////////////////////////////
 
@@ -56,7 +56,12 @@ app.use(fileUpload());
 
 // DE USO ESPECÍFICO
 
-const { esUsuario, existe, esAdmin, esAutor } = require('./middlewares/index');
+const {
+    esUsuario,
+    existe,
+    esAdmin,
+    esAutor,
+    esPropietarioPerfil } = require('./middlewares/index');
 
 ///////////////////////////////////* ENDPOINTS *////////////////////////////////////////
 
@@ -75,10 +80,10 @@ app.post('/experiencias', esUsuario, esAdmin, experiencia.añadir);
 app.put('/experiencias/:id', esUsuario, esAdmin, esAutor, existe, experiencia.editar);
 
 // DELETE Elimina experiencia.  ( Sólo administrador ) ❌
-app.delete('/experiencias/:id', esUsuario, esAdmin, existe, esAutor, experiencia.eliminar);
+app.delete('/experiencias/:id', esUsuario, esAdmin, esAutor, existe, experiencia.eliminar);
 
 // PUT Reserva plaza en experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario no está apuntado). 👍
-app.post('/experiencias/:id/reservar', esUsuario, existe, experiencia.reservar); 
+app.post('/experiencias/:id/reservar', esUsuario, existe, experiencia.reservar);
 
 // DELETE cancela la reserva de la experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario está apuntado). 👍
 app.delete('/experiencias/:id/cancelar', esUsuario, existe, experiencia.cancelar);
@@ -104,7 +109,7 @@ app.post('/usuarios', usuario.registrar);
 app.get('/usuarios/validar/:codigo', usuario.validar);
 
 // PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
-app.put('/usuarios/:id', esUsuario, existe, usuario.editar);
+app.put('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.editar);
 
 // DELETE usuario, elimina un usuario. (Sólo administrador)👍
 app.delete('/usuarios/:id', esUsuario, existe, usuario.eliminar);
