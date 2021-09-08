@@ -1,110 +1,82 @@
 const conexionMysql = require("../../DB/conexionMysql");
-const { formatearDateMysql, guardarFoto } = require("../../helpers");
+const { formatearDateMysql, validate, guardarImagenesExperiencia } = require("../../helpers");
+const { añadirExperienciaSchema } = require('../../schemas')
+
 /**
- * Añade una experiencia a la tabla de experiencias ❌
+ * Añade una experiencia a la tabla de experiencias 👍
  *
  * @param {any} req
  * @param {any} res
  * @param {any} next
  */
 async function añadirExperiencia(req, res, next) {
-  let conexion;
-  try {
-    conexion = await conexionMysql();
 
-    //saco los datos del body, instalo express-fileupload
-    const {
-      nombre,
-      descripcion,
-      fecha_inicial,
-      fecha_final,
-      rating,
-      precio,
-      ubicacion,
-      plazas_totales,
-    } = req.body;
-
-    console.log(req.body);
-
-    if (
-      !nombre ||
-      !descripcion ||
-      !fecha_inicial ||
-      !fecha_final ||
-      !precio ||
-      !ubicacion ||
-      !plazas_totales
-    ) {
-      const error = new Error("Faltan campos obligatorios");
-      error.httpStatus = 400;
-      throw error;
+    let conexion;
+    try {
+        await validate(añadirExperienciaSchema, req);                   //Validamos la petición mediante Joi.
+        conexion = await conexionMysql();                               //Creamos una conexión a la BD.
+        const idExperiencia = await procesarBody(req, conexion);        //Procesamos los parámetros del body.
+        await procesarImagenes(req.files, conexion, idExperiencia);     //Procesamos las imágenes.
+        res.statusCode = 200;
+        res.send({
+            status: "Ok",
+            message: `Experiencia ${idExperiencia} guardada correctamente`,
+        });
+    } catch (error) {
+        next(error);
+    } finally {
+        if (conexion) {
+            conexion.release();
+        }
     }
-    // hacemos la INSERT en el DB
-    const now = new Date();
-
-    const [result] = await conexion.query(
-      `
-		INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, rating, precio, ubicacion, plazas_totales)
-		VALUES (?,?,?,?,?,?,?,?,?)
-	
-	`,
-      [
-        formatearDateMysql(now),
-        nombre,
-        descripcion,
-        fecha_inicial,
-        fecha_final,
-        rating,
-        precio,
-        ubicacion,
-        plazas_totales,
-      ]
-    );
-
-    console.log(req);
-
-    //saco el id de la nueva experiencia
-    const { insertId } = [result];
-
-    //proceso las fotos
-    const fotos = [];
-    if (req.files && Object.keys(req.files).length > 0) {
-      for (const foto of Object.values(req.files).slice(0, 4)) {
-        console.log(foto);
-        //creo en helpers una funcion que me guarda las fotos
-        const nombreFoto = await guardarFoto(foto);
-        fotos.push(nombreFoto);
-
-        //las inserto en el DB
-        await conexion.query(
-          `
-				INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
-				VALUES (?,?,?)
-				`,
-          [formatearDateMysql(now), nombreFoto, result.insertId]
-        );
-      }
-    }
-
-    res.statusCode = 200;
-    res.send({
-      status: "Ok",
-      data: {
-        id: insertId,
-        fecha_insert: now,
-        nombre,
-        descripcion,
-        fecha_inicial,
-        fecha_final,
-        rating,
-        precio,
-        ubicacion,
-        plazas_totales,
-        fotos: fotos,
-      },
-    });
-  } catch (error) {
-    next(error);
-  }
 }
+
+async function procesarBody(req, conexion) {
+
+    const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
+    const {                                         //saco los datos del body.
+        nombre,
+        descripcion,
+        fecha_inicial,
+        fecha_final,
+        precio,
+        ubicacion,
+        plazas_totales,
+    } = req.body;
+    const [result] = await conexion.query(          // hacemos la INSERT en el DB
+        `
+        INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, precio, ubicacion, plazas_totales)
+        VALUES (?,?,?,?,?,?,?,?)
+        `,
+        [
+            now,
+            nombre,
+            descripcion,
+            fecha_inicial,
+            fecha_final,
+            precio,
+            ubicacion,
+            plazas_totales,
+        ]
+    );
+    return result.insertId;
+}
+
+async function procesarImagenes(files, conexion, idExperiencia) {
+    //proceso las fotos
+    const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
+    const fotos = [];
+    for (const foto of Object.values(files)) {
+        const nombreFoto = await guardarImagenesExperiencia(foto);
+        fotos.push(nombreFoto);
+        await conexion.query(       //las inserto en el DB
+            `
+            INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
+            VALUES (?,?,?)
+            `,
+            [now, nombreFoto, idExperiencia]
+        );
+    }
+}
+
 module.exports = añadirExperiencia;

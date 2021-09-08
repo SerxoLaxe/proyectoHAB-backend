@@ -1,7 +1,5 @@
 version = 1
 
-exclude_patterns = ["documentacion/"]
-
 [[analyzers]]
 name = "test-coverage"
 enabled = true
