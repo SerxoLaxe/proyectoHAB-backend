@@ -111,7 +111,7 @@ app.post('/usuarios', usuario.registrar);
 // POST validar usuario mediante codigo. 👍 
 app.get('/usuarios/validar/:codigo', usuario.validar);
 
-// PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
+// PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌ 👈
 app.put('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.editar);
 
 // DELETE usuario, elimina un usuario. (Sólo el propio usuario)👍
@@ -120,7 +120,7 @@ app.delete('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.elim
 // GET login de usuario. 👍
 app.post('/usuarios/login', usuario.login);
 
-// PUT Cambia la contraseña ❌
+// PUT Cambia la contraseña ❌👈
 app.put('/usuarios/:id/password', existe, usuario.cambiarContraseña);
 
 /* RESERVADOS A DESARROLLO */
