@@ -73,6 +73,9 @@ app.get('/experiencias/search', experiencia.buscar);
 // GET Selecciona experiencia mediante id.  👍                                       
 app.get('/experiencias/:id', existe, experiencia.id);
 
+//GET Selecciona los usuarios con reserva de cierta experiencia especificando el Id de esta. 👍
+app.get('/experiencias/:id/reservas', esUsuario, existe, experiencia.reservas)
+
 // POST Añade nueva experiencia ( Sólo administrador ) 👍 
 app.post('/experiencias', esUsuario, esAdmin, experiencia.añadir);
 
@@ -89,7 +92,7 @@ app.post('/experiencias/:id/reservar', esUsuario, existe, experiencia.reservar);
 app.delete('/experiencias/:id/cancelar', esUsuario, existe, experiencia.cancelar);
 
 // POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).❌                        
-app.post('/experiecias/:id/puntuar', esUsuario, existe, experiencia.puntuar);
+app.post('/experiencias/:id/puntuar', esUsuario, existe, experiencia.puntuar);
 
 // POST Añade imagen a experiencia.( Sólo administrador) ❌
 app.post('/experiencias/:id/imagen/:id', esUsuario, esAdmin, esAutor, existe, experiencia.añadirImagen);
@@ -111,8 +114,8 @@ app.get('/usuarios/validar/:codigo', usuario.validar);
 // PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌
 app.put('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.editar);
 
-// DELETE usuario, elimina un usuario. (Sólo administrador)👍
-app.delete('/usuarios/:id', esUsuario, existe, usuario.eliminar);
+// DELETE usuario, elimina un usuario. (Sólo el propio usuario)👍
+app.delete('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.eliminar);
 
 // GET login de usuario. 👍
 app.post('/usuarios/login', usuario.login);
