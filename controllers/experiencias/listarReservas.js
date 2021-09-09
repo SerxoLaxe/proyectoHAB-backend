@@ -13,7 +13,7 @@ async function listarReservas(req, res, next) {
         const { id } = req.params;
         const [result] = await conexion.query(
             `
-            SELECT res.id, res.fecha, usr.nombre, usr.avatar FROM reservas res
+            SELECT res.id, res.fecha, res.cancelada, usr.nombre, usr.avatar FROM reservas res
             INNER JOIN usuarios usr ON res.id_usuario=usr.id
             WHERE res.cancelada=false
             AND res.id_experiencia=? 
