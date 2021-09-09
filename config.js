@@ -35,6 +35,11 @@ const joiConfig = {
     schemaUsuarios: {
         minCharsContraseña: 10, //Número mínimo de carácteres de extensión para la contraseña
         maxCharsContraseña: 20, //Número máximo de carácteres de extensión para la contraseña.
+    },
+    schemaPuntuacion:{
+        minPuntuacion: 0,
+        maxPuntuacion:5,
+        maxCharsComentario: 2000,
     }
 
 }
