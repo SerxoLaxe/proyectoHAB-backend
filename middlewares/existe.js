@@ -32,7 +32,7 @@ async function existe(req, res, next) {
         }
 
         if (resultado.length <= 0) {
-            throw new Error(`No encontrado en ${tabla}`);
+            throw new Error(`${tabla.slice(0,-1)} no existe`);
         }
         next();
 
