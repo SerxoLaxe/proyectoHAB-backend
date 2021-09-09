@@ -33,7 +33,7 @@ async function registrarUsuario(req, res, next) {
         res.statusCode = 200;
         res.send({
             status: 'Ok',
-            message: 'Registrar usuario',
+            message: 'Usuario registrado correctamente',
         });
     } catch (error) {
         next(error);
