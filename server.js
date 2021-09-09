@@ -91,7 +91,7 @@ app.post('/experiencias/:id/reservar', esUsuario, existe, experiencia.reservar);
 // DELETE cancela la reserva de la experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario está apuntado). 👍
 app.delete('/experiencias/:id/cancelar', esUsuario, existe, experiencia.cancelar);
 
-// POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).❌                        
+// POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).👍                       
 app.post('/experiencias/:id/puntuar', esUsuario, existe, experiencia.puntuar);
 
 // POST Añade imagen a experiencia.( Sólo administrador) ❌
