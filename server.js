@@ -30,6 +30,9 @@ const app = express();
 // Reset y configuración de la base de datos con datos creados por módulo Faker.
 require('./DB/initDB').config();
 
+// Se incluye este modulo, para que no exista conflictos en la base de datos cuando se realicen  peticiones en el servidor local
+const cors = require('cors');
+
 ///////////////////////////////////* IMPORT DE CONTROLLERS *//////////////////////////////
 
 // Import de controladores experiencias
@@ -44,6 +47,9 @@ const usuario = require('./controllers/usuarios/index');
 
 // MIddleware log de eventos de express.
 app.use(morgan('dev'));
+
+//Evita conflictos en nuestra base de datos local.
+app.use(cors());                                                  
 
 // Middleware parsing responses a json.
 app.use(express.json());
