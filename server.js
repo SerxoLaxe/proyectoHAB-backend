@@ -127,7 +127,7 @@ app.delete('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.elim
 app.post('/usuarios/login', usuario.login);
 
 // PUT Cambia la contraseña ❌👈
-app.put('/usuarios/:id/password', existe, usuario.cambiarContraseña);
+app.put('/usuarios/:id/changepassword', esUsuario, existe, esPropietarioPerfil, usuario.cambiarContraseña);
 
 /* RESERVADOS A DESARROLLO */
 
