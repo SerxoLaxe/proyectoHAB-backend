@@ -10,16 +10,29 @@ async function existe(req, res, next) {
         const tabla = req.path.split('/')[1];  //O es experiencias o es usuarios.
         const { params: { id } = {} } = req;
         conexion = await conexionMysql();
-        const [resultado] = await conexion.query(
-            `
-            SELECT id 
-            FROM ${tabla}
-            WHERE id=?
-            `,
-            [id]
-        );
+        let resultado;
+        if (tabla === 'experiencias') {
+            [resultado] = await conexion.query(
+                `
+                SELECT id 
+                FROM experiencias
+                WHERE id=?
+                `,
+                [id]
+            );
+        } else if (tabla === 'usuarios') {
+            [resultado] = await conexion.query(
+                `
+                SELECT id 
+                FROM usuarios
+                WHERE id=?
+                `,
+                [id]
+            );
+        }
+
         if (resultado.length <= 0) {
-            throw new Error(`No encontrado en ${tabla}`);
+            throw new Error(`${tabla.slice(0,-1)} no existe`);
         }
         next();
 

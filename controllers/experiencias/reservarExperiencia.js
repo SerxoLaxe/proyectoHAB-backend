@@ -72,7 +72,7 @@ async function quedanPlazas(conexion, idExperiencia) {
     const [plazas] = await conexion.query(
         `
         SELECT exp.plazas_totales FROM experiencias exp
-        INNER JOIN reservas res ON res.id_experiencia = exp.id
+        INNER JOIN reservas res ON res.id_experiencia = exp.id AND res.cancelada=false
         WHERE exp.id = ?
         `,
         [idExperiencia]

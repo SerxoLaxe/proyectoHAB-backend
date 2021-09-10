@@ -1,19 +1,22 @@
 const conexionMysql = require("../../DB/conexionMysql");
 
 /**
- * Selecciona de la tabla de experiencias un único registro especificando su ID. 👍 
+ * Responde con una selección de los usuarios que cuentan con reserva en cierta experiencia. 👍 
  * @param {} req 
  * @param {*} res 
  * @param {*} next 
  */
-async function conseguirExperienciaID(req, res, next) {
+async function listarReservas(req, res, next) {
     let conexion;
     try {
         conexion = await conexionMysql();
         const { id } = req.params;
         const [result] = await conexion.query(
             `
-            SELECT * FROM experiencias WHERE id=?
+            SELECT res.id, res.fecha, res.cancelada, usr.nombre, usr.avatar FROM reservas res
+            INNER JOIN usuarios usr ON res.id_usuario=usr.id
+            WHERE res.cancelada=false
+            AND res.id_experiencia=? 
             `,
             [id]);
 
@@ -28,4 +31,4 @@ async function conseguirExperienciaID(req, res, next) {
     }
 }
 
-module.exports = conseguirExperienciaID;
+module.exports = listarReservas;

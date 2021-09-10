@@ -17,13 +17,14 @@ async function buscarExperiencias(req, res, next) {
 
         // Si no hay error, obtenemos conexión a Mysql.
         conexion = await conexionMysql();
+        
         // Creamos una query SQL adaptada a los parámetros de la petición.
         const queryString = construirQueryString(req.query, conexion);
 
-        //Realizamos la petición
+        // Realizamos la petición.
         const [result] = await conexion.query(queryString);
 
-        //Si la petición no da errores, respondemos con los datos obtenidos.
+        // Si la petición no da errores, respondemos con los datos obtenidos.
         res.statusCode = 200;
         res.send({
             status: "Ok",
@@ -45,13 +46,13 @@ async function buscarExperiencias(req, res, next) {
 function construirQueryString(params, conexion) {
     const { texto, precioMinimo, precioMaximo, fechaInicial, fechaFinal } = params;
 
-    //Parte de la string que siempre se va a usar
+    // Parte de la string que siempre se va a usar.
     const queryBase = `SELECT * FROM experiencias WHERE`;
 
-    //Array en el que se irán añadiendo todas las condiciones
+    // Array en el que se irán añadiendo todas las condiciones.
     const queryArray = [];
 
-    //Cuando el parámetro está definido se añade al queryArray el string que define la condición relativa al parámetro.
+    // Cuando el parámetro está definido se añade al queryArray el string que define la condición relativa al parámetro.
     if (typeof texto !== 'undefined' && texto.length !== 0) {
         queryArray.push(
             `CONCAT(
