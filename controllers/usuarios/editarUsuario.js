@@ -28,7 +28,7 @@ async function editarUsuario(req, res, next) {
 function generarQueryString(req, conexion) {
     const { id } = req.userAuth
     const { nombre, biografia, nombreAvatar } = req.body;
-    let queryArray = [];
+    const queryArray = [];
 
     if (typeof nombre !== 'undefined' && nombre.length > 0) {
         queryArray.push(`nombre=${conexion.escape(nombre)}`)
