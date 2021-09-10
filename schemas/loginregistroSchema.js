@@ -34,4 +34,4 @@ const loginRegistroSchema = Joi.object().keys({
     email: emailSchema,
 });
 
-module.exports = {loginRegistroSchema, contraseñaSchema};
+module.exports = {loginRegistroSchema, contraseñaSchema, emailSchema};

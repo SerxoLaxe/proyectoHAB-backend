@@ -5,7 +5,9 @@ const listarTodos = require('./conseguirTodoUsuario');
 const validar = require('./validarUsuario');
 const eliminar = require('./eliminarUsuario');
 const login = require('./loginUsuario');
-const cambiarContraseña = require('./cambiarContraseñaUsuario')
+const cambiarContraseña = require('./cambiarContraseñaUsuario');
+const solicitarRecuperacionContraseña = require('./solicitarRecuperacionContraseñaUsuario');
+const efectuarRecuperacionContraseña = require('./efectuarRecuperacionContraseña');
 
 module.exports = {
     editar,
@@ -16,4 +18,6 @@ module.exports = {
     eliminar,
     login,
     cambiarContraseña,
+    solicitarRecuperacionContraseña,
+    efectuarRecuperacionContraseña,
 };
