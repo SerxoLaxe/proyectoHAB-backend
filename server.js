@@ -49,7 +49,7 @@ const usuario = require('./controllers/usuarios/index');
 app.use(morgan('dev'));
 
 //Evita conflictos en nuestra base de datos local.
-app.use(cors());                                                  
+app.use(cors());
 
 // Middleware parsing responses a json.
 app.use(express.json());
@@ -117,17 +117,17 @@ app.post('/usuarios', usuario.registrar);
 // POST validar usuario mediante codigo. 👍 
 app.get('/usuarios/validar/:codigo', usuario.validar);
 
-// PUT usuario, para editar sus datos.  (Sólo el propio usuario)❌ 👈
+// PUT usuario, para editar sus datos.  (Sólo el propio usuario) 👍
 app.put('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.editar);
 
 // DELETE usuario, elimina un usuario. (Sólo el propio usuario)👍
-app.delete('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.eliminar);
+app.delete('/usuarios/:id', esUsuario, existe, /* esPropietarioPerfil, */ usuario.eliminar);
 
 // GET login de usuario. 👍
 app.post('/usuarios/login', usuario.login);
 
 // PUT Cambia la contraseña cuando el usuario está logueado 👍
-app.put('/usuarios/:id/changepassword', esUsuario, existe, esPropietarioPerfil, usuario.cambiarContraseña);
+app.put('/usuarios/changepassword', esUsuario, existe, esPropietarioPerfil, usuario.cambiarContraseña);
 
 // POST Solicita la recuperación de la contraseña introduciendo solamente el email ( para usuarios que hayan olvidado su contraseña).👍
 app.post('/usuarios/lostpassword/requestchange', usuario.solicitarRecuperacionContraseña);
