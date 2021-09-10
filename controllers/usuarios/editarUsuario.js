@@ -42,16 +42,16 @@ function generarQueryString(req, conexion) {
         queryArray.push(`avatar=${conexion.escape(nombreAvatar)}`)
     }
 
-    if (queryArray.length !== 0) {
-        const queryString = queryArray.join(' , ');
-        const finalString = `UPDATE usuarios SET ${queryString} WHERE id=${conexion.escape(id)}`;
-        console.log(finalString);
-        return finalString;
-    } else {
+    if (queryArray.length === 0) {
         const error = new Error('Ningún campo cubierto, cubre al menos uno para editar el perfil');
         error.httpStatus = 400;
         throw error;
     }
+
+    const queryString = queryArray.join(' , ');
+    const finalString = `UPDATE usuarios SET ${queryString} WHERE id=${conexion.escape(id)}`;
+    return finalString;
+
 }
 
 
