@@ -16,12 +16,12 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
  * @param {Object} foto - Objeto imagen de Sharp.
  * @returns {string} - Nombre de la imagen.
  */
-async function guardarImagenesExperiencia(foto) {
+async function guardarImagen(foto, anchuraFinal) {
     const { UPLOAD_DIRECTORY } = process.env;
     const recursosDir = path.join(__dirname, UPLOAD_DIRECTORY);
     await ensureDir(recursosDir);                               //compruebo si hay en el directorio de recursos y sino lo creo 
     const imagen = sharp(foto.data);                            //leo el buffer (foto.data) con sharp
-    imagen.resize(600);                                         //controlo el tamaño
+    imagen.resize(anchuraFinal);                                         //controlo el tamaño
     const nombreImagen = `${uuid.v4()}.jpg`;                    //genero un nombre para la foto con uuid sin controlar el formato
     await imagen.toFile(path.join(recursosDir, nombreImagen));  //guardo la imagen en mi directorio de recursos 
     return nombreImagen;                                         //devuelvo el nombre de la foto
@@ -110,7 +110,7 @@ async function sendMail({ to, subject, body }) {
 
 module.exports = {
     validate,
-    guardarImagenesExperiencia,
+    guardarImagen,
     generateRandomString,
     log,
     logError,
