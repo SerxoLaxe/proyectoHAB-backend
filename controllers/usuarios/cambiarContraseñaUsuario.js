@@ -43,7 +43,7 @@ async function cambiarContraseña(req, res, next) {
     `       ,
             [nuevaContraseña, new Date(), id]
         );
-
+        res.httpStatus = 200;
         res.send({
             status: "ok",
             message: "Contraseña cambiada",
