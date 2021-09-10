@@ -1,5 +1,5 @@
 const conexionMysql = require("../../DB/conexionMysql");
-const { formatearDateMysql, validate, guardarImagenesExperiencia } = require("../../helpers");
+const { formatearDateMysql, validate, guardarImagen } = require("../../helpers");
 const { añadirExperienciaSchema } = require('../../schemas')
 
 /**
@@ -84,7 +84,7 @@ async function procesarImagenes(files, conexion, idExperiencia) {
 
     //Iteramos por cada archivo presente en files.
     for (const foto of Object.values(files)) {
-        const nombreFoto = await guardarImagenesExperiencia(foto);
+        const nombreFoto = await guardarImagen(foto, 600);
         fotos.push(nombreFoto);
 
          //Las inserto en la DB.
