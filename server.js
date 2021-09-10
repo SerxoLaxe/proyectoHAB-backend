@@ -126,8 +126,14 @@ app.delete('/usuarios/:id', esUsuario, existe, esPropietarioPerfil, usuario.elim
 // GET login de usuario. 👍
 app.post('/usuarios/login', usuario.login);
 
-// PUT Cambia la contraseña ❌👈
+// PUT Cambia la contraseña cuando el usuario está logueado 👍
 app.put('/usuarios/:id/changepassword', esUsuario, existe, esPropietarioPerfil, usuario.cambiarContraseña);
+
+// POST Solicita la recuperación de la contraseña introduciendo solamente el email ( para usuarios que hayan olvidado su contraseña).👍
+app.post('/usuarios/lostpassword/requestchange', usuario.solicitarRecuperacionContraseña);
+
+// POST Efectúa la recuperación de la contraseña , introduciendo una nueva. 👍
+app.post('/usuarios/lostpassword/makechange', usuario.efectuarRecuperacionContraseña);
 
 /* RESERVADOS A DESARROLLO */
 
