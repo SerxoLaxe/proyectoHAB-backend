@@ -9,6 +9,7 @@ const helpers = require('./helpers');                       //Helpers, incluye g
 const express = require('express');                         //Módulo para la creación de servidor http.
 const app = express();                                      //definición de aplicación Express.
 require('./DB/initDB').config();                            //Reset y configuración de la base de datos con datos creados por módulo Faker.
+const cors = require("cors");                              // Se incluye este modulo, para que no exista conflictos en la base de datos cuando se realicen  peticiones en el servidor local
 
 /* IMPORT DE CONTROLLERS */
 const experiencia = require('./controllers/experiencias/index');        //Import de controladores experiencias
@@ -18,6 +19,7 @@ const usuario = require('./controllers/usuarios/index');                //Import
 
 //GLOBALES
 app.use(morgan('dev'));                                                 //MIddleware log de eventos de express.
+app.use(cors());                                                        //Evita conflictos en nuestra base de datos local. 👍
 app.use(express.json());                                                //Middleware parsing responses a json.
 app.use(express.static(path.join(__dirname, UPLOAD_DIRECTORY)));        //Middleware recursos estáticos.
 app.use(fileUpload());                                                  //Middleware subida de archivos a servidor.
