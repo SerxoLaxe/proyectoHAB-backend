@@ -8,7 +8,8 @@ const añadirImagen = require('./añadirImagenExperiencia');
 const eliminarImagen = require('./eliminarImagenExperiencia');
 const puntuar = require('./puntuarExperiencia');
 const reservar = require('./reservarExperiencia');
-const cancelar = require('./cancelarExperiencia')
+const cancelar = require('./cancelarExperiencia');
+const reservas = require('./listarReservas');
 
 module.exports = { 
     añadir,
@@ -22,4 +23,5 @@ module.exports = {
     puntuar,
     reservar,
     cancelar,
+    reservas,
 };

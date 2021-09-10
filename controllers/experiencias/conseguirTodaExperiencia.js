@@ -1,7 +1,7 @@
 const conexionMysql = require('../../DB/conexionMysql');
 
 /** 
- * Responde con una array de todos los datos de la tabla experiencias. ❌ 
+ * Responde con una array de todos los datos de la tabla experiencias. 👍
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 

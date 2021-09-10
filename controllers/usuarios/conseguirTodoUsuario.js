@@ -6,17 +6,15 @@ const conexionMysql = require('../../DB/conexionMysql');
  * @param {*} res 
  * @param {*} next 
  */
-async function conseguirTodoUsuario(req, res, next){
+async function conseguirTodoUsuario(req, res, next) {
     let conexion;
     try {
         conexion = await conexionMysql();
-
         const [resultado] = await conexion.query(
             `
             SELECT * FROM usuarios
             `
-        )
-
+        );
         res.statusCode = 200;
         res.send({
             status: 'Ok',

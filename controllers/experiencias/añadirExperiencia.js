@@ -13,10 +13,17 @@ async function añadirExperiencia(req, res, next) {
 
     let conexion;
     try {
-        await validate(añadirExperienciaSchema, req);                   //Validamos la petición mediante Joi.
-        conexion = await conexionMysql();                               //Creamos una conexión a la BD.
-        const idExperiencia = await procesarBody(req, conexion);        //Procesamos los parámetros del body.
-        await procesarImagenes(req.files, conexion, idExperiencia);     //Procesamos las imágenes.
+        // Validamos la petición mediante Joi.
+        await validate(añadirExperienciaSchema, req);
+
+        // Creamos una conexión a la BD.                   
+        conexion = await conexionMysql();
+        
+         // Procesamos los parámetros del body.
+        const idExperiencia = await procesarBody(req, conexion);
+        
+        // Procesamos las imágenes.
+        await procesarImagenes(req.files, conexion, idExperiencia);     
         res.statusCode = 200;
         res.send({
             status: "Ok",
@@ -33,8 +40,11 @@ async function añadirExperiencia(req, res, next) {
 
 async function procesarBody(req, conexion) {
 
-    const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
-    const {                                         //saco los datos del body.
+    // Almacenamos la fecha actual.
+    const now = formatearDateMysql(new Date());
+    
+    // Saco los datos del body.
+    const {                                         
         nombre,
         descripcion,
         fecha_inicial,
@@ -44,7 +54,9 @@ async function procesarBody(req, conexion) {
         plazas_totales,
     } = req.body;
     const idAutor = req.userAuth.id;
-    const [result] = await conexion.query(          // hacemos la INSERT en el DB
+
+    // hacemos la INSERT en el DB.
+    const [result] = await conexion.query(          
         `
         INSERT INTO experiencias (fecha_insert, nombre, descripcion, fecha_inicial, fecha_final, precio, ubicacion, plazas_totales, id_autor)
         VALUES (?,?,?,?,?,?,?,?,?)
@@ -65,13 +77,18 @@ async function procesarBody(req, conexion) {
 }
 
 async function procesarImagenes(files, conexion, idExperiencia) {
-    //proceso las fotos
-    const now = formatearDateMysql(new Date());     //Almacenamos la fecha actual
+
+    // Almacenamos la fecha actual
+    const now = formatearDateMysql(new Date());    
     const fotos = [];
+
+    //Iteramos por cada archivo presente en files.
     for (const foto of Object.values(files)) {
         const nombreFoto = await guardarImagenesExperiencia(foto);
         fotos.push(nombreFoto);
-        await conexion.query(       //las inserto en el DB
+
+         //Las inserto en la DB.
+        await conexion.query(      
             `
             INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
             VALUES (?,?,?)

@@ -51,4 +51,5 @@ async function activarUsuario(codigo, conexion) {
         [codigo]
     );
 }
+
 module.exports = validarUsuario;
