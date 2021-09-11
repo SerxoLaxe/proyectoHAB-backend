@@ -24,8 +24,8 @@ const añadirExperienciaSchema = Joi.object().keys({
         ubicacion: Joi.string().required().error(
             new Error('La ubicación un campo obligatorio.')
         ),
-        plazas_totales: Joi.number().required().positive().error(
-            new Error('Las plazas totales son obligatorias y debe ser de valor positivo.')
+        plazas_totales: Joi.number().required().positive().integer().error(
+            new Error('Las plazas totales son obligatorias y debe ser un integral positivo.')
         ),
     }),
     files: Joi.object().required().min(schemaExperiencias.minImagenes).max(schemaExperiencias.maxImagenes).error(

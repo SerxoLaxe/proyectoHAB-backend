@@ -1,5 +1,7 @@
 # Backend proyecto final bootcamp Hack a Boss.
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
+[![DeepSource](https://deepsource.io/gh/SerxoLaxe/proyectoHAB-backend.svg/?label=active+issues&show_trend=true&token=FWHItyQywUKPj3Gk9NSQfPq_)](https://deepsource.io/gh/SerxoLaxe/proyectoHAB-backend/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/SerxoLaxe/proyectoHAB-backend.svg/?label=resolved+issues&show_trend=true&token=FWHItyQywUKPj3Gk9NSQfPq_)](https://deepsource.io/gh/SerxoLaxe/proyectoHAB-backend/?ref=repository-badge)
 
 Este es el backend del proyecto final del bootcamp full stack Javascript impartido por Hack a Boss.
 

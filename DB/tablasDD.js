@@ -18,7 +18,7 @@ const tablaUsuarios = {
         codigo_validacion VARCHAR(100),
         eliminado BOOLEAN DEFAULT false,
         ultimo_cambio_contraseña DATETIME,
-        codigo_recuperacion varchar(100)
+        codigo_recuperacion VARCHAR(100)
         )
     `,
 };
@@ -65,7 +65,7 @@ const tablaReservas = {
     nombre: 'reservas',
     columnas:
     `(
-        id INT PRIMARY KEY AUTO_INCREMENT,
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha DATETIME NOT NULL,
         cancelada BOOLEAN DEFAULT false,
         id_usuario INT NOT NULL,
@@ -75,5 +75,21 @@ const tablaReservas = {
     )`
 }
 
-module.exports = { tablaUsuarios, tablaExperiencias, tablaExperiencias_fotos, tablaReservas };
+const tablaPuntuaciones = {
+    nombre: 'puntuaciones',
+    columnas: 
+    `(
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        fecha DATETIME NOT NULL,
+        comentario VARCHAR(1000), 
+        puntuacion DECIMAL(2,1) NOT NULL,
+        id_usuario INT NOT NULL,
+        FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+        id_experiencia INT NOT NULL,
+        FOREIGN KEY (id_experiencia) REFERENCES experiencias(id)
+
+    )`
+}
+
+module.exports = { tablaUsuarios, tablaExperiencias, tablaExperiencias_fotos, tablaReservas, tablaPuntuaciones };
 

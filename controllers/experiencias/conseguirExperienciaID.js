@@ -8,6 +8,7 @@ const conexionMysql = require("../../DB/conexionMysql");
  * @param {any} next
  */
 async function conseguirExperienciaID(req, res, next) {
+<<<<<<< HEAD
   let conexion;
   try {
     conexion = await conexionMysql();
@@ -22,6 +23,17 @@ async function conseguirExperienciaID(req, res, next) {
     `,
       [id]
     );
+=======
+    let conexion;
+    try {
+        conexion = await conexionMysql();
+        const { id } = req.params;
+        const [result] = await conexion.query(
+            `
+            SELECT * FROM experiencias WHERE id=?
+            `,
+            [id]);
+>>>>>>> ab6b81ca93a76004e82ea600aff5cf3fcec1cb95
 
     let [single] = result;
 

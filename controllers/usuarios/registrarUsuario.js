@@ -2,7 +2,7 @@ const conexionMysql = require('../../DB/conexionMysql');
 const { validate, generateRandomString, formatearDateMysql, sendMail } = require('../../helpers');
 const { loginRegistroSchema } = require('../../schemas/index')
 /**
- * Registra un nuevo usuario tomando del body de la petición el email y la contraseña, genera para el usuario un código de registro y envia un correo con enlace de validación. ❌
+ * Registra un nuevo usuario tomando del body de la petición el email y la contraseña, genera para el usuario un código de registro y envia un correo con enlace de validación. 👍
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -10,17 +10,30 @@ const { loginRegistroSchema } = require('../../schemas/index')
 async function registrarUsuario(req, res, next) {
     let conexion;
     try {
-        await validate(loginRegistroSchema, req.body);                   //Validamos los datos del body.
-        const { email } = req.body;                                         //Destructuring del body.
-        conexion = await conexionMysql();                                   //Obtenemos una conexión a la BD.
-        await existeUsuarioConEmail(email, conexion);                       //Comprobamos que el email no exista ya en la BD.
-        const codigoRegistro = generateRandomString();                      //Genero un código de registro (ej: sbdhfbud809urut9304)
-        await añadirUsuarioEnTabla(req.body, codigoRegistro, conexion);     //Añado el usuario a la tabla de usuarios.
-        enviarEmail(email, codigoRegistro)                            //Envio un email con el enlace de validación.
+        // Validamos los datos del body.
+        await validate(loginRegistroSchema, req.body);
+        
+        // Destructuring del body.
+        const { email } = req.body;
+
+        // Obtenemos una conexión a la BD.                                        
+        conexion = await conexionMysql();
+
+        // Comprobamos que el email no exista ya en la BD.                                   
+        await existeUsuarioConEmail(email, conexion);
+        
+        // Genero un código de registro (ej: sbdhfbud809urut9304)
+        const codigoRegistro = generateRandomString();
+        
+        // Añado el usuario a la tabla de usuarios.
+        await añadirUsuarioEnTabla(req.body, codigoRegistro, conexion);
+        
+        // Envio un email con el enlace de validación.
+        enviarEmail(email, codigoRegistro)                            
         res.statusCode = 200;
         res.send({
             status: 'Ok',
-            message: 'Registrar usuario',
+            message: 'Usuario registrado correctamente',
         });
     } catch (error) {
         next(error);
@@ -58,7 +71,9 @@ async function existeUsuarioConEmail(email, conexion) {
  * @param {Object} conexion - conexion a Mysql
  */
 async function añadirUsuarioEnTabla(datos, codigoRegistro, conexion) {
-    await conexion.query(                                   // añado el usuario a la base de datos (con registrationCode=sbdhfbud809urut9304)
+
+    // añado el usuario a la base de datos (con registrationCode=sbdhfbud809urut9304)
+    await conexion.query(                                   
         `
         INSERT INTO usuarios(fecha,email,contraseña,codigo_validacion)
         VALUES (?,?,SHA2(?, 512),?)

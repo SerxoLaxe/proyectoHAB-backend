@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { validate } = require('../../helpers');
 const { loginRegistroSchema } = require('../../schemas');
 /**
- * Esta función logea a los usuarios con credenciales correctas respondiendo con un JWT. ❌
+ * Esta función logea a los usuarios con credenciales correctas respondiendo con un JWT. 👍
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -28,14 +28,14 @@ async function loginUsuario(req, res, next) {
             throw error;
         }
 
-        // compruebo si el usuario está activo
+        // Compruebo si el usuario está activo.
         if (!usuario[0].activo) {
             const error = new Error("El usuario no está activo. Comprueba tu email.");
             error.httpStatus = 401;
             throw error;
         }
 
-        // si todo está bien devolvemos un json con los datos de login
+        // Si todo está bien devolvemos un json con los datos de login.
         const info = {
             id: usuario[0].id,
             role: usuario[0].privilegios,
@@ -58,4 +58,5 @@ async function loginUsuario(req, res, next) {
         if (conexion) conexion.release();
     }
 }
+
 module.exports = loginUsuario;
