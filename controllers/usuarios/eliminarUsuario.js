@@ -35,7 +35,7 @@ async function eliminarUsuario(req, res, next) {
         await conexion.query(
             `
         UPDATE usuarios
-        SET contraseña="[BORRADO]", nombre="[BORRADO]", biografia="[BORRADO]" ,avatar=NULL, activo=0, eliminado=1, ultimo_cambio_contraseña=?
+        SET contraseña="[BORRADO]", nombre="[BORRADO]", email="[BORRADO]" ,biografia="[BORRADO]" ,avatar=NULL, activo=0, eliminado=1, ultimo_cambio_contraseña=?
         WHERE id=?
     `,
             [new Date(), id]

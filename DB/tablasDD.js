@@ -18,7 +18,7 @@ const tablaUsuarios = {
         codigo_validacion VARCHAR(100),
         eliminado BOOLEAN DEFAULT false,
         ultimo_cambio_contraseña DATETIME,
-        codigo_recuperacion varchar(100)
+        codigo_recuperacion VARCHAR(100)
         )
     `,
 };
