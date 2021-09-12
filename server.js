@@ -122,10 +122,9 @@ app.post("/experiencias/:id/puntuar", esUsuario, existe, experiencia.puntuar);
 
 // POST Añade imagen a experiencia.( Sólo administrador) ❌
 app.post(
-  "/experiencias/:id/imagen/:id",
+  "/experiencias/:id/imagen",
   esUsuario,
   esAdmin,
-  esAutor,
   existe,
   experiencia.añadirImagen
 );
