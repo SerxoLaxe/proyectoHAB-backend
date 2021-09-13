@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { joiConfig } = require('../config');
 const { schemaUsuarios } = joiConfig;
 
-/**Esquema de validación para las contraseñas */
+/**Esquema de validación para las contraseñas ❌*/ 
 const contraseñaSchema = Joi.
     string().
     required().
