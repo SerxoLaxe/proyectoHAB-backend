@@ -1,5 +1,6 @@
 const conexionMysql = require("../../DB/conexionMysql");
-const { formatearDateMysql } = require("../../helpers");
+const { formatearDateMysql, validate } = require("../../helpers");
+const { editarExperienciaSchema } = require("../../schemas");
 
 /**
  * Realiza un UPDATE en la tabla experiencias introduciendo los datos
@@ -12,6 +13,9 @@ const { formatearDateMysql } = require("../../helpers");
 async function editarExperiencia(req, res, next) {
   let conexion;
   try {
+    // validamos la peticion mediante Joi.
+    await validate(editarExperienciaSchema, req);
+
     conexion = await conexionMysql();
 
     const { id } = req.params;

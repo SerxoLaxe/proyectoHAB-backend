@@ -19,7 +19,7 @@ async function conseguirExperienciaID(req, res, next) {
       [id]
     );
 
-    let [single] = result;
+    const [single] = result;
 
     const [fotos] = await conexion.query(
       `
