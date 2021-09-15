@@ -39,20 +39,20 @@ async function puntuarExperiencia(req, res, next) {
 async function existenReservaPuntuacion(conexion, idUsuario, idExperiencia) {
     const [resultado] = await conexion.query(
         `
-        SELECT res.id, punt.id FROM reservas AS res
-        LEFT JOIN puntuaciones AS punt ON punt.id_usuario = res.id_usuario
+        SELECT res.id AS id_reserva, punt.id AS id_puntuacion FROM reservas AS res
+        LEFT JOIN puntuaciones AS punt ON punt.id_usuario = res.id_usuario AND punt.id_experiencia = res.id_experiencia
         WHERE res.id_usuario=? 
         AND res.id_experiencia=?
         AND res.cancelada=false
         `,
         [idUsuario, idExperiencia]);
 
-    if (resultado.length === 0) {
+    if (resultado.length === 0 || resultado[0].id_reserva === null) {
         const error = new Error('no has participado en esta experiencia ');
         error.httpStatus = 404;
         throw error;
     }
-    if (resultado[0].id !== null) {
+    if (resultado[0].id_puntuacion !== null) {
         const error = new Error('Ya has puntuado esta experiencia');
         error.httpStatus = 401;
         throw error;
