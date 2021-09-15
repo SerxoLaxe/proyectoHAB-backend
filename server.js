@@ -86,7 +86,7 @@ app.get("/experiencias/:id/reservas", esUsuario, existe, experiencia.reservas);
 // POST Añade nueva experiencia ( Sólo administrador ) 👍
 app.post("/experiencias", esUsuario, esAdmin, experiencia.añadir);
 
-// PUT Editar experiencia.  ( Sólo administrador ) ❌
+// PUT Editar experiencia.  ( Sólo administrador ) 👍
 app.put(
   "/experiencias/:id",
   esUsuario,
@@ -96,13 +96,13 @@ app.put(
   experiencia.editar
 );
 
-// DELETE Elimina experiencia.  ( Sólo administrador ) ❌
+// DELETE Elimina experiencia.  ( Sólo administrador ) 👍
 app.delete(
   "/experiencias/:id",
   esUsuario,
   esAdmin,
-  esAutor,
   existe,
+  esAutor,
   experiencia.eliminar
 );
 
@@ -117,10 +117,10 @@ app.delete(
   experiencia.cancelar
 );
 
-// POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).👍
+// POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).
 app.post("/experiencias/:id/puntuar", esUsuario, existe, experiencia.puntuar);
 
-// POST Añade imagen a experiencia.( Sólo administrador) ❌
+// POST Añade imagen a experiencia.( Sólo administrador) 👍
 app.post(
   "/experiencias/:id/imagen",
   esUsuario,
@@ -133,6 +133,7 @@ app.post(
 app.delete(
   "/experiencias/:id/imagen/:imagenId",
   esUsuario,
+  esAdmin,
   existe,
   experiencia.eliminarImagen
 );
@@ -166,7 +167,7 @@ app.delete(
   usuario.eliminar
 );
 
-// GET login de usuario. 👍
+// POST login de usuario. 👍
 app.post("/usuarios/login", usuario.login);
 
 // PUT Cambia la contraseña cuando el usuario está logueado 👍

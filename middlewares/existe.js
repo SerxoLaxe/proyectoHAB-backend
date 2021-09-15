@@ -47,6 +47,8 @@ async function existe(req, res, next) {
   } catch (error) {
     error.httpStatus = 404;
     next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 }
 module.exports = existe;
