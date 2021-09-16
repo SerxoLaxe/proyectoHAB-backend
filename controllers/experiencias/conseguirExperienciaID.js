@@ -19,8 +19,6 @@ async function conseguirExperienciaID(req, res, next) {
       [id]
     );
 
-    const [single] = result;
-
     const [fotos] = await conexion.query(
       `
     SELECT id, fecha_foto, foto
@@ -33,7 +31,7 @@ async function conseguirExperienciaID(req, res, next) {
     res.send({
       status: "Ok",
       data: {
-        ...single,
+        ...result[0],
         fotos,
       },
     });

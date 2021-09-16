@@ -69,6 +69,8 @@ async function eliminarExperiencia(req, res, next) {
     });
   } catch (error) {
     next(error);
+  } finally {
+    if (conexion) conexion.release();
   }
 }
 module.exports = eliminarExperiencia;

@@ -36,7 +36,7 @@ async function eliminarImagenExperiencia(req, res, next) {
     // elimino la imagen de la tabla
     await conexion.query(
       `
-    DELETE FROM experiencias_fotos WHERE id=? AND experiencia_id
+    DELETE FROM experiencias_fotos WHERE id=? AND experiencia_id=?
     `,
       [imagenId, id]
     );
