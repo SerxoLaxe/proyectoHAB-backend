@@ -59,7 +59,7 @@ async function existenReservaPuntuacion(conexion, idUsuario, idExperiencia) {
     throw error;
   }
 
-  if (resultado[0].id !== null) {
+  if (resultado[0].id_puntuacion !== null) {
     const error = new Error("Ya has puntuado esta experiencia");
     error.httpStatus = 401;
     throw error;
