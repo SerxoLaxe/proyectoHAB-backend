@@ -1,11 +1,10 @@
-const conexionMysql = require('../../DB/conexionMysql');
-const {validate, generateRandomString, sendMail} = require('../../helpers');
-const { emailSchema} = require('../../schemas')
+const conexionMysql = require("../../DB/conexionMysql");
+const { validate, generateRandomString, sendMail } = require("../../helpers");
+const { emailSchema } = require("../../schemas");
 
-async function solicitarRecuperacionContraseña(req,res, next){
-    let conexion;
+async function solicitarRecuperacionContraseña(req, res, next) {
+  let conexion;
   try {
-    
     // sacamos el correo desde el body.
     const { email } = req.body;
 
@@ -68,7 +67,6 @@ async function solicitarRecuperacionContraseña(req,res, next){
   } finally {
     if (conexion) conexion.release();
   }
-
 }
 
 module.exports = solicitarRecuperacionContraseña;

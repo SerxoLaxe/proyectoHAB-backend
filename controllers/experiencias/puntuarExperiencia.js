@@ -41,9 +41,8 @@ async function puntuarExperiencia(req, res, next) {
  * @param {any} idExperiencia
  */
 async function existenReservaPuntuacion(conexion, idUsuario, idExperiencia) {
-
-    const [resultado] = await conexion.query(
-        `
+  const [resultado] = await conexion.query(
+    `
         SELECT res.id AS id_reserva, punt.id AS id_puntuacion FROM reservas AS res
         LEFT JOIN puntuaciones AS punt ON punt.id_usuario = res.id_usuario AND punt.id_experiencia = res.id_experiencia
 

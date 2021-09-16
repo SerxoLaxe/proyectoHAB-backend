@@ -1,10 +1,7 @@
-
 /** Tabla de Usuarios */
 const tablaUsuarios = {
-
-    nombre: 'usuarios',
-    columnas:
-        ` 
+  nombre: "usuarios",
+  columnas: ` 
         (
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nombre VARCHAR(200),
@@ -25,10 +22,8 @@ const tablaUsuarios = {
 
 /** Tabla de experiencias */
 const tablaExperiencias = {
-
-    nombre: 'experiencias',
-    columnas:
-        `
+  nombre: "experiencias",
+  columnas: `
         (
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha_insert DATETIME NOT NULL,
@@ -43,14 +38,13 @@ const tablaExperiencias = {
         id_autor INT NOT NULL,
         FOREIGN KEY (id_autor) REFERENCES usuarios (id)
         )
-    `
+    `,
 };
 
 /** Tabla de experiencias_fotos */
 const tablaExperiencias_fotos = {
-    nombre: 'experiencias_fotos',
-    columnas:
-        `
+  nombre: "experiencias_fotos",
+  columnas: `
         (
         id INT PRIMARY KEY AUTO_INCREMENT,
         fecha_foto DATETIME NOT NULL,
@@ -62,9 +56,8 @@ const tablaExperiencias_fotos = {
 };
 
 const tablaReservas = {
-    nombre: 'reservas',
-    columnas:
-    `(
+  nombre: "reservas",
+  columnas: `(
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha DATETIME NOT NULL,
         cancelada BOOLEAN DEFAULT false,
@@ -72,13 +65,12 @@ const tablaReservas = {
         FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
         id_experiencia INT NOT NULL,
         FOREIGN KEY (id_experiencia) REFERENCES experiencias(id)
-    )`
-}
+    )`,
+};
 
 const tablaPuntuaciones = {
-    nombre: 'puntuaciones',
-    columnas: 
-    `(
+  nombre: "puntuaciones",
+  columnas: `(
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha DATETIME NOT NULL,
         comentario VARCHAR(1000), 
@@ -88,8 +80,13 @@ const tablaPuntuaciones = {
         id_experiencia INT NOT NULL,
         FOREIGN KEY (id_experiencia) REFERENCES experiencias(id)
 
-    )`
-}
+    )`,
+};
 
-module.exports = { tablaUsuarios, tablaExperiencias, tablaExperiencias_fotos, tablaReservas, tablaPuntuaciones };
-
+module.exports = {
+  tablaUsuarios,
+  tablaExperiencias,
+  tablaExperiencias_fotos,
+  tablaReservas,
+  tablaPuntuaciones,
+};
