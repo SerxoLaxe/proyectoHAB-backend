@@ -1,4 +1,4 @@
-const añadirExperienciaSchema = require("./añadirExperienciaSchema");
+const {añadirExperienciaSchema, imagenesExperienciaSchema} = require("./añadirExperienciaSchema");
 const buscarExperienciaSchema = require("./buscarExperienciaSchema");
 const editarExperienciaSchema = require("./editarExperienciaSchema");
 const { loginRegistroSchema } = require("./loginregistroSchema");
@@ -16,4 +16,5 @@ module.exports = {
   contraseñaSchema,
   emailSchema,
   perfilUsuarioSchema,
+  imagenesExperienciaSchema
 };

@@ -1,9 +1,10 @@
 const conexionMysql = require("../../DB/conexionMysql");
-const { validate, guardarImagen } = require("../../helpers");
+const { validate, guardarAvatarUsuario } = require("../../helpers");
 const { perfilUsuarioSchema } = require("../../schemas");
+
 /**
  * Edita el usuario indicado por su ID, introduciendo nuevos valores en las
- * columnas de nombre, biografía y avatar. ❌
+ * columnas de nombre, biografía y avatar. 👍
  */
 async function editarUsuario(req, res, next) {
   let conexion;
@@ -13,9 +14,8 @@ async function editarUsuario(req, res, next) {
       typeof req.files !== "undefined" &&
       Object.values(req.files).length > 0
     ) {
-      req.body.nombreAvatar = await guardarImagen(
+      req.body.nombreAvatar = await guardarAvatarUsuario(
         Object.values(req.files)[0],
-        300
       );
     }
     conexion = await conexionMysql();

@@ -131,10 +131,9 @@ app.post(
 
 // DELETE Elimina imagen de experiencia (Sólo administrador) 👍
 app.delete(
-  "/experiencias/:id/imagen/:imagenId",
+  "/experiencias/imagen/:idImagen",
   esUsuario,
   esAdmin,
-  existe,
   experiencia.eliminarImagen
 );
 

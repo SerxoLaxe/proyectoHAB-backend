@@ -7,6 +7,18 @@ const sharp = require("sharp");
 const uuid = require("uuid");
 const sgMail = require("@sendgrid/mail");
 
+const {
+  fotoConfig: {
+    experiencias: {
+      anchuraNormal,
+      anchuraThumbnail,
+    },
+    usuarios:{
+      anchuraAvatar,
+    }
+  } } = require('./config');
+
+
 const { UPLOAD_DIRECTORY } = process.env;
 const recursosDir = path.join(__dirname, UPLOAD_DIRECTORY);
 
@@ -28,13 +40,40 @@ async function eliminarImagen(nombreImagen) {
  * @param {Object} foto - Objeto imagen de Sharp.
  * @returns {string} - Nombre de la imagen.
  */
-async function guardarImagen(foto, anchuraFinal) {
+
+async function guardarAvatarUsuario(imagen) {
   await ensureDir(recursosDir); //compruebo si hay en el directorio de recursos y sino lo creo
-  const imagen = sharp(foto.data); //leo el buffer (foto.data) con sharp
-  imagen.resize(anchuraFinal); //controlo el tamaño
-  const nombreImagen = `${uuid.v4()}.jpg`; //genero un nombre para la foto con uuid sin controlar el formato
-  await imagen.toFile(path.join(recursosDir, nombreImagen)); //guardo la imagen en mi directorio de recursos
-  return nombreImagen; //devuelvo el nombre de la foto
+  const imagenSharp = sharp(imagen.data); //leo el buffer (foto.data) con sharp
+  imagenSharp.resize({
+    fit: sharp.fit.cover,
+    width: anchuraAvatar,
+    height: anchuraAvatar,
+  }).sharpen();
+  const nombreAvatar = `${uuid.v4()}.jpg`;
+  await imagenSharp.toFile(path.join(recursosDir, nombreAvatar));
+  return nombreAvatar;
+
+}
+async function guardarImagenExperiencia(foto) {
+  await ensureDir(recursosDir); //compruebo si hay en el directorio de recursos y sino lo creo
+  const imagenNormal = sharp(foto.data); //leo el buffer (foto.data) con sharp
+  const imagenThumbnail = sharp(foto.data);
+
+
+  imagenThumbnail.resize({
+    fit: sharp.fit.cover,
+    width: anchuraThumbnail,
+    height: anchuraThumbnail,
+  }).sharpen();
+
+  imagenNormal.resize(anchuraNormal); //controlo el tamaño
+
+  const UUID = uuid.v4();
+  const nombreImagenNormal = `${UUID}.jpg`; //genero un nombre para la foto con uuid sin controlar el formato
+  const nombreImagenThumbnail = `${UUID}-thumbnail.jpg`
+  await imagenNormal.toFile(path.join(recursosDir, nombreImagenNormal)); //guardo la imagen en mi directorio de recursos
+  await imagenThumbnail.toFile(path.join(recursosDir, nombreImagenThumbnail));
+  return [nombreImagenNormal, nombreImagenThumbnail]; //devuelvo el nombre de la foto
 }
 
 /**
@@ -126,11 +165,12 @@ async function sendMail({ to, subject, body }) {
 
 module.exports = {
   validate,
-  guardarImagen,
+  guardarImagenExperiencia,
   generateRandomString,
   log,
   logError,
   formatearDateMysql,
   sendMail,
   eliminarImagen,
+  guardarAvatarUsuario,
 };

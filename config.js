@@ -45,4 +45,15 @@ const joiConfig = {
   },
 };
 
-module.exports = { fakerConfig, joiConfig };
+/**Configuración de la edición y guardado de imágenes */
+const fotoConfig ={
+  experiencias: {
+    anchuraNormal: 2500,
+    anchuraThumbnail: 1000,
+  },
+  usuarios: {
+    anchuraAvatar: 500,
+  }
+}
+
+module.exports = { fakerConfig, joiConfig, fotoConfig };

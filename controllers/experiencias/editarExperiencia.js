@@ -3,9 +3,7 @@ const { formatearDateMysql, validate } = require("../../helpers");
 const { editarExperienciaSchema } = require("../../schemas");
 
 /**
- * Realiza un UPDATE en la tabla experiencias introduciendo los datos
- * proporcionados en el body de la petición. ❌
- *
+ * Realiza un UPDATE en la tabla experiencias introduciendo los datos proporcionados en el body de la petición. 👍
  * @param {any} req
  * @param {any} res
  * @param {any} next
@@ -37,25 +35,12 @@ async function editarExperiencia(req, res, next) {
       throw error;
     }
 
-    // compruebo los campos minimos
-    if (
-      !nombre ||
-      !descripcion ||
-      !fecha_inicial ||
-      !fecha_final ||
-      !precio ||
-      !ubicacion ||
-      !plazas_totales
-    ) {
-      const error = new Error("Faltan campos obligatorios");
-      console.log(error);
-    }
     const fecha_mod = new Date();
     await conexion.query(
       `
-    UPDATE experiencias SET fecha_insert=?, nombre=?, descripcion=?, fecha_inicial=?, fecha_final=?, precio=?, ubicacion=?, plazas_totales=?
-    WHERE id=?
-    `,
+      UPDATE experiencias SET fecha_insert=?, nombre=?, descripcion=?, fecha_inicial=?, fecha_final=?, precio=?, ubicacion=?, plazas_totales=?
+      WHERE id=?
+      `,
       [
         formatearDateMysql(fecha_mod),
         nombre,
@@ -90,4 +75,5 @@ async function editarExperiencia(req, res, next) {
     if (conexion) conexion.release();
   }
 }
+
 module.exports = editarExperiencia;

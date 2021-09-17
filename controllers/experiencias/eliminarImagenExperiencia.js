@@ -12,39 +12,41 @@ async function eliminarImagenExperiencia(req, res, next) {
   try {
     conexion = await conexionMysql();
 
-    const { id, imagenId } = req.params;
+    const { idImagen } = req.params;
 
-    const [fotoActual] = await conexion.query(
+    const [imagen] = await conexion.query(
       `
-    SELECT foto FROM experiencias_fotos WHERE id=? AND experiencia_id=?
-    
+      SELECT foto, thumbnail FROM experiencias_fotos WHERE id=? 
     `,
-      [imagenId, id]
+      [idImagen]
     );
 
-    if (fotoActual.length === 0) {
+    if (imagen.length === 0) {
       const error = new Error(
-        `La foto con el id: ${imagenId} no existe en la base de datos`
+        `La foto con id ${idImagen} no existe.`
       );
       error.httpStatus = 404;
       throw error;
     }
 
     // elimino la imagen del disco
-    await eliminarImagen(fotoActual[0].foto);
+    await eliminarImagen(imagen[0].foto);
+
+    // Elimino el thumbnail.
+    await eliminarImagen(imagen[0].thumbnail)
 
     // elimino la imagen de la tabla
     await conexion.query(
       `
-    DELETE FROM experiencias_fotos WHERE id=? AND experiencia_id=?
+    DELETE FROM experiencias_fotos WHERE id=?
     `,
-      [imagenId, id]
+      [idImagen]
     );
 
     res.statusCode = 200;
     res.send({
       status: "Ok",
-      message: `La imagen ${fotoActual[0].foto} ha sido eliminada`,
+      message: `La imagen ${idImagen} ha sido eliminada`,
     });
   } catch (error) {
     next(error);

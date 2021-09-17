@@ -2,7 +2,7 @@ const conexionMysql = require("../../DB/conexionMysql");
 const {
   formatearDateMysql,
   validate,
-  guardarImagen,
+  guardarImagenExperiencia,
 } = require("../../helpers");
 const { añadirExperienciaSchema } = require("../../schemas");
 
@@ -85,18 +85,21 @@ async function procesarImagenes(files, conexion, idExperiencia) {
 
   //Iteramos por cada archivo presente en files.
   for (const foto of Object.values(files)) {
-    const nombreFoto = await guardarImagen(foto, 600);
-    fotos.push(nombreFoto);
+    const [nombreFotoNormal, nombreFotoThumbnail] = await guardarImagenExperiencia(foto);
 
-    //Las inserto en la DB.
-    await conexion.query(
-      `
-            INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
-            VALUES (?,?,?)
-            `,
-      [now, nombreFoto, idExperiencia]
-    );
+    fotos.push([now, nombreFotoNormal, nombreFotoThumbnail, idExperiencia]);
+
   }
+
+  //Las inserto en la DB.
+  await conexion.query(
+    `
+    INSERT INTO experiencias_fotos (fecha_foto, foto,thumbnail, experiencia_id)
+    VALUES ?
+    `,
+    [fotos]
+  );
+
 }
 
 module.exports = añadirExperiencia;
