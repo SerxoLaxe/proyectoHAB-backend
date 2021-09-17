@@ -85,18 +85,22 @@ async function procesarImagenes(files, conexion, idExperiencia) {
 
   //Iteramos por cada archivo presente en files.
   for (const foto of Object.values(files)) {
-    const nombreFoto = await guardarImagen(foto, 600);
-    fotos.push(nombreFoto);
-
-    //Las inserto en la DB.
-    await conexion.query(
-      `
-            INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id)
-            VALUES (?,?,?)
-            `,
-      [now, nombreFoto, idExperiencia]
+    const nombreFotoNormal = await guardarImagen(foto, 600);
+    const nombreFotoThumbnail = await guardarImagen(foto, 75);
+    fotos.push(
+      [now, nombreFotoNormal, idExperiencia, "normal"],
+      [now, nombreFotoThumbnail, idExperiencia, "thumbnail"],
     );
   }
+  
+  //Las inserto en la DB.
+  await conexion.query(
+    `
+            INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id, tipo)
+            VALUES ?
+            `, [fotos]
+  );
+
 }
 
 module.exports = añadirExperiencia;
