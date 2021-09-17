@@ -22,9 +22,9 @@ async function añadirImagenExperiencia(req, res, next) {
   let conexion;
   try {
     await validate(imagenesExperienciaSchema, req.files);
-    const {params:{id}} = req;
+    const { params: { id } } = req;
     conexion = await conexionMysql();
-    await cabenMasImagenes(conexion, id);
+    await cabenMasImagenes(conexion, id, req.files);
     await guardarImagenes(conexion, req.files, id);
     res.statusCode = 200;
     res.send({
@@ -38,7 +38,7 @@ async function añadirImagenExperiencia(req, res, next) {
   }
 }
 
-async function cabenMasImagenes(conexion, id) {
+async function cabenMasImagenes(conexion, id, files) {
 
   //Controlo si la experiencia tiene un máximo de 4 fotos
   const [currentFotos] = await conexion.query(
@@ -50,6 +50,12 @@ async function cabenMasImagenes(conexion, id) {
 
   if (currentFotos.length >= 4) {
     const error = new Error(`La experiencia ${id} ya tiene 4 fotos`);
+    error.httpStatus = 403;
+    throw error;
+  }
+  
+  if (currentFotos.length > (4-Object.values(files).length)){
+    const error = new Error(`No queda espacio para ${Object.values(files).length} imágenes, introduce como máximo ${4-currentFotos.length}`);
     error.httpStatus = 403;
     throw error;
   }
