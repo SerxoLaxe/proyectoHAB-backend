@@ -5,6 +5,14 @@ const {
   guardarImagen,
 } = require("../../helpers");
 const { añadirExperienciaSchema } = require("../../schemas");
+const {
+  fotoConfig: {
+    experiencias: {
+      anchuraNormal,
+      anchuraThumbnail,
+    }
+  }
+} = require('../../config');
 
 /**
  * Añade una experiencia a la tabla de experiencias 👍
@@ -85,14 +93,14 @@ async function procesarImagenes(files, conexion, idExperiencia) {
 
   //Iteramos por cada archivo presente en files.
   for (const foto of Object.values(files)) {
-    const nombreFotoNormal = await guardarImagen(foto, 600);
-    const nombreFotoThumbnail = await guardarImagen(foto, 75);
+    const nombreFotoNormal = await guardarImagen(foto, anchuraNormal);
+    const nombreFotoThumbnail = await guardarImagen(foto, anchuraThumbnail, 'thumbnail');
     fotos.push(
       [now, nombreFotoNormal, idExperiencia, "normal"],
       [now, nombreFotoThumbnail, idExperiencia, "thumbnail"],
     );
   }
-  
+
   //Las inserto en la DB.
   await conexion.query(
     `
