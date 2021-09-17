@@ -45,8 +45,13 @@ async function buscarExperiencias(req, res, next) {
  * @returns {string} - La string apropiada.
  */
 function construirQueryString(params, conexion) {
-  const { texto, precioMinimo, precioMaximo, fechaInicial, fechaFinal } =
-    params;
+  const {
+    texto,
+    precioMinimo,
+    precioMaximo,
+    fechaInicial,
+    fechaFinal
+  } = params;
 
   // Parte de la string que siempre se va a usar.
   const queryBase = `SELECT * FROM experiencias WHERE`;

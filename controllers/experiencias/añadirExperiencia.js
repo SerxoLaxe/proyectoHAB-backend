@@ -42,6 +42,7 @@ async function añadirExperiencia(req, res, next) {
 }
 
 async function procesarBody(req, conexion) {
+  
   // Almacenamos la fecha actual.
   const now = formatearDateMysql(new Date());
 
@@ -79,11 +80,12 @@ async function procesarBody(req, conexion) {
 }
 
 async function procesarImagenes(files, conexion, idExperiencia) {
+
   // Almacenamos la fecha actual
   const now = formatearDateMysql(new Date());
   const fotos = [];
 
-  //Iteramos por cada archivo presente en files.
+  // Iteramos por cada archivo presente en files.
   for (const foto of Object.values(files)) {
     const [nombreFotoNormal, nombreFotoThumbnail] = await guardarImagenExperiencia(foto);
 
@@ -91,7 +93,7 @@ async function procesarImagenes(files, conexion, idExperiencia) {
 
   }
 
-  //Las inserto en la DB.
+  // Las inserto en la DB.
   await conexion.query(
     `
     INSERT INTO experiencias_fotos (fecha_foto, foto,thumbnail, experiencia_id)

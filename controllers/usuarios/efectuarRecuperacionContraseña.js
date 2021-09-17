@@ -1,6 +1,7 @@
 const conexionMysql = require("../../DB/conexionMysql");
 const { validate } = require("../../helpers");
 const { contraseñaSchema } = require("../../schemas");
+
 async function efectuarRecuperacionContraseña(req, res, next) {
   let conexion;
   try {
@@ -9,10 +10,10 @@ async function efectuarRecuperacionContraseña(req, res, next) {
     // Validamos la contraseña.
     await validate(contraseñaSchema, nuevaContraseña);
 
-    //Obtenemos conexion a la BD
+    // Obtenemos conexion a la BD
     conexion = await conexionMysql();
 
-    //Comprobamos si existe alguna cuenta que posea el código de recuperacion provisto en la ruta
+    // Comprobamos si existe alguna cuenta que posea el código de recuperacion provisto en la ruta
     const [usuario] = await conexion.query(
       `
             SELECT id FROM usuarios

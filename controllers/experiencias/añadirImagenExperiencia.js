@@ -2,7 +2,6 @@ const conexionMysql = require("../../DB/conexionMysql");
 const { formatearDateMysql, validate, guardarImagenExperiencia } = require("../../helpers");
 const { imagenesExperienciaSchema } = require('../../schemas')
 
-
 /**
  * Añade una imagen a la experiencia especificada. 👍
  *
@@ -32,7 +31,7 @@ async function añadirImagenExperiencia(req, res, next) {
 
 async function cabenMasImagenes(conexion, id, files) {
 
-  //Controlo si la experiencia tiene un máximo de 4 fotos
+  // Controlo si la experiencia tiene un máximo de 4 fotos
   const [currentFotos] = await conexion.query(
     `
     SELECT id FROM experiencias_fotos WHERE experiencia_id=?

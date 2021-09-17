@@ -95,7 +95,10 @@ async function guardarPuntuacion(conexion, req) {
   const idUsuario = req.userAuth.id;
   const idExperiencia = req.params.id;
   const {
-    body: { puntuacion, comentario },
+    body: {
+      puntuacion,
+      comentario
+    },
   } = req;
 
   await conexion.query(
@@ -112,4 +115,5 @@ async function guardarPuntuacion(conexion, req) {
     ]
   );
 }
+
 module.exports = puntuarExperiencia;

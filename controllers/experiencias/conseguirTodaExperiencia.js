@@ -29,4 +29,5 @@ async function conseguirTodaExperiencia(req, res, next) {
     }
   }
 }
+
 module.exports = conseguirTodaExperiencia;

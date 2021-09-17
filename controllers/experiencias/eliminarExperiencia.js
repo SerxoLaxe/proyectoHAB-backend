@@ -22,7 +22,6 @@ async function eliminarExperiencia(req, res, next) {
     `,
       [id]
     );
-    // console.log(fotos);
 
     // borro las fotos del disco
     for (const foto of fotos) {
@@ -30,7 +29,7 @@ async function eliminarExperiencia(req, res, next) {
       await eliminarImagen(foto.thumbnail);
     }
 
-    // borro las fotos en la base de datos
+    // borro las fotos en la base de datos.
     await conexion.query(
       `
     DELETE FROM experiencias_fotos WHERE experiencia_id=?
@@ -38,7 +37,7 @@ async function eliminarExperiencia(req, res, next) {
       [id]
     );
 
-    // //borro los votos de la tabla puntuaciones
+    // Borro los votos de la tabla puntuaciones.
     await conexion.query(
       `
     DELETE FROM puntuaciones WHERE id_experiencia=?
@@ -46,8 +45,7 @@ async function eliminarExperiencia(req, res, next) {
       [id]
     );
 
-    //borro las reservas
-
+    //Borro las reservas.
     await conexion.query(
       `
     DELETE FROM reservas WHERE id_experiencia=?
@@ -55,7 +53,7 @@ async function eliminarExperiencia(req, res, next) {
     `,
       [id]
     );
-    // borro la experiencia
+    // Borro la experiencia.
     await conexion.query(
       `
     DELETE FROM experiencias WHERE id=?
@@ -74,4 +72,5 @@ async function eliminarExperiencia(req, res, next) {
     if (conexion) conexion.release();
   }
 }
+
 module.exports = eliminarExperiencia;

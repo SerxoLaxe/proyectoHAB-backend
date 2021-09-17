@@ -75,16 +75,28 @@ const {
 /* EXPERIENCIA */
 
 // GET experiencias mediante búsqueda y filtrado opcional mediante rango de fechas y precios. 👍
-app.get("/experiencias/search", experiencia.buscar);
+app.get(
+  "/experiencias/search",
+  experiencia.buscar);
 
 // GET Selecciona experiencia mediante id.  👍
-app.get("/experiencias/:id", existe, experiencia.id);
+app.get(
+  "/experiencias/:id",
+  existe,
+  experiencia.id);
 
 //GET Selecciona los usuarios con reserva de cierta experiencia especificando el Id de esta. 👍
-app.get("/experiencias/:id/reservas", esUsuario, existe, experiencia.reservas);
+app.get(
+  "/experiencias/:id/reservas",
+  esUsuario,
+  existe,
+  experiencia.reservas);
 
 // POST Añade nueva experiencia ( Sólo administrador ) 👍
-app.post("/experiencias", esUsuario, esAdmin, experiencia.añadir);
+app.post("/experiencias",
+  esUsuario,
+  esAdmin,
+  experiencia.añadir);
 
 // PUT Editar experiencia.  ( Sólo administrador ) 👍
 app.put(
@@ -107,7 +119,10 @@ app.delete(
 );
 
 // PUT Reserva plaza en experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario no está apuntado). 👍
-app.post("/experiencias/:id/reservar", esUsuario, existe, experiencia.reservar);
+app.post(
+  "/experiencias/:id/reservar",
+  esUsuario, existe,
+  experiencia.reservar);
 
 // DELETE cancela la reserva de la experiencia. ( Sólo cuando la experiencia no ha comenzado aún y el usuario está apuntado). 👍
 app.delete(
@@ -118,7 +133,11 @@ app.delete(
 );
 
 // POST Puntúa experiencia ( sólo cuando está finalizada y el usuario ha participado).
-app.post("/experiencias/:id/puntuar", esUsuario, existe, experiencia.puntuar);
+app.post(
+  "/experiencias/:id/puntuar",
+  esUsuario,
+  existe,
+  experiencia.puntuar);
 
 // POST Añade imagen a experiencia.( Sólo administrador) 👍
 app.post(
@@ -140,13 +159,21 @@ app.delete(
 /* USUARIO */
 
 // GET usuario, para acceso al perfil mediante ID.👍
-app.get("/usuarios/:id", esUsuario, existe, usuario.id);
+app.get(
+  "/usuarios/:id",
+  esUsuario,
+  existe,
+  usuario.id);
 
 // POST registro de nuevo usuario. 👍
-app.post("/usuarios", usuario.registrar);
+app.post(
+  "/usuarios",
+  usuario.registrar);
 
 // POST validar usuario mediante codigo. 👍
-app.get("/usuarios/validar/:codigo", usuario.validar);
+app.get(
+  "/usuarios/validar/:codigo",
+  usuario.validar);
 
 // PUT usuario, para editar sus datos.  (Sólo el propio usuario) 👍
 app.put(
@@ -167,7 +194,9 @@ app.delete(
 );
 
 // POST login de usuario. 👍
-app.post("/usuarios/login", usuario.login);
+app.post(
+  "/usuarios/login",
+  usuario.login);
 
 // PUT Cambia la contraseña cuando el usuario está logueado 👍
 app.put(

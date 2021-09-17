@@ -1,8 +1,6 @@
 const conexionMysql = require("../../DB/conexionMysql");
 /**
- * Valida usuarios mediante una petición GET, que usa la ruta
- * /usuarios/validar/:código de validación. ❌
- *
+ * Valida usuarios mediante una petición GET, que usa la ruta /usuarios/validar/:código de validación. 👍
  * @param {any} req
  * @param {any} res
  * @param {any} next

@@ -13,9 +13,9 @@ async function conseguirTodoUsuario(req, res, next) {
     conexion = await conexionMysql();
     const [resultado] = await conexion.query(
       `
-            SELECT * FROM usuarios
-            `
-    );
+      SELECT * FROM usuarios
+     `
+     );
     res.statusCode = 200;
     res.send({
       status: "Ok",

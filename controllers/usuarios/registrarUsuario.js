@@ -6,6 +6,7 @@ const {
   sendMail,
 } = require("../../helpers");
 const { loginRegistroSchema } = require("../../schemas/index");
+
 /**
  * Registra un nuevo usuario tomando del body de la petición el email y la
  * contraseña, genera para el usuario un código de registro y envia un correo

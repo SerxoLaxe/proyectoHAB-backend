@@ -1,11 +1,10 @@
 const conexionMysql = require("../../DB/conexionMysql");
 const jwt = require("jsonwebtoken");
 const { validate } = require("../../helpers");
+
 const { loginRegistroSchema } = require("../../schemas");
 /**
- * Esta función logea a los usuarios con credenciales correctas respondiendo con
- * un JWT. 👍
- *
+ * Esta función logea a los usuarios con credenciales correctas respondiendo con un JWT. 👍
  * @param {any} req
  * @param {any} res
  * @param {any} next

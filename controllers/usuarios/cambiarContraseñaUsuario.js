@@ -1,8 +1,9 @@
 const conexionMysql = require("../../DB/conexionMysql");
 const { validate } = require("../../helpers");
 const { contraseñaSchema } = require("../../schemas");
+
 /**
- * Cambia la contraseña del usuario ❌
+ * Cambia la contraseña del usuario 👍
  *
  * @param {any} req
  * @param {any} res
@@ -47,7 +48,7 @@ async function cambiarContraseña(req, res, next) {
     res.httpStatus = 200;
     res.send({
       status: "ok",
-      message: "Contraseña cambiada",
+      message: "Contraseña modificada correctamente",
     });
   } catch (error) {
     next(error);
