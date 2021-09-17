@@ -2,6 +2,27 @@ const Joi = require("joi");
 const { joiConfig } = require("../config");
 const { schemaExperiencias } = joiConfig;
 
+const imagenesExperienciaSchema = Joi.object()
+.required()
+.min(schemaExperiencias.minImagenes)
+.max(schemaExperiencias.maxImagenes)
+.error(
+  new Error(
+    `Sólo se permite un mínimo de ${schemaExperiencias.minImagenes} y un máximo de ${schemaExperiencias.maxImagenes} imágenes por experiencia.`
+  )
+)
+.pattern(
+  Joi.string(),
+  Joi.object()
+    .keys({
+      mimetype: Joi.string()
+        .required()
+        .valid("image/png", "image/jpeg")
+        .error(new Error("Formato de imagen no válido")),
+    })
+    .unknown(true)
+);
+
 /** Esquema de validación de la peticion de añadir experiencia. */
 const añadirExperienciaSchema = Joi.object()
   .keys({
@@ -56,27 +77,8 @@ const añadirExperienciaSchema = Joi.object()
             )
           ),
       }),
-    files: Joi.object()
-      .required()
-      .min(schemaExperiencias.minImagenes)
-      .max(schemaExperiencias.maxImagenes)
-      .error(
-        new Error(
-          `Sólo se permite un mínimo de ${schemaExperiencias.minImagenes} y un máximo de ${schemaExperiencias.maxImagenes} imágenes por experiencia.`
-        )
-      )
-      .pattern(
-        Joi.string(),
-        Joi.object()
-          .keys({
-            mimetype: Joi.string()
-              .required()
-              .valid("image/png", "image/jpeg")
-              .error(new Error("Formato de imagen no válido")),
-          })
-          .unknown(true)
-      ),
+    files: imagenesExperienciaSchema,
   })
   .unknown(true);
 
-module.exports = añadirExperienciaSchema;
+module.exports = {añadirExperienciaSchema, imagenesExperienciaSchema};
