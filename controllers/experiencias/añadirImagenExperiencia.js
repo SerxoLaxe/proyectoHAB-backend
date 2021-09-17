@@ -1,13 +1,5 @@
 const conexionMysql = require("../../DB/conexionMysql");
-const { guardarImagen, formatearDateMysql, validate } = require("../../helpers");
-const {
-  fotoConfig: {
-    experiencias: {
-      anchuraNormal,
-      anchuraThumbnail
-    }
-  }
-} = require('../../config');
+const { formatearDateMysql, validate, guardarImagenExperiencia } = require("../../helpers");
 const { imagenesExperienciaSchema } = require('../../schemas')
 
 
@@ -43,19 +35,19 @@ async function cabenMasImagenes(conexion, id, files) {
   //Controlo si la experiencia tiene un máximo de 4 fotos
   const [currentFotos] = await conexion.query(
     `
-    SELECT id FROM experiencias_fotos WHERE experiencia_id=? AND tipo='normal'
+    SELECT id FROM experiencias_fotos WHERE experiencia_id=?
     `,
     [id]
   );
 
   if (currentFotos.length >= 4) {
-    const error = new Error(`La experiencia ${id} ya tiene 4 fotos`);
+    const error = new Error(`La experiencia ${id} ya cuenta con 4 imágenes`);
     error.httpStatus = 403;
     throw error;
   }
-  
-  if (currentFotos.length > (4-Object.values(files).length)){
-    const error = new Error(`No queda espacio para ${Object.values(files).length} imágenes, introduce como máximo ${4-currentFotos.length}`);
+
+  if (currentFotos.length > (4 - Object.values(files).length)) {
+    const error = new Error(`No queda espacio para ${Object.values(files).length} imágenes, introduce como máximo ${4 - currentFotos.length}`);
     error.httpStatus = 403;
     throw error;
   }
@@ -63,21 +55,19 @@ async function cabenMasImagenes(conexion, id, files) {
 
 async function guardarImagenes(conexion, files, id) {
 
+  const now = formatearDateMysql(new Date());
   const fotos = [];
   for (const foto of Object.values(files)) {
-    const fotoNormal = await guardarImagen(foto, anchuraNormal);
-    const fotoThumbnail = await guardarImagen(foto, anchuraThumbnail, 'thumbnail');
-    const now = formatearDateMysql(new Date());
+    const [nombreFotoNormal, nombreFotoThumbnail] = await guardarImagenExperiencia(foto);
     fotos.push(
-      [now, fotoNormal, id, 'normal'],
-      [now, fotoThumbnail, id, 'thumbnail'],
+      [now, nombreFotoNormal, nombreFotoThumbnail, id]
     )
   }
 
   //añade la foto en la Base de Datos
   await conexion.query(
     `
-    INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id, tipo) VALUES ?
+    INSERT INTO experiencias_fotos (fecha_foto, foto, thumbnail, experiencia_id) VALUES ?
     `,
     [fotos]
   );

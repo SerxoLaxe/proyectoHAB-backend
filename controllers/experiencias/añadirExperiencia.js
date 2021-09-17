@@ -2,17 +2,9 @@ const conexionMysql = require("../../DB/conexionMysql");
 const {
   formatearDateMysql,
   validate,
-  guardarImagen,
+  guardarImagenExperiencia,
 } = require("../../helpers");
 const { añadirExperienciaSchema } = require("../../schemas");
-const {
-  fotoConfig: {
-    experiencias: {
-      anchuraNormal,
-      anchuraThumbnail,
-    }
-  }
-} = require('../../config');
 
 /**
  * Añade una experiencia a la tabla de experiencias 👍
@@ -93,18 +85,16 @@ async function procesarImagenes(files, conexion, idExperiencia) {
 
   //Iteramos por cada archivo presente en files.
   for (const foto of Object.values(files)) {
-    const nombreFotoNormal = await guardarImagen(foto, anchuraNormal);
-    const nombreFotoThumbnail = await guardarImagen(foto, anchuraThumbnail, 'thumbnail');
-    fotos.push(
-      [now, nombreFotoNormal, idExperiencia, "normal"],
-      [now, nombreFotoThumbnail, idExperiencia, "thumbnail"],
-    );
+    const [nombreFotoNormal, nombreFotoThumbnail] = await guardarImagenExperiencia(foto);
+
+    fotos.push([now, nombreFotoNormal, nombreFotoThumbnail, idExperiencia]);
+
   }
 
   //Las inserto en la DB.
   await conexion.query(
     `
-            INSERT INTO experiencias_fotos (fecha_foto, foto, experiencia_id, tipo)
+            INSERT INTO experiencias_fotos (fecha_foto, foto,thumbnail, experiencia_id)
             VALUES ?
             `, [fotos]
   );

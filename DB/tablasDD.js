@@ -48,8 +48,8 @@ const tablaExperiencias_fotos = {
         (
         id INT PRIMARY KEY AUTO_INCREMENT,
         fecha_foto DATETIME NOT NULL,
-        foto VARCHAR(64),
-        tipo ENUM("thumbnail", "normal") DEFAULT "normal" NOT NULL,
+        foto VARCHAR(64) NOT NULL,
+        thumbnail VARCHAR(64),
         experiencia_id INT NOT NULL,
         FOREIGN KEY (experiencia_id) REFERENCES experiencias(id)
         )

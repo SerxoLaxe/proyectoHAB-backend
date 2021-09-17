@@ -52,7 +52,7 @@ const fotoConfig ={
     anchuraThumbnail: 1000,
   },
   usuarios: {
-    anchuraAvatar: 700,
+    anchuraAvatar: 500,
   }
 }
 
