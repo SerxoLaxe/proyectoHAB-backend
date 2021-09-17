@@ -94,9 +94,10 @@ async function procesarImagenes(files, conexion, idExperiencia) {
   //Las inserto en la DB.
   await conexion.query(
     `
-            INSERT INTO experiencias_fotos (fecha_foto, foto,thumbnail, experiencia_id)
-            VALUES ?
-            `, [fotos]
+    INSERT INTO experiencias_fotos (fecha_foto, foto,thumbnail, experiencia_id)
+    VALUES ?
+    `,
+    [fotos]
   );
 
 }

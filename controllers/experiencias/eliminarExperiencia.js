@@ -14,14 +14,22 @@ async function eliminarExperiencia(req, res, next) {
 
     const { id } = req.params;
 
-    // selecciono las fotos
+    // selecciono las fotos y thumbnails.
     const [fotos] = await conexion.query(
       `
-    SELECT foto FROM experiencias_fotos WHERE experiencia_id=?
+    SELECT foto, thumbnail FROM experiencias_fotos WHERE experiencia_id=?
 
     `,
       [id]
     );
+    // console.log(fotos);
+
+    // borro las fotos del disco
+    for (const foto of fotos) {
+      await eliminarImagen(foto.foto);
+      await eliminarImagen(foto.thumbnail);
+    }
+
     // borro las fotos en la base de datos
     await conexion.query(
       `
@@ -29,13 +37,6 @@ async function eliminarExperiencia(req, res, next) {
     `,
       [id]
     );
-
-    // console.log(fotos);
-
-    // borro las fotos del disco
-    for (const foto of fotos) {
-      await eliminarImagen(foto.foto);
-    }
 
     // //borro los votos de la tabla puntuaciones
     await conexion.query(
