@@ -28,10 +28,20 @@ async function eliminarImagen(nombreImagen) {
  * @param {Object} foto - Objeto imagen de Sharp.
  * @returns {string} - Nombre de la imagen.
  */
-async function guardarImagen(foto, anchuraFinal) {
+async function guardarImagen(foto, anchuraFinal, modo) {
   await ensureDir(recursosDir); //compruebo si hay en el directorio de recursos y sino lo creo
   const imagen = sharp(foto.data); //leo el buffer (foto.data) con sharp
-  imagen.resize(anchuraFinal); //controlo el tamaño
+
+  if (modo === 'thumbnail') {
+    imagen.resize({
+      fit: sharp.fit.cover,
+      width: anchuraFinal,
+      height: anchuraFinal,
+    }).sharpen();
+  } else {
+    imagen.resize(anchuraFinal); //controlo el tamaño
+  }
+
   const nombreImagen = `${uuid.v4()}.jpg`; //genero un nombre para la foto con uuid sin controlar el formato
   await imagen.toFile(path.join(recursosDir, nombreImagen)); //guardo la imagen en mi directorio de recursos
   return nombreImagen; //devuelvo el nombre de la foto
