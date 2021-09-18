@@ -3,9 +3,7 @@ const { buscarExperienciaSchema } = require("../../schemas/index");
 const { validate } = require("../../helpers");
 
 /**
- * BuscarExperiencias() toma los parámetros definidos en la query y los usa para
- * buscar coincidencias en la tabla experiencias. 👍
- *
+ * BuscarExperiencias() toma los parámetros definidos en la query y los usa para buscar coincidencias en la tabla experiencias. 👍
  * @param {any} req
  * @param {any} res
  * @param {any} next
@@ -53,8 +51,21 @@ function construirQueryString(params, conexion) {
     fechaFinal
   } = params;
 
-  // Parte de la string que siempre se va a usar.
-  const queryBase = `SELECT * FROM experiencias WHERE`;
+  // Parte inicial de la string que siempre se va a usar.
+  const queryStartString = (
+    `
+    SELECT exp.* , group_concat(fotos.thumbnail) as thumbnails
+    FROM experiencias AS exp
+    LEFT JOIN experiencias_fotos AS fotos
+    ON fotos.experiencia_id=exp.id 
+    WHERE
+    `);
+
+    // Parte final de la string que siempre se va a usar
+    const queryEndingString =  (
+      `
+      GROUP BY exp.id
+      `);
 
   // Array en el que se irán añadiendo todas las condiciones.
   const queryArray = [];
@@ -63,36 +74,36 @@ function construirQueryString(params, conexion) {
   if (typeof texto !== "undefined" && texto.length !== 0) {
     queryArray.push(
       `CONCAT(
-            experiencias.nombre, 
-            experiencias.descripcion, 
-            experiencias.ubicacion) 
+            exp.nombre, 
+            exp.descripcion, 
+            exp.ubicacion) 
             LIKE ${conexion.escape(`%${texto}%`)}`
     );
   }
 
   if (typeof precioMinimo !== "undefined" && precioMinimo > 0) {
-    queryArray.push(`experiencias.precio >= ${conexion.escape(precioMinimo)}`);
+    queryArray.push(`exp.precio >= ${conexion.escape(precioMinimo)}`);
   }
 
   if (typeof precioMaximo !== "undefined" && precioMaximo > 0) {
-    queryArray.push(`experiencias.precio <= ${conexion.escape(precioMaximo)}`);
+    queryArray.push(`exp.precio <= ${conexion.escape(precioMaximo)}`);
   }
 
   if (typeof fechaInicial !== "undefined") {
     queryArray.push(
-      `experiencias.fecha_inicial >= ${conexion.escape(fechaInicial)}`
+      `exp.fecha_inicial >= ${conexion.escape(fechaInicial)}`
     );
   }
 
   if (typeof fechaFinal !== "undefined") {
     queryArray.push(
-      `experiencias.fecha_final <= ${conexion.escape(fechaFinal)}`
+      `exp.fecha_final <= ${conexion.escape(fechaFinal)}`
     );
   }
 
-  // Concatenamos la parte invariable de la string (queryBase) junto con el array de condicionales, que es unido con el string ' AND '.
-  // Pseudo resultado: 'SELECT * FROM EXPERIENCIAS WHERE' + 'columnaA = parámetroA' + ' AND ' + 'columnaB = parámetroB'.
-  const queryString = `${queryBase} ${queryArray.join(" AND ")}`;
+  // Concatenamos la parte invariable de la string (queryStartString y queryEndingString) junto con el array de condicionales, que es unido con el string ' AND '.
+  // Pseudo resultado: 'SELECT * FROM EXPERIENCIAS WHERE' + 'columnaA = parámetroA' + ' AND ' + 'columnaB = parámetroB' + 'GROUP BY id'.
+  const queryString = `${queryStartString} ${queryArray.join(" AND ")} ${queryEndingString}`;
   return queryString;
 }
 

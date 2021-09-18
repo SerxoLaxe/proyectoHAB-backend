@@ -21,7 +21,7 @@ async function conseguirExperienciaID(req, res, next) {
 
     const [fotos] = await conexion.query(
       `
-    SELECT id, fecha_foto, foto
+    SELECT id, fecha_foto, foto, thumbnail
     FROM experiencias_fotos
     WHERE experiencia_id = ? 
     `,
