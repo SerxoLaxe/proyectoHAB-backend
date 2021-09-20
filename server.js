@@ -189,7 +189,7 @@ app.delete(
   "/usuarios/:id",
   esUsuario,
   existe,
-  esPropietarioPerfil,
+  /* esPropietarioPerfil */
   usuario.eliminar
 );
 
