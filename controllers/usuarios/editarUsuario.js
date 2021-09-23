@@ -9,7 +9,7 @@ const { perfilUsuarioSchema } = require("../../schemas");
 async function editarUsuario(req, res, next) {
   let conexion;
   try {
-    await validate(perfilUsuarioSchema, req);
+    //await validate(perfilUsuarioSchema, req);
     if (req.files &&
       typeof req.files !== "undefined" &&
       Object.values(req.files).length > 0
