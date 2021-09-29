@@ -15,7 +15,7 @@ const perfilUsuarioSchema = Joi.object()
           )
         ),
     }),
-    files: Joi.object()
+    /* files: Joi.object()
       .max(1)
       .pattern(
         Joi.any(),
@@ -27,8 +27,7 @@ const perfilUsuarioSchema = Joi.object()
               .error(new Error("Formato de imagen no válido")),
           })
           .unknown()
-      ),
-  })
-  .unknown();
+      ) */
+  }).unknown()
 
 module.exports = perfilUsuarioSchema;
