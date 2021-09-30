@@ -14,39 +14,15 @@ async function conseguirTodaExperiencia(req, res, next) {
 
     const [result] = await conexion.query(
       `
-    SELECT * FROM experiencias
+      SELECT exp.* , group_concat(fotos.thumbnail) as thumbnails FROM experiencias AS exp LEFT JOIN experiencias_fotos AS fotos ON fotos.experiencia_id=exp.id GROUP BY exp.id
     `
     );
 
-    //añado las fotos a los resultados
-    let resultConFotos = [];
-    if (result.length > 0) {
-      // saco los ids de los resultados
-      const ids = result.map((result) => result.id);
-
-      //selecciono las fotos
-      const [fotos] = await conexion.query(`
-    SELECT * FROM experiencias_fotos WHERE experiencia_id IN (${ids.join(",")})
-    `);
-      console.log("result", result);
-      // uno el array de fotos con el resultado
-      resultConFotos = result.map((result) => {
-        const resultFotos = fotos.filter(
-          (foto) => foto.experiencia_id === result.id
-        );
-        //devuelvo el resultado y el array de fotos
-        return {
-          ...result,
-          fotos: resultFotos,
-        };
-      });
-
-      res.statusCode = 200;
-      res.send({
-        status: "Ok",
-        data: resultConFotos,
-      });
-    }
+    res.statusCode = 200;
+    res.send({
+      status: "Ok",
+      data: result,
+    });
   } catch (error) {
     next(error);
   } finally {
