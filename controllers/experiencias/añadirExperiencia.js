@@ -31,6 +31,7 @@ async function añadirExperiencia(req, res, next) {
     res.send({
       status: "Ok",
       message: `Experiencia ${idExperiencia} guardada correctamente`,
+      id: idExperiencia,
     });
   } catch (error) {
     next(error);
@@ -42,9 +43,9 @@ async function añadirExperiencia(req, res, next) {
 }
 
 async function procesarBody(req, conexion) {
-  
   // Almacenamos la fecha actual.
   const now = formatearDateMysql(new Date());
+  const fechaActual = new Date(now);
 
   // Saco los datos del body.
   const {
@@ -58,6 +59,24 @@ async function procesarBody(req, conexion) {
   } = req.body;
   const idAutor = req.userAuth.id;
 
+  const fechaInicial = new Date(fecha_inicial);
+  const fechaFinal = new Date(fecha_final);
+
+  if (fechaInicial < fechaActual) {
+    const error = new Error(
+      "La fecha de inicio no puede ser anterior a la fecha actual"
+    );
+    error.httpStatus = 400;
+    throw error;
+  }
+  if (fechaInicial > fechaFinal) {
+    const error = new Error(
+      "La fecha de inicio no puede ser posterior a la fecha de fin"
+    );
+    error.httpStatus = 400;
+    throw error;
+  }
+
   // hacemos la INSERT en el DB.
   const [result] = await conexion.query(
     `
@@ -68,8 +87,8 @@ async function procesarBody(req, conexion) {
       now,
       nombre,
       descripcion,
-      fecha_inicial,
-      fecha_final,
+      fechaInicial,
+      fechaFinal,
       precio,
       ubicacion,
       plazas_totales,
@@ -80,28 +99,26 @@ async function procesarBody(req, conexion) {
 }
 
 async function procesarImagenes(files, conexion, idExperiencia) {
-
   // Almacenamos la fecha actual
   const now = formatearDateMysql(new Date());
   const fotos = [];
 
   // Iteramos por cada archivo presente en files.
   for (const foto of Object.values(files)) {
-    const [nombreFotoNormal, nombreFotoThumbnail] = await guardarImagenExperiencia(foto);
+    const [nombreFotoNormal, nombreFotoThumbnail] =
+      await guardarImagenExperiencia(foto);
 
     fotos.push([now, nombreFotoNormal, nombreFotoThumbnail, idExperiencia]);
-
   }
 
   // Las inserto en la DB.
   await conexion.query(
     `
-    INSERT INTO experiencias_fotos (fecha_foto, foto,thumbnail, experiencia_id)
+    INSERT INTO experiencias_fotos (fecha_foto, foto, thumbnail, experiencia_id)
     VALUES ?
     `,
     [fotos]
   );
-
 }
 
 module.exports = añadirExperiencia;
