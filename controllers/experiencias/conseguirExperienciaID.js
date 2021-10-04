@@ -28,11 +28,21 @@ async function conseguirExperienciaID(req, res, next) {
       [id]
     );
 
+    const [puntuaciones] = await conexion.query(
+      `
+      SELECT id_usuario, puntuacion, comentario
+      FROM puntuaciones
+      WHERE id_experiencia=?
+      `,
+      [id]
+    )
+
     res.send({
       status: "Ok",
       data: {
         ...result[0],
         fotos,
+        puntuaciones
       },
     });
   } catch (err) {
