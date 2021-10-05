@@ -62,13 +62,13 @@ async function procesarBody(req, conexion) {
   const fechaInicial = new Date(fecha_inicial);
   const fechaFinal = new Date(fecha_final);
 
-  if (fechaInicial < fechaActual) {
+  /* if (fechaInicial < fechaActual) {
     const error = new Error(
       "La fecha de inicio no puede ser anterior a la fecha actual"
     );
     error.httpStatus = 400;
     throw error;
-  }
+  } */
   if (fechaInicial > fechaFinal) {
     const error = new Error(
       "La fecha de inicio no puede ser posterior a la fecha de fin"
