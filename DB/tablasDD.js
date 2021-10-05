@@ -75,7 +75,7 @@ const tablaPuntuaciones = {
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         fecha DATETIME NOT NULL,
         comentario VARCHAR(1000), 
-        puntuacion DECIMAL(2,1) NOT NULL,
+        puntuacion INT NOT NULL,
         id_usuario INT NOT NULL,
         FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
         id_experiencia INT NOT NULL,
