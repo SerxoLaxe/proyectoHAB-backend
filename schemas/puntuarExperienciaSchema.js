@@ -11,7 +11,7 @@ const puntuarExperienciaSchema = Joi.object().keys({
     .required()
     .error(
       new Error(
-        `Introduce una puntuación numérica entre ${minPuntuacion} y ${maxPuntuacion}, puede ser decimal.`
+        `Introduce una puntuación numérica entre ${minPuntuacion} y ${maxPuntuacion}.`
       )
     ),
   comentario: Joi.string()
