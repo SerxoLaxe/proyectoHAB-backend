@@ -114,6 +114,38 @@ async function guardarPuntuacion(conexion, req) {
       idExperiencia,
     ]
   );
+
+  const [puntuaciones] = await conexion.query(
+    `
+    SELECT id_usuario, puntuacion, comentario
+    FROM puntuaciones
+    WHERE id_experiencia=?
+    `,
+    [idExperiencia]
+  );
+
+  await conexion.query(
+    `
+    UPDATE experiencias SET rating=?
+    WHERE id=?
+    `,
+    [conseguirMediaPuntuaciones(puntuaciones),
+    idExperiencia]);
+}
+
+function conseguirMediaPuntuaciones(puntuaciones) {
+  let sumaDeTodasLasPuntuaciones;
+  if (puntuaciones.length > 1) {
+    sumaDeTodasLasPuntuaciones = puntuaciones.reduce((acc, object) => {
+      return (acc + object.puntuacion)
+    }, 0);
+  } else if (puntuaciones.length === 0) {
+    return [];
+  } else {
+    sumaDeTodasLasPuntuaciones = puntuaciones[0].puntuacion
+  }
+  const puntuacionMedia = Math.round(sumaDeTodasLasPuntuaciones / puntuaciones.length);
+  return puntuacionMedia;
 }
 
 module.exports = puntuarExperiencia;

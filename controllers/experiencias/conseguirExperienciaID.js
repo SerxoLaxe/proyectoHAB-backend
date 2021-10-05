@@ -35,14 +35,16 @@ async function conseguirExperienciaID(req, res, next) {
       WHERE id_experiencia=?
       `,
       [id]
-    )
+    );
+    const puntuacionMedia = conseguirMediaPuntuaciones(puntuaciones)
 
     res.send({
       status: "Ok",
       data: {
         ...result[0],
         fotos,
-        puntuaciones
+        puntuaciones,
+        puntuacionMedia,
       },
     });
   } catch (err) {
@@ -50,6 +52,21 @@ async function conseguirExperienciaID(req, res, next) {
   } finally {
     if (conexion) conexion.release();
   }
+}
+
+function conseguirMediaPuntuaciones(puntuaciones) {
+  let sumaDeTodasLasPuntuaciones;
+  if (puntuaciones.length > 1) {
+    sumaDeTodasLasPuntuaciones = puntuaciones.reduce((acc, object) => {
+      return (acc + object.puntuacion)
+    }, 0);
+  } else if (puntuaciones.length === 0) {
+return [];
+  } else {
+    sumaDeTodasLasPuntuaciones = puntuaciones[0].puntuacion
+  }
+  const puntuacionMedia = Math.round(sumaDeTodasLasPuntuaciones / puntuaciones.length);
+  return puntuacionMedia;
 }
 
 module.exports = conseguirExperienciaID;
