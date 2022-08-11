@@ -101,11 +101,10 @@ function log(message) {
  * @param {Object} error
  */
 function logError(error) {
+  console.error(chalk.red.bold(error));
   if (process.env.VERBOSE === "true") {
     console.error(chalk.red(error.stack));
-  } else {
-    console.error(chalk.red.bold(error));
-  }
+  } 
 }
 
 /**
